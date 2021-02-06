@@ -1,0 +1,169 @@
+vich_uploader:
+    db_driver: orm
+
+    #mappings:
+    #    products:
+    #        uri_prefix: /images/products
+    #        upload_destination: '%kernel.project_dir%/public/images/products'
+    mappings:
+        structures_logo:
+            uri_prefix: /uploads/logo
+            upload_destination: '%kernel.project_dir%/public/uploads/logo'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+
+        photos:
+            uri_prefix: /uploads/users
+            upload_destination: '%kernel.project_dir%/public/uploads/users'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+
+        logos:
+            uri_prefix: /uploads/users/logos
+            upload_destination: '%kernel.project_dir%/public/uploads/users/logos'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+
+        products_images:
+            uri_prefix: /uploads/products
+            upload_destination: '%kernel.project_dir%/public/uploads/products'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+
+        products_medias:
+            uri_prefix: /uploads/products/medias
+            upload_destination: '%kernel.project_dir%/public/uploads/products/medias'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+
+        pages_images:
+            uri_prefix: /uploads/pages
+            upload_destination: '%kernel.project_dir%/public/uploads/pages'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+
+        partenaires_image:
+            uri_prefix: /uploads/partenaires
+            upload_destination: '%kernel.project_dir%/public/uploads/partenaires'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+
+        marques_image:
+            uri_prefix: /uploads/marques
+            upload_destination: '%kernel.project_dir%/public/uploads/marques'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+
+        mainsliders_image:
+            uri_prefix: /uploads/mainsliders
+            upload_destination: '%kernel.project_dir%/public/uploads/mainsliders'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+
+        publicites:
+            uri_prefix: /uploads/publicites
+            upload_destination: '%kernel.project_dir%/public/uploads/publicites'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+
+        documents_pdf:
+            uri_prefix: /uploads/documents/files
+            upload_destination: '%kernel.project_dir%/public/uploads/documents/files'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+
+        documents_image:
+            uri_prefix: /uploads/documents/images
+            upload_destination: '%kernel.project_dir%/public/uploads/documents/images'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+
+        blogs_images:
+            uri_prefix: /uploads/blogs
+            upload_destination: '%kernel.project_dir%/public/uploads/blogs'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+
+        blogs_medias:
+            uri_prefix: /uploads/blogs/medias
+            upload_destination: '%kernel.project_dir%/public/uploads/blogs/medias'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+
+        dossiers_images:
+            uri_prefix: /uploads/dossiers
+            upload_destination: '%kernel.project_dir%/public/uploads/dossiers'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+
+        dossiers_medias:
+            uri_prefix: /uploads/dossiers/medias
+            upload_destination: '%kernel.project_dir%/public/uploads/dossiers/medias'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+
+        formations_images:
+            uri_prefix: /uploads/formations
+            upload_destination: '%kernel.project_dir%/public/uploads/formations'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+
+        formations_medias:
+            uri_prefix: /uploads/formations/medias
+            upload_destination: '%kernel.project_dir%/public/uploads/formations/medias'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+
+        pdf_file:
+            uri_prefix: /uploads/pdf
+            upload_destination: '%kernel.project_dir%/public/uploads/pdf'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+
+        catalogues_image:
+            uri_prefix: /uploads/pdf/covers
+            upload_destination: '%kernel.project_dir%/public/uploads/pdf/covers'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true

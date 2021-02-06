@@ -1,0 +1,5 @@
+{% form_theme form 'form_div_layout.html.twig' %}
+{{ form_start(form, {'action': path('search.home')}) }}
+    {{ form_widget(form.q) }}
+    <button type="submit"><i class="ion-ios-search-strong"></i></button>
+{{ form_end(form) }}

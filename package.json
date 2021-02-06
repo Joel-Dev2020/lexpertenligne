@@ -1,0 +1,36 @@
+{
+    "devDependencies": {
+        "@babel/plugin-proposal-class-properties": "^7.12.1",
+        "@babel/preset-react": "7.0.0",
+        "@symfony/webpack-encore": "^0.33.0",
+        "core-js": "^3.0.0",
+        "jquery": "^3.4.1",
+        "node-sass": "^5.0.0",
+        "regenerator-runtime": "^0.13.2",
+        "sass-loader": "7.0.1",
+        "webpack-notifier": "^1.6.0"
+    },
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.13.1",
+        "alertifyjs": "^1.13.1",
+        "bootstrap-select": "^1.13.18",
+        "clipboard": "^2.0.6",
+        "flip-toolkit": "^7.0.9",
+        "js-datepicker": "^5.14.2",
+        "nouislider": "^14.5.0",
+        "prop-types": "^15.7.2",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1",
+        "react-flip-toolkit": "^7.0.10",
+        "react-router-dom": "^5.2.0",
+        "select2": "^4.0.13"
+    }
+}

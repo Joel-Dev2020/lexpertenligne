@@ -1,0 +1,180 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Admin - {{ parametres.structure ? parametres.structure.name : company_name }} - {{ title }}{% endblock %}
+
+{% block body %}
+    <div class="pt-32pt">
+        <div class="container-fluid page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+            {{ fil_arial_admin_categories(title, 'Utilisateurs', '') }}
+            <div class="row" role="tablist">
+                <div class="col-auto">
+                    <a href="{{ path('admin.users.new') }}" class="btn btn-outline-secondary">
+                        <i class="material-icons">add</i>
+                        {{ libelle_ajouter }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid page__container">
+        <div class="page-section">
+
+            <div class="page-separator">
+                <div class="page-separator__text">Aperçu</div>
+            </div>
+
+            <div class="row mb-lg-8pt">
+                <div class="col-md-6 col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="position-relative mr-16pt">
+                                    <div class="text-center fullbleed d-flex align-items-center justify-content-center flex-column z-0">
+                                        <small>92%</small>
+                                    </div>
+                                    <canvas width="48"
+                                            height="48"
+                                            class="chart-canvas position-relative z-1 js-update-chart-progress"
+                                            id="inTimeProgressChart"
+                                            data-chart-line-background-color="primary;gray"
+                                            data-chart-disable-tooltips="true"></canvas>
+                                </div>
+                                <div class="flex">
+                                    <strong>In Time</strong>
+                                </div>
+                                <div class="text-50">60</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="position-relative mr-16pt">
+                                    <div class="text-center fullbleed d-flex align-items-center justify-content-center flex-column z-0">
+                                        <small>23%</small>
+                                    </div>
+                                    <canvas width="48"
+                                            height="48"
+                                            class="chart-canvas position-relative z-1 js-update-chart-progress-accent"
+                                            id="lateProgressChart"
+                                            data-chart-line-background-color="accent;gray"
+                                            data-chart-disable-tooltips="true"></canvas>
+                                </div>
+                                <div class="flex">
+                                    <strong>In Time</strong>
+                                </div>
+                                <div class="text-50">15</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="position-relative mr-16pt">
+                                    <div class="text-center fullbleed d-flex align-items-center justify-content-center flex-column z-0">
+                                        <small>6%</small>
+                                    </div>
+                                    <canvas width="48"
+                                            height="48"
+                                            class="chart-canvas position-relative z-1"
+                                            id="absentsProgressChart"
+                                            data-chart-line-background-color="yellow;gray"
+                                            data-chart-disable-tooltips="true"></canvas>
+                                </div>
+                                <div class="flex">
+                                    <strong>Absents</strong>
+                                </div>
+                                <div class="text-50">4</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="position-relative mr-16pt">
+                                    <div class="text-center fullbleed d-flex align-items-center justify-content-center flex-column z-0">
+                                        <small>1%</small>
+                                    </div>
+                                    <canvas width="48"
+                                            height="48"
+                                            class="chart-canvas position-relative z-1"
+                                            id="vacationProgressChart"
+                                            data-chart-line-background-color="yellow;gray"
+                                            data-chart-disable-tooltips="true"></canvas>
+                                </div>
+                                <div class="flex">
+                                    <strong>Vacation</strong>
+                                </div>
+                                <div class="text-50">1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% include 'flash/__flash.html.twig' %}
+
+            <div class="page-separator">
+                <div class="page-separator__text">Liste des utilisateurs</div>
+            </div>
+
+            <div class="card mb-0">
+
+                <div class="table-responsive" data-toggle="lists" data-lists-sort-by="js-lists-values-employee-name" data-lists-values='["js-lists-values-employee-name", "js-lists-values-employer-name", "js-lists-values-projects", "js-lists-values-activity", "js-lists-values-earnings"]'>
+
+                    <div class="card-header">
+                        <form class="form-inline">
+                            <label class="mr-sm-2 form-label" for="inlineFormFilterBy">Filtrer par:</label>
+                            <input type="text" class="form-control search mb-2 mr-sm-2 mb-sm-0" id="inlineFormFilterBy" placeholder="Rechercher ...">
+                        </form>
+                    </div>
+
+                    <table class="table mb-0 thead-border-top-0 table-nowrap">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-employee-name">Utilisateurs</a>
+                                </th>
+                                <th style="width: 150px;">
+                                    <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-employer-name">Rôles</a>
+                                </th>
+                                <th class="text-center" style="width: 48px;">
+                                    <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-projects">Status</a>
+                                </th>
+                                <th style="width: 120px;">
+                                    <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-activity">Activité</a>
+                                </th>
+                                <th style="width: 51px;">
+                                    <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-earnings">Etat</a>
+                                </th>
+                                <th style="width: 24px;" class="pl-0"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="list" id="staff">
+                        {% for user in users %}
+                            {% include 'admin/users/partials/__tr_table.html.twig' %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6">{{ data_none }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-footer p-8pt">
+                    {{ knp_pagination_render(users) }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+

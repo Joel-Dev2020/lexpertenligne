@@ -1,0 +1,9 @@
+<div style="width: 100%; height: 150px; max-height: 150px; background-color: #ccc;" class="mt-lg-4">
+        {% if pubs.publicite.filenamepubblock1 %}
+                <a href="{{ pubs.publicite.urlpubblock1 }}">
+                        <img src="{{ vich_uploader_asset(pubs.publicite, 'imageFile1') | imagine_filter('banner644x150') }}" alt="{{ pubs.publicite.pubblock1 }}">
+                </a>
+        {% else %}
+                <img src="{{ asset('assetics/images/empty/pubs.png') | imagine_filter('banner644x150') }}" alt="{{ pubs.publicite.pubblock1 }}">
+        {% endif %}
+</div>

@@ -1,0 +1,51 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Admin - {{ parametres.structure ? parametres.structure.name : company_name }} - {{ title }}{% endblock %}
+
+{% block body %}
+    <div class="page-section bg-primary border-bottom-white">
+        <div class="container-fluid page__container d-flex flex-column flex-md-row align-items-center text-center text-md-left">
+            <img width="104" class="mr-md-32pt mb-32pt mb-md-0" src="{{ asset('admin/img/avatars/1.png') }}" alt="Image">
+            <div class="flex mb-32pt mb-md-0">
+                <h2 class="text-white mb-0">{{ notification.action }}</h2>
+                <p class="lead text-white-50 d-flex align-items-center">
+                    <span class="ml-16pt d-flex align-items-center">
+                        <i class="material-icons icon-16pt mr-4pt">calendar</i> {{ notification.createdAt ? notification.createdAt|date('d/m/Y à H:i:s') : '' }}
+                    </span>
+                </p>
+            </div>
+            <a href="{{ path('admin.users.index') }}" class="btn btn-outline-white">Retour à la liste</a>
+        </div>
+    </div>
+
+    <div class="page-section bg-white border-bottom-2">
+        <div class="container-fluid page__container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="text-70">
+                        <span class="badge badge-success" style="background-color: {{ notification.color }};">
+                            {{ notification.action }} <i class="fa fa-{{ notification.icon }}"></i>
+                        </span>
+                        <u>{{ notification.titre }}</u>
+                        {% if notification.contacts %}
+                            <strong><a href="javascript:">{{ notification.contacts.nomprenoms }}</a></strong>
+                        {% endif %}
+                        {% if notification.abonnes %}
+                            <strong><a href="{{ path('admin.abonnes.edit', {'id': notification.abonnes.id}) }}">{{ notification.abonnes.nomprenoms }}</a></strong>
+                        {% endif %}
+                        edité(e) par {{ notification.user.username ?? (parametres.structure ? parametres.structure.name : company_name) }}
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p class="text-70">I’m currently working as a freelance marketing director and always interested in a challenge. Here’s how to reach out and connect.</p>
+                    <div class="d-flex align-items-center">
+                        {% include 'admin/notifications/_delete_form.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+

@@ -1,0 +1,9 @@
+{% for page in pages %}
+    <li class="sidebar-menu-item">
+        {#{% set category = '' %}
+        {% for cat in page.categories %}{% set category = cat.slug ?? 'categores' %}{% endfor %}#}
+        <a class="sidebar-menu-button" href="{{ path('pages.show', {'id': page.id, 'slug': page.slug}) }}">
+            <span class="sidebar-menu-text">{{ page.name }}</span>
+        </a>
+    </li>
+{% endfor %}

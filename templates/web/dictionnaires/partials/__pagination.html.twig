@@ -1,0 +1,5 @@
+{% if lexiques.items > nbreLexique %}
+    <div class="card-footer" id="js-dictionnaires-pagination">
+        {{ knp_pagination_render(lexiques) }}
+    </div>
+{% endif %}

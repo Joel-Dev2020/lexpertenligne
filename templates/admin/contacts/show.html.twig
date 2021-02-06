@@ -1,0 +1,40 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Admin - {{ parametres.structure ? parametres.structure.name : company_name }} - {{ title }}{% endblock %}
+
+{% block body %}
+    <div class="page-section bg-primary border-bottom-white">
+        <div class="container-fluid page__container d-flex flex-column flex-md-row align-items-center text-center text-md-left">
+            <img width="104" class="mr-md-32pt mb-32pt mb-md-0" src="{{ asset('admin/img/avatars/1.png') }}" alt="{{ contact.nomprenoms }}">
+            <div class="flex mb-32pt mb-md-0">
+                <h2 class="text-white mb-0">{{ contact.nomprenoms }}</h2>
+                <p class="lead text-white-50 d-flex align-items-center">
+                    <span class="ml-16pt d-flex align-items-center">
+                        <i class="material-icons icon-16pt mr-4pt">mail_outline</i> {{ contact.email }}
+                    </span>
+                    <span class="ml-16pt d-flex align-items-center">
+                        <i class="material-icons icon-16pt mr-4pt">phone</i> {{ contact.telephone ?? 'Aucun contact' }}
+                    </span>
+                </p>
+            </div>
+            <a href="{{ path('admin.contacts.index') }}" class="btn btn-outline-white">Retour à la liste</a>
+        </div>
+    </div>
+
+    <div class="page-section bg-white border-bottom-2">
+        <div class="container-fluid page__container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>{{ contact.nomprenoms }}</h4>
+                </div>
+                <div class="col-md-6">
+                    <h4>Actions</h4>
+                    <p class="text-70">I’m currently working as a freelance marketing director and always interested in a challenge. Here’s how to reach out and connect.</p>
+                    <div class="d-flex align-items-center">
+                        {% include 'admin/users/_delete_form.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

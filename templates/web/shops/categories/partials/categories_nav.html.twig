@@ -1,0 +1,8 @@
+{% for categorie in categories %}
+<li>
+    <a href="{{ path('shop.products.categories', {'id': categorie.id, 'slug': categorie.slug}) }}">
+        {{ categorie.name }} <span class="pull-right">({{ categorie.products.count }})</span>
+    </a>
+</li>
+{% endfor %}
+<li><a href="javascript:"><i class="fa fa-plus"></i> Voir plus de catégrie</a> </li>

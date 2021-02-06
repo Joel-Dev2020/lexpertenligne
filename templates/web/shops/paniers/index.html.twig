@@ -1,0 +1,25 @@
+{% extends 'layouts/front/base.html.twig' %}
+
+{% block title %}{{ parametres.structure.name ?? company_name }} | {{ title }}{% endblock %}
+{% block breadcrumb %}
+    <!--breadcrumbs area start-->
+    <div class="ttm-page-title-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    {{ fil_arial(title) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--breadcrumbs area end-->
+{% endblock %}
+{% block body %}
+    <section class="cart-section clearfix">
+        <div class="container">
+            {% include 'flash/__flash.html.twig' %}
+            <!-- row -->
+            {{ cart_table() }}
+        </div>
+    </section><!-- cart-section end-->
+{% endblock %}

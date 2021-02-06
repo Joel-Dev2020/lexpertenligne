@@ -1,0 +1,10 @@
+{% extends 'layouts/front/base.html.twig' %}
+
+{% block title %}{{ parametres.structure.name ?? company_name }} | {{ title }}{% endblock %}
+
+{% block body %}
+    {{ fil_arial(title) }}
+    <div class="container-fluid page__container page-section">
+        {{ contact_form() }}
+    </div>
+{% endblock %}

@@ -1,0 +1,41 @@
+<tr>
+    <td>
+        <div class="media flex-nowrap align-items-center" style="white-space: nowrap;">
+            <div class="avatar avatar-sm mr-8pt">
+                {% if dossier.filename %}
+                    <img class="avatar-img rounded-circle" src="{{ vich_uploader_asset(dossier, 'imageFile') | imagine_filter('avatar') }}" alt="{{ dossier.name }}">
+                {% else %}
+                    <img  class="avatar-img rounded-circle" src="{{ asset('assetics/images/empty/small.png') }}" alt="{{ dossier.name }}">
+                {% endif %}
+            </div>
+            <div class="media-body">
+                <div class="d-flex flex-column">
+                    <p class="mb-0"><strong class="js-lists-values-employee-name">{{ dossier.name }}</strong></p>
+                    <small class="js-lists-values-employee-email text-50">{{ dossier.createdAt|date('d/m/Y') }}</small>
+                </div>
+            </div>
+        </div>
+    </td>
+    <td>
+        <div class="d-flex align-items-center">
+            <a href="{{ path('admin.dossierscategories.edit', {'id': dossier.categories.id}) }}" class="text-warning"><i class="material-icons mr-8pt">star</i></a>
+            <a href="{{ path('admin.dossierscategories.edit', {'id': dossier.categories.id}) }}" class="text-70">{{ dossier.categories.name }}</a>
+        </div>
+    </td>
+    <td class="text-50 js-lists-values-activity small">{{ dossier.commentaire.count }}</td>
+    <td class="text-50 js-lists-values-activity small">
+        <form action="{{ path('admin.dossiers.activer', {'id': dossier.id}) }}" onclick="this.submit()">
+            <div class="ml-auto mb-2 mb-sm-0 custom-control-inline mr-0">
+                <div class="custom-control custom-checkbox-toggle ml-8pt">
+                    <input checked="" type="checkbox" id="active" {{ (dossier.online) ? 'checked' : '' }} data-id="{{ dossier.id }}" class="custom-control-input">
+                    <label class="custom-control-label" for="active">Active</label>
+                </div>
+            </div>
+        </form>
+    </td>
+    <td class="text-right pl-0">
+        <a href="{{ path('admin.dossiers.show', {'id': dossier.id}) }}" class="text-50"><i class="material-icons">folder</i></a>
+        <a href="{{ path('admin.dossiers.edit', {'id': dossier.id}) }}" class="text-50"><i class="material-icons">edit</i></a>
+        {% include 'admin/dossiers/_delete_form.html.twig' %}
+    </td>
+</tr>

@@ -1,0 +1,22 @@
+{% if marques|length != 0 %}
+<section class="product_section p_bottom p_section1">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section_title">
+                    <h2>Nos marques</h2>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="product_area ">
+                    <div class="product_container bottom">
+                        <div class="custom-row product_row1">
+                            {% include 'pages/shops/marques/cards/__card.html.twig' with {marques: marques} only %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}

@@ -1,0 +1,10 @@
+{{ form_start(form, {'action': path('abonnes.pop.index'), 'attr': {'id': 'subscribenewsletterform', 'class': 'popup-subscribe-form'}}) }}
+    <div id="resultat" class="mx-0"></div>
+
+    {{ form_widget(form.email) }}
+    <input type="submit" value="Souscrire" class="btn subscribe-btn btn-medium btn-style-1">
+    <div class="form-group text-center mt--20">
+        <input type="checkbox" name="hide-popup" id="hide-popup">
+        <label for="hide-popup"> Ne plus afficher cette fenêtre contextuelle </label>
+    </div>
+{{ form_end(form) }}

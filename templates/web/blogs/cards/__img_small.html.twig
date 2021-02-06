@@ -1,0 +1,5 @@
+{% if blog.filename %}
+    <img src="{{ vich_uploader_asset(blog, 'imageFile') | imagine_filter('small') }}" alt="{{ blog.name }}" class="avatar-img rounded">
+{% else %}
+    <img src="{{ asset('assetics/images/empty/small.png') | imagine_filter('small') }}" alt="{{ blog.name }}" class="avatar-img rounded">
+{% endif %}

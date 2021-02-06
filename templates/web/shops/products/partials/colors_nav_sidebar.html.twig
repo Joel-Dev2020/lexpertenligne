@@ -1,0 +1,8 @@
+{% if colors|length > 0 %}
+    <h2>Couleur</h2>
+    <ul>
+        {% for index,color in colors %}
+            <li><a href="{{ path('shop.products.colors', {'id': color.id, 'slug': color.slug}) }}">{{ color.name }} </a> <span>({{ color.products.count }})</span></li>
+        {% endfor %}
+    </ul>
+{% endif %}

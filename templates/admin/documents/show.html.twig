@@ -1,0 +1,70 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Admin - {{ parametres.structure ? parametres.structure.name : company_name }} - {{ title }}{% endblock %}
+
+{% block body %}
+    <div class="document-section bg-primary border-bottom-white">
+        <div class="container-fluid document__container d-flex flex-column flex-md-row align-items-center text-center text-md-left">
+            {% if document.filename %}
+                <img width="104" class="mr-md-32pt mb-32pt mb-md-0" src="{{ vich_uploader_asset(document, 'imageFile') | imagine_filter('avatar') }}" alt="{{ document.name }}">
+            {% else %}
+                <img width="104" class="mr-md-32pt mb-32pt mb-md-0" src="{{ asset('assetics/images/avatar.png') }}" alt="{{ document.name }}">
+            {% endif %}
+            <div class="flex mb-32pt mb-md-0">
+                <h2 class="text-white mb-0">{{ document.name }}</h2>
+                <p class="lead text-white-50 d-flex align-items-center">
+                    <span class="ml-16pt d-flex align-items-center">
+                        <i class="material-icons icon-16pt mr-4pt">calendar</i> {{ document.createdAt|date('d/m/Y à H:i:s') }}
+                    </span>
+                </p>
+            </div>
+            <a href="{{ path('admin.documents.index') }}" class="btn btn-outline-white">Retour à la liste</a>
+        </div>
+    </div>
+
+    <div class="document-section bg-white border-bottom-2">
+        <div class="container-fluid document__container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>{{ document.name }}</h4>
+                    <p class="text-70">Etat:
+                        <span class="badge badge-success" style="font-size: 12px!important;">
+                            {{ document.online ? 'En ligne' : 'Hors ligne' }}
+                        </span>
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <h4>Actions</h4>
+                    <p class="text-70">I’m currently working as a freelance marketing director and always interested in a challenge. Here’s how to reach out and connect.</p>
+                    <div class="d-flex align-items-center">
+                        <a href="{{ path('admin.documents.edit', {'id': document.id}) }}" class="text-accent font-size-24pt mr-8pt">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        {% include 'admin/documents/_delete_form.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="document-section">
+        <div class="container-fluid document__container">
+            <!-- DataTable within card -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header" style="padding: 1rem 1rem;">
+                            <div class="row align-items-center m-l-0">
+                                <div class="col-sm-6">
+                                    <h6>Contenu de la document</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

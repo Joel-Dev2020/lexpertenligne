@@ -1,0 +1,12 @@
+<style>
+    .form-control {
+        display: inline!important;
+    }
+</style>
+{{ form_start(form, {'action': path('newsletter.index'), 'attr': {'id': 'subscribenewsletterform', 'class': 'newsletter-form mt--40'}}) }}
+
+{{ form_widget(form.email) }}
+<input type="submit" value="Souscrire" class="btn newsletter-btn btn-style-1">
+
+{{ form_end(form) }}
+

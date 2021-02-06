@@ -1,0 +1,28 @@
+{% for lexique in lexiques %}
+    <div class="list-group-item p-3">
+        <div class="row align-items-start">
+            <div class="col-md-3 mb-8pt mb-md-0">
+                <div class="media align-items-center">
+                    <div class="media-left mr-12pt">
+                        <a href="javascript:" class="avatar avatar-sm">
+                            <!-- <img src="LB" alt="avatar" class="avatar-img rounded-circle"> -->
+                            <span class="avatar-title rounded-circle">{{ lexique.lexique|slice(null, 1) }}</span>
+                        </a>
+                    </div>
+                    <div class="d-flex flex-column media-body media-middle">
+                        <a href="javascript:" class="card-title" style="font-size: 10pt!important;">
+                            {{ lexique.lexique }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-8pt mb-md-0">
+                <p class="mb-8pt text-justify">
+                    <a href="javascript:" class="text-body">
+                        <strong>{{ lexique.definition }}</strong>
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endfor %}

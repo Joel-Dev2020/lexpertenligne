@@ -1,0 +1,29 @@
+<ul class="cart-list">
+    {% for item in items %}
+    <li>
+        <a href="javascript:" class="photo">
+            {% if item.product.filename %}
+                <img class="cart-thumb" src="{{ vich_uploader_asset(item.product, 'imageFile') | imagine_filter('small') }}" alt="{{ item.product.name }}">
+            {% else %}
+                <img class="cart-thumb" src="{{asset('assetics/images/product-thumb-empty.jpg') | imagine_filter('small') }}" alt="{{ item.product.name }}">
+            {% endif %}
+        </a>
+        <h6><a href="{{ path('shop.products.show', {'id': item.product.id, 'slug': item.product.slug}) }}">{{ item.product.name }}</a></h6>
+        <p>
+            {{ item.qte }} x -
+            {% include 'pages/shops/products/partials/__price.html.twig' with {product: item.product} %}
+        </p>
+    </li>
+    {% endfor %}
+    {% if items|length != 0 %}
+        <li class="total">
+            <span class="pull-right"><strong>Total</strong>: {{ totalttc|devise }}</span>
+            <a href="{{ path('cart.index') }}" class="btn btn-default btn-cart">Panier</a>
+        </li>
+    {% else %}
+        <li class="total">
+            <span class="pull-right"><strong>Le panier est</strong>: vide</span>
+            <a href="{{ path('cart.index') }}" class="btn btn-default btn-cart">Panier</a>
+        </li>
+    {% endif %}
+</ul>

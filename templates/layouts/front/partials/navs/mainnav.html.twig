@@ -1,0 +1,41 @@
+<ul class="nav navbar-nav d-none d-sm-flex flex justify-content-start ml-8pt">
+    <li class="nav-item {{ set_active_route(current_global, 'dossiers') }}">
+        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left text-white">folder</span>
+        <a href="{{ path('dossiers.index') }}" class="nav-link">Dossiers</a>
+    </li>
+    <li class="nav-item {{ set_active_route(current_global, 'blogs') }}">
+        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left text-white">bookmarks</span>
+        <a href="{{ path('blogs.index') }}" class="nav-link">Actualités</a>
+    </li>
+    <li class="nav-item {{ set_active_route(current_global, 'formations') }}">
+        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left text-white">school</span>
+        <a href="{{ path('formations.index') }}" class="nav-link">Formations</a>
+    </li>
+    <li class="nav-item {{ set_active_route(current_global, 'documents') }}">
+        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left text-white">next_week</span>
+        <a href="{{ path('documents.index') }}" class="nav-link">Documents</a>
+    </li>
+    <li class="nav-item {{ set_active_route(current_global, 'abonnements') }}">
+        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left text-white">people</span>
+        <a href="{{ path('abonnement.index') }}" class="nav-link">Abonnements</a>
+    </li>
+    {#<li class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" data-caret="false">Formations</a>
+        <div class="dropdown-menu">
+            <a href="javascript:" class="dropdown-item">Browse Courses</a>
+            <a href="javascript:" class="dropdown-item">Preview Course</a>
+            <a href="javascript:" class="dropdown-item">Preview Lesson</a>
+            <a href="javascript:" class="dropdown-item">
+                <span class="mr-16pt">Take Course</span>
+                <span class="badge badge-notifications badge-accent text-uppercase ml-auto">Pro</span>
+            </a>
+            <a href="javascript:" class="dropdown-item">Take Lesson</a>
+            <a href="javascript:" class="dropdown-item">Take Quiz</a>
+            <a href="javascript:" class="dropdown-item">Quiz Result</a>
+            <a href="javascript:" class="dropdown-item">Student Dashboard</a>
+            <a href="javascript:" class="dropdown-item">My Courses</a>
+            <a href="javascript:" class="dropdown-item">My Quizzes</a>
+            <a href="javascript:" class="dropdown-item">Help Center</a>
+        </div>
+    </li>#}
+</ul>

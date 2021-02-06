@@ -1,0 +1,25 @@
+<style>
+    .select2-dropdown{
+        width: 422px!important;
+        height: 300px!important;
+        overflow: hidden!important;
+        overflow-y: scroll!important;
+    }
+</style>
+<div class="form-group">
+    <label class="form-label">{{ form_label(form.categories) }}</label>
+    {{ form_widget(form.categories) }}
+    <a href="javascript:void(0)" class="small">{{ form_help(form.categories) }}</a>
+</div>
+
+<div class="form-group">
+    <label class="form-label">{{ form_label(form.salairehoraire) }}</label>
+    {{ form_widget(form.salairehoraire) }}
+    <a href="javascript:void(0)" class="small">{{ form_help(form.salairehoraire) }}</a>
+</div>
+
+<div class="form-group">
+    <label class="form-label">{{ form_label(form.salairemensuel) }}</label>
+    {{ form_widget(form.salairemensuel) }}
+    <a href="javascript:void(0)" class="small">{{ form_help(form.salairemensuel) }}</a>
+</div>

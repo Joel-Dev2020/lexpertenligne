@@ -1,0 +1,177 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Admin - {{ parametres.structure ? parametres.structure.name : company_name }} - {{ title }}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid page__container">
+        <div class="page-section">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="h2 measure-lead-max mb-2">{{ formation.name }}</h1>
+                    <p class="text-muted d-flex align-items-center mb-lg-32pt">
+                        <a href="{{ path('admin.formations.index') }}" class="mr-3">Revenir à la liste</a>
+                        <a href="{{ path('admin.formations.new') }}" class="mr-2 text-50">Nouvelle formation</a>
+                        <a href="{{ path('admin.formations.edit', {'id': formation.id}) }}" class="text-50" style="text-decoration: underline;">Modifier</a> &nbsp;
+                        <a href="{{ path('admin.formationscategories.edit', {'id': formation.categories.id}) }}" class="mr-2 text-50">{{ formation.categories.name }}</a>
+                    </p>
+                    <div class="card card-body">
+                        <div class="d-flex">
+                            <a href="#"
+                               class="avatar avatar-sm avatar-online mr-12pt">
+                                <!-- <img src="../../public/images/people/256/256_rsz_nicolas-horn-689011-unsplash.jpg" alt="people" class="avatar-img rounded-circle"> -->
+                                <span class="avatar-title rounded-circle">AT</span>
+                            </a>
+                            <div class="flex">
+                                <p class="d-flex align-items-center mb-2">
+                                    <a href="#" class="text-body mr-2"><strong>{{ formation.user.username }}</strong></a>
+                                    <small class="text-muted">{{ formation.createdAt|ago }}</small>
+                                </p>
+                                {% if formation.extrait %}
+                                    <p>{{ formation.extrait|nl2br }}</p>
+                                    <hr>
+                                {% endif %}
+                                <p>{{ formation.content|raw }}</p>
+                                <div class="d-flex align-items-center">
+                                    <a href="#"
+                                       class="text-50 d-flex align-items-center text-decoration-0">
+                                        <i class="material-icons mr-1" style="font-size: inherit;">remove_red_eye</i> {{ formation.view }}
+                                    </a>
+                                    <a href="#" class="text-50 d-flex align-items-center text-decoration-0 ml-3">
+                                        <i class="material-icons mr-1" style="font-size: inherit;">thumb_up</i> 130
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid page__container">
+        {{ form_start(form) }}
+            <div class="row">
+                <div class="col-lg-9">
+                    {% include 'flash/__message.html.twig' %}
+                    <div class="page-section">
+                        <h4>Ajouter un module</h4>
+
+                        <div class="card--connect pb-32pt pb-lg-64pt">
+                            <div class="card o-hidden mb-0">
+                                <div class="card-header bg-transparent">
+                                    <h5 class="text-uppercase mb-0">Modules de la formation</h5>
+                                </div>
+
+                                <div class="list-group list-group-flush">
+                                    {% for programformation in programs %}
+                                        <div class="list-group-item p-3">
+                                        <div class="row align-items-start">
+                                            <div class="col-md-1 mb-8pt mb-md-0">
+                                                <div class="media align-items-center">
+                                                    <div class="media-left mr-12pt">
+                                                        <a href="javascript:" class="avatar avatar-sm">
+                                                            <span class="avatar-title rounded-circle">{{ loop.index }}</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col mb-8pt mb-md-0">
+                                                <p class="mb-8pt">
+                                                    <a href="javascript:" class="text-body">
+                                                        <strong>{{ programformation.name }} </strong>
+                                                    </a>
+                                                    <strong style="float: right;"> Durée: {{ programformation.duree ?? '----' }}</strong>
+                                                    <br>
+                                                    {{ programformation.content|raw }}
+                                                </p>
+                                                <p class="text-right">
+                                                    <a href="#"><i class="fa fa-edit"></i> Modifier</a> &nbsp;
+                                                    <a href="#"><i class="fa fa-trash"></i> Supprimer</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                        <div class="list-group-item p-3">
+                                            <div class="row align-items-start">
+                                                <div class="col-md-12 mb-8pt mb-md-0">
+                                                    <div class="alert alert-soft-warning mb-0 p-8pt">
+                                                        <div class="d-flex align-items-start">
+                                                            <div class="mr-8pt">
+                                                                <i class="material-icons">error_outline</i>
+                                                            </div>
+                                                            <div class="flex">
+                                                                <small class="text-100">Aucun module ajouté</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="list-group">
+                            <div class="list-group-item">
+                                <div role="group" aria-labelledby="label-title" class="m-0 form-group">
+                                    <div class="form-row">
+                                        <label id="label-title" for="title" class="col-md-3 col-form-label form-label">Titre du module</label>
+                                        <div class="col-md-9">
+                                            {{ form_widget(form.name) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item">
+                                <div role="group" aria-labelledby="label-title" class="m-0 form-group">
+                                    <div class="form-row">
+                                        <label id="label-title" for="title" class="col-md-3 col-form-label form-label">Durée</label>
+                                        <div class="col-md-9">
+                                            {{ form_widget(form.duree) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item">
+                                <div role="group" aria-labelledby="label-title" class="m-0 form-group">
+                                    <div class="form-row">
+                                        <label id="label-title" for="title" class="col-md-3 col-form-label form-label">Numéro d'ordre</label>
+                                        <div class="col-md-9">
+                                            {{ form_widget(form.ordre) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item">
+                                <div role="group" aria-labelledby="label-question" class="m-0 form-group">
+                                    <div class="form-row">
+                                        <label id="label-question" for="question" class="col-md-3 col-form-label form-label">Contenu du module</label>
+                                        <div class="col-md-9">
+                                            {{ form_widget(form.content) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item text-right">
+                                <button type="submit" class="btn btn-accent">Ajouter le module</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 page-nav">
+                    <div data-perfect-scrollbar data-perfect-scrollbar-wheel-propagation="true">
+                        <div class="page-section pt-lg-112pt">
+                            <div class="nav page-nav__menu">
+                                <a href="javascript:void(0)" class="nav-link active">Resumé de la formation</a>
+                            </div>
+                            <div class="page-nav__content">
+                                <p class="text-70">{{ formation.extrait|nl2br }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

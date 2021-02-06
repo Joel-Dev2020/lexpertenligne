@@ -1,0 +1,75 @@
+<div class="navbar navbar-expand navbar-dark navbar-dark-pickled-bluewood navbar-shadow" id="default-navbar" data-primary>
+
+    <!-- Navbar toggler -->
+    <button class="navbar-toggler w-auto mr-16pt d-block d-lg-none rounded-0" type="button" data-toggle="sidebar">
+        <span class="material-icons">short_text</span>
+    </button>
+
+    <!-- Navbar Brand -->
+    <a href="{{ path('home') }}" class="navbar-brand mr-16pt d-lg-none">
+        <!-- <img class="navbar-brand-icon" src="../../public/images/logo/white-100@2x.png" width="30" alt="Luma"> -->
+        <span class="avatar avatar-sm navbar-brand-icon mr-0 mr-lg-8pt">
+            <span class="avatar-title rounded bg-primary">
+                {% include 'layouts/partials/__logo.html.twig' %}
+            </span>
+        </span>
+        <span class="d-none d-lg-block">{{ parametres.structure.name ?? company_name }}</span>
+    </a>
+
+    {% include 'layouts/front/partials/navs/mainnav.html.twig' %}
+
+    <form class="search-form navbar-search d-none d-lg-flex mr-16pt" action="#" style="max-width: 230px">
+        <button class="btn" type="submit"><i class="material-icons">search</i></button>
+        <input type="text" class="form-control" placeholder="Rechercher ...">
+    </form>
+
+    <ul class="nav navbar-nav ml-auto mr-0">
+        {% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}
+        <li class="nav-item dropdown" data-toggle="tooltip" data-title="Mon compte" data-placement="bottom" data-boundary="window">
+            <a href="{{ path('profil.index', {'username': app.user.slug ?? 'username'}) }}" class="nav-link dropdown-toggle" data-toggle="dropdown" data-caret="false">
+                <i class="material-icons">people_outline</i>
+            </a>
+            <div class="dropdown-menu">
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <a href="{{ path('admin.home') }}" class="dropdown-item"><i class="fa fa-chevron-right"></i>&nbsp; Dashboard Backoffice</a>
+                {% endif %}
+                <a href="{{ path('profil.index', {'username': app.user.slug ?? 'username'}) }}" class="dropdown-item">
+                    <i class="fa fa-chevron-right"></i>&nbsp; Mon compte
+                </a>
+                <a href="javascript:" class="dropdown-item"><i class="fa fa-chevron-right"></i>&nbsp; Historique des commandes</a>
+                <a href="{{ path('profil.user.edit', {'id': app.user.id, 'username': app.user.slug ?? 'username'}) }}" class="dropdown-item"><i class="fa fa-chevron-right"></i>&nbsp; Editer mon compte</a>
+                <a href="javascript:" class="dropdown-item"><i class="fa fa-chevron-right"></i>&nbsp; Mes favoris</a>
+                <a href="javascript:" class="dropdown-item"><i class="fa fa-chevron-right"></i>&nbsp; Mon abonnement</a>
+                <a href="javascript:" class="dropdown-item"><i class="fa fa-chevron-right"></i>&nbsp; Changer mon mot de passe</a>
+                <a href="{{ path('security_logout') }}" class="dropdown-item"><i class="fa fa-chevron-right"></i>&nbsp; Déconnexion</a>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a href="{{ path('security_logout') }}" class="nav-link" data-toggle="tooltip" data-title="Se déconnecter" data-placement="bottom" data-boundary="window">
+                <i class="material-icons">lock_open</i>
+            </a>
+        </li>
+        {% else %}
+            <li class="nav-item">
+                <a href="{{ path('security_register') }}"
+                   class="nav-link"
+                   data-toggle="tooltip"
+                   data-title="Créer votre compte"
+                   data-placement="bottom"
+                   data-boundary="window"><i class="material-icons">people</i></a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ path('security_login') }}"
+                   class="nav-link"
+                   data-toggle="tooltip"
+                   data-title="Se connecter"
+                   data-placement="bottom"
+                   data-boundary="window"><i class="material-icons">lock</i></a>
+            </li>
+        {% endif %}
+        <li class="nav-item">
+            <a href="{{ path('contacts') }}"
+               class="btn btn-outline-white">Contactez nous</a>
+        </li>
+    </ul>
+</div>

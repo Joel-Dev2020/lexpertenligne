@@ -1,0 +1,90 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Admin - {{ parametres.structure ? parametres.structure.name : company_name }} - {{ title }}{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid flex-grow-1 container-p-y">
+        <h4 class="font-weight-bold py-3 mb-0">Approvisionnements</h4>
+        <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
+            {{ fil_arial_admin_categories(title, 'Shop', 'Approvisionnements') }}
+        </div>
+
+        <!-- DataTable within card -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header" style="padding: 1rem 1rem;">
+                        <div class="row align-items-center m-l-0">
+                            <div class="col-sm-6">
+                                <h6>{{ title }}</h6>
+                            </div>
+                            <div class="col-sm-6 text-right">
+                                <button class="btn btn-success btn-sm mb-3" data-toggle="modal" data-target="#modal-form">
+                                    <i class="feather icon-plus"></i> Nouvel approvisionnement
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-datatable table-responsive">
+                        <table class="datatables-demo table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th width="50">ID</th>
+                                <th>Produits</th>
+                                <th>Ancienne qté</th>
+                                <th>Nouvelle qté</th>
+                                <th width="100">Date</th>
+                                <th width="50">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for approvisionnement in approvisionnements %}
+                                <tr class="odd gradeX">
+                                    <td>{{ approvisionnement.id }}</td>
+                                    <td><a href="{{ path('admin.products.edit', {'id': approvisionnement.products.id}) }}">{{ approvisionnement.products.name }}</a></td>
+                                    <td>
+                                        <span class="label label-success">{{ approvisionnement.oldqty }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="label label-success">{{ approvisionnement.newqty }}</span>
+                                    </td>
+                                    <td>{{ approvisionnement.createdAt ? approvisionnement.createdAt|date('d-m-Y') : '' }}</td>
+                                    <td>
+                                        <a href="{{ path('admin.approvisionnements.edit', {'id': approvisionnement.id}) }}" class="btn btn-xs btn-success"><i class="icon feather icon-edit"></i></a>
+                                        {% include 'admin/shops/products/approvisionnements/_delete_form.html.twig' %}
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="6">{{ data_none }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xs">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nouvel approvisionnement</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-body">
+                            {% include 'admin/shops/products/approvisionnements/_form_new.html.twig' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

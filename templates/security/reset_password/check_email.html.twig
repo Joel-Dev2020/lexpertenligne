@@ -1,0 +1,43 @@
+{% extends 'layouts/front/base.html.twig' %}
+
+{% block title %}{{ parametres.structure ? parametres.structure.name : company_name }} - Mot de passe oublié{% endblock %}
+
+{% block body %}
+    <div class="page-section pb-0">
+        <div class="container-fluid page__container d-flex flex-column flex-sm-row align-items-sm-center">
+            <div class="flex">
+                <h1 class="h2 mb-0">Réinitialisation de mot de passe</h1>
+                <p class="text-breadcrumb">Gestionaire de compte</p>
+            </div>
+            <p class="d-sm-none"></p>
+            <a href="{{ path('contacts') }}" class="btn btn-outline-secondary flex-column">
+                Bésoin d'aide?
+                <span class="btn__secondary-text">Contactez nous</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="page-section">
+        <div class="container-fluid page__container">
+            <div class="page-separator">
+                <div class="page-separator__text">Email envoyé</div>
+            </div>
+            <div class="col-sm-6 p-0">
+                <div class="alert alert-soft-warning">
+                    <div class="d-flex flex-wrap">
+                        <div class="mr-8pt">
+                            <i class="material-icons">check_circle</i>
+                        </div>
+                        <div class="flex" style="min-width: 180px">
+                            <small class="text-100">
+                                <p>An email has been sent that contains a link that you can click to reset your password. This link will expire in {{ tokenLifetime|date('g') }} hour(s).</p>
+                                <p>If you don't receive an email please check your spam folder or <a style="color: darkred;" href="{{ path('app_forgot_password_request') }}">try again</a>.</p>
+                                <a class="btn btn-warning btn-sm" href="{{ path('home') }}">Revenir à la page d'accueil</a>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

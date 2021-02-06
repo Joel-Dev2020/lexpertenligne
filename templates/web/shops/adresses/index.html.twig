@@ -1,0 +1,172 @@
+{% extends 'layouts/front/base.html.twig' %}
+
+{% block title %}{{ parametres.structure.name ?? company_name }} | {{ title }}{% endblock %}
+
+{% block body %}
+    <!--breadcrumbs area start-->
+    <div class="breadcrumbs_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    {{ fil_arial(title) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--breadcrumbs area end-->
+
+    <!--Checkout page section-->
+    <div class="Checkout_section" id="accordion">
+        <div class="container">
+            {% if app.user == null %}
+            <div class="row">
+                <div class="col-12">
+                    <div class="user-actions">
+                        <h3>
+                            <i class="fa fa-file-o" aria-hidden="true"></i>
+                            Déjà client?
+                            <a class="Returning" href="#" data-toggle="collapse" data-target="#checkout_login" aria-expanded="true">Cliquez ici pour vous identifier</a>
+
+                        </h3>
+                        <div id="checkout_login" class="collapse" data-parent="#accordion">
+                            <div class="checkout_info">
+                                {{ form_login() }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user-actions">
+                        <h3>
+                            <i class="fa fa-file-o" aria-hidden="true"></i>
+                            Vous n'avez pas encore de compte?
+                            <a class="Returning" href="#" data-toggle="collapse" data-target="#checkout_coupon" aria-expanded="true">Cliquez ici pour vous inscrire</a>
+                        </h3>
+                        <div id="checkout_coupon" class="collapse" data-parent="#accordion">
+                            <div class="checkout_info">
+                                {{ form_register() }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+                <div class="row">
+                    <div class="col-12">
+                        <div class="user-actions">
+                            <h3 style="border-top: 3px solid seagreen!important;">
+                                <i class="fa fa-file-o" aria-hidden="true"></i>
+                                Vous êtes connecté en tant que:
+                                <a class="Returning" style="color: seagreen!important; font-size: 18px!important;font-weight: bold;" href="#" data-toggle="collapse" data-target="#checkout_login" aria-expanded="true">
+                                    {{ app.user.nom }} {{ app.user.prenoms }}
+                                </a>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            <div class="checkout_form">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        {% if mode[0]['key'] == 1 %}
+                            {#{% form_theme form 'form_div_layout.html.twig' %}#}
+                            <h3>Nouvelle adresse de livraison ou de facturation</h3>
+                            {{ form_start(form, {'action': path('add_address'), 'attr': {'id': 'address-form'}}) }}
+                                <div id="js-address-content"></div>
+                                <p>Si vous avez pas renseigné d'adresses livraison et de facturation, veuillez saisir vos coordonnées dans les cases ci-dessous.</p>
+                                {% include 'flash/__flash.html.twig' %}
+                                <div class="row">
+                                    <div class="col-lg-6 mb-20">
+                                        <label>{{ form_label(form.nomprenoms) }} <span>*</span></label>
+                                        {{ form_widget(form.nomprenoms) }}
+                                    </div>
+                                    <div class="col-lg-6 mb-20">
+                                        <label>{{ form_label(form.contacts) }}  <span>*</span></label>
+                                        {{ form_widget(form.contacts) }}
+                                    </div>
+                                    <div class="col-lg-12 mb-20">
+                                        <label>{{ form_label(form.email) }} <span>*</span></label>
+                                        {{ form_widget(form.email) }}
+                                    </div>
+                                    <div class="col-lg-12 mb-20">
+                                        <label>{{ form_label(form.adresse) }} <span>*</span></label>
+                                        {{ form_widget(form.adresse) }}
+                                    </div>
+                                </div>
+                                <div class="order_button">
+                                    <button id="js-address-button" type="submit">Ajouter à ma liste d'adresses</button>
+                                </div>
+                            {{ form_end(form) }}
+                            {% if adresses|length > 0 %}
+                            <hr>
+                            <h3>Adresse de livraison</h3>
+                            <div class="order_table table-responsive">
+                                <form action="{{ path('livraison.set') }}" method="post">
+                                    <table>
+                                        <tbody>
+                                        {% for addr in adresses %}
+                                            <tr>
+                                                <td style="text-align: left!important;">
+                                                    <label for="adresse_livraison{{ addr.id }}">
+                                                        <input style="height: auto!important;width: auto!important;" type="radio" onchange="this.form.submit()" {% if livraison is not empty and livraison.id == addr.id %}checked{% endif%} name="adresse_livraison" value="{{ addr.id }}" id="adresse_livraison{{ addr.id }}"> {{ addr.adresse }}
+                                                    </label>
+                                                </td>
+                                                <td style="min-width: 50px;!important;">
+                                                    <a href="{{ path('livraison.delete', {'id': addr.id}) }}" onclick="return confirm('Etes vous sûr de supprimer cette adresse de livraison?');"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                        {% else %}
+                                            <tr><td>Aucune adresse renseignée pour le moment</td></tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                            <h3>Adresse de facturation</h3>
+                            <div class="order_table table-responsive">
+                                <form action="{{ path('facturation.set') }}" method="post">
+                                    <table>
+                                        <tbody>
+                                        {% for addr in adresses %}
+                                            <tr>
+                                                <td style="text-align: left!important;">
+                                                    <label for="adresse_facturation{{ addr.id }}">
+                                                        <input style="height: auto!important;width: auto!important;" type="radio" onchange="this.form.submit()" {% if facturation is not empty and facturation.id == addr.id %}checked{% endif%} name="adresse_facturation" value="{{ addr.id }}" id="adresse_facturation{{ addr.id }}"> {{ addr.adresse }}
+                                                    </label>
+                                                </td>
+                                                <td style="min-width: 50px;!important;">
+                                                    <a href="{{ path('facturation.delete', {'id': addr.id}) }}" onclick="return confirm('Etes vous sûr de supprimer cette adresse de facturation?');"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                        {% else %}
+                                            <tr><td>Aucune adresse renseignée pour le moment</td></tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                            {% endif %}
+                        {% else %}
+                            <h3>Sélectionnez votre point de relais</h3>
+                            <small>Mode de livraison sélectionné: {{ mode[0]['mode'] }}</small>
+                            {{ form_start(boutiqueForm) }}
+                                {{ form_widget(boutiqueForm) }}
+                            {{ form_end(boutiqueForm) }}
+                            {% if pointretrait %}
+                                <div class="alert alert-success mt-5">
+                                    <h4 class="text-success">Point de relais sélectionné: <strong style="font-size: 20px">{{ pointretrait.name }}</strong></h4>
+                                </div>
+                            {% else %}
+                                <div class="alert alert-info mt-5 text-center">
+                                    <h5 class="text-info"><strong style="font-size: 20px">Aucun point de vente sélectionné</strong></h5>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        {{ cart_table_recap() }}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <!--Checkout page section end-->
+{% endblock %}

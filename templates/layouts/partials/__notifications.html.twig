@@ -1,0 +1,101 @@
+<!-- Notifications dropdown -->
+<div class="nav-item dropdown dropdown-notifications dropdown-xs-down-full" data-toggle="tooltip" data-title="Messages" data-placement="bottom" data-boundary="window" data-original-title="" title="">
+    <button class="nav-link btn-flush dropdown-toggle" type="button" data-toggle="dropdown" data-caret="false" aria-expanded="false">
+        <i class="material-icons icon-24pt">mail_outline</i>
+    </button>
+    <div class="dropdown-menu dropdown-menu-right">
+        <div data-perfect-scrollbar="" class="position-relative ps">
+            <div class="dropdown-header"><strong>Messages</strong></div>
+            <div class="list-group list-group-flush mb-0">
+
+                <a href="javascript:void(0);" class="list-group-item list-group-item-action unread">
+                            <span class="d-flex align-items-center mb-1">
+                                <small class="text-black-50">5 minutes ago</small>
+
+                                <span class="ml-auto unread-indicator bg-accent"></span>
+
+                            </span>
+                    <span class="d-flex">
+                                <span class="avatar avatar-xs mr-2">
+                                    <img src="{{ asset('assetics/images/people/110/woman-5.jpg') }}" alt="people" class="avatar-img rounded-circle">
+                                </span>
+                                <span class="flex d-flex flex-column">
+                                    <strong class="text-black-100">Michelle</strong>
+                                    <span class="text-black-70">Clients loved the new design.</span>
+                                </span>
+                            </span>
+                </a>
+
+                <a href="javascript:void(0);" class="list-group-item list-group-item-action">
+                            <span class="d-flex align-items-center mb-1">
+                                <small class="text-black-50">5 minutes ago</small>
+                            </span>
+                    <span class="d-flex">
+                                <span class="avatar avatar-xs mr-2">
+                                    <img src="{{ asset('assetics/images/people/110/woman-5.jpg') }}" alt="people" class="avatar-img rounded-circle">
+                                </span>
+                                <span class="flex d-flex flex-column">
+                                    <strong class="text-black-100">Michelle</strong>
+                                    <span class="text-black-70">🔥 Superb job..</span>
+                                </span>
+                            </span>
+                </a>
+
+            </div>
+            <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+                <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+            </div>
+            <div class="ps__rail-y" style="top: 0px; right: 0px;">
+                <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- // END Notifications dropdown -->
+
+<!-- Notifications dropdown -->
+<div class="nav-item ml-16pt dropdown dropdown-notifications dropdown-xs-down-full" data-toggle="tooltip" data-title="Notifications" data-placement="bottom" data-boundary="window" data-original-title="" title="">
+    <button class="nav-link btn-flush dropdown-toggle" type="button" data-toggle="dropdown" data-caret="false">
+        <i class="material-icons">notifications_none</i>
+        {% if notifications|length > 0 %}
+            <span class="badge badge-notifications badge-accent">{{ notifications|length }}</span>
+        {% else %}
+            <span class="badge badge-notifications badge-accent">{{ notifications|length }}</span>
+        {% endif %}
+    </button>
+    <div class="dropdown-menu dropdown-menu-right">
+        <div data-perfect-scrollbar="" class="position-relative ps">
+            <div class="dropdown-header"><strong>{{ pluralize(notifications|length, 'notification') }}</strong></div>
+            <div class="list-group list-group-flush mb-0">
+                {% for notification in notifications %}
+                    <a href="{{ path('admin.notifications.show', {'id': notification.id}) }}" class="list-group-item list-group-item-action {{ notification.reading ? '' : 'unread' }}">
+                        <span class="d-flex align-items-center mb-1">
+                            <small class="text-black-50">{{ notification.createdAt|ago }}</small>
+                            <span class="ml-auto unread-indicator bg-accent"></span>
+                        </span>
+                        <span class="d-flex">
+                            <span class="avatar avatar-xs mr-2">
+                                <span class="avatar-title rounded-circle bg-light">
+                                    <i class="material-icons font-size-16pt text-accent" style="color: {{ notification.color }}!important;">account_circle</i>
+                                </span>
+                            </span>
+                            <span class="flex d-flex flex-column">
+                                <span class="text-black-70">{{ notification.action}} <br>{{ notification.titre}}</span>
+                            </span>
+                        </span>
+                    </a>
+                {% endfor %}
+                {% if notifications|length > 0 %}
+                    <a href="{{ path('admin.notifications.index') }}" class="list-group-item list-group-item-action">Afficher toutes les notifications</a>
+                {% endif %}
+            </div>
+            <div class="ps__rail-x" style="left: 0; bottom: 0;">
+                <div class="ps__thumb-x" tabindex="0" style="left: 0; width: 0;"></div>
+            </div>
+            <div class="ps__rail-y" style="top: 0; right: 0;">
+                <div class="ps__thumb-y" tabindex="0" style="top: 0; height: 0;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- // END Notifications dropdown -->

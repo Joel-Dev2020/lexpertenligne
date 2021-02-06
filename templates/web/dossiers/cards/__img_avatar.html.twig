@@ -1,0 +1,5 @@
+{% if dossier.user.filename %}
+    <img src="{{ vich_uploader_asset(dossier.user, 'imageFile') | imagine_filter('avatar') }}" width="40" alt="{{ dossier.user.username }}" class="rounded-circle">
+{% else %}
+    <img src="{{ asset('assetics/images/avatar.png') }}" width="40" height="40" alt="{{ dossier.user.username }}" class="rounded-circle">
+{% endif %}

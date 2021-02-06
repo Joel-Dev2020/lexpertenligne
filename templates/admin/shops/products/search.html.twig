@@ -1,0 +1,61 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Admin - {{ parametres.structure ? parametres.structure.name : company_name }} - {{ title }}{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid flex-grow-1 container-p-y">
+        <h4 class="font-weight-bold py-3 mb-0">Recherche de produits</h4>
+        <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
+            {{ fil_arial_admin_categories(title, 'Shop', 'Produits') }}
+        </div>
+
+        <!-- DataTable within card -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header" style="padding: 1rem 1rem;">
+                        <div class="row align-items-center m-l-0">
+                            <div class="col-sm-6">
+                                <h6>{{ title }}</h6>
+                            </div>
+                            <div class="col-sm-6 text-right">
+                                <a class="btn btn-success text-white btn-sm btn-round" href="{{ path('admin.products.new') }}">
+                                    <i class="feather icon-plus"></i> Nouveau produit
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-datatable table-responsive">
+                        <div class="container">
+                            {% include 'flash/__flash.html.twig' %}
+                        </div>
+                        <table class="datatables-demo table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th width="30">Image</th>
+                                <th>Nom produit</th>
+                                <th width="100">Statut</th>
+                                <th width="70">Prix</th>
+                                <th width="40">Qtes</th>
+                                <th width="100">Cat.</th>
+                                <th width="60">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for product in products %}
+                                    {% include 'admin/shops/products/partials/_tr_table.html.twig' %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="7">{{ data_none }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

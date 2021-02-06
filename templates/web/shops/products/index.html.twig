@@ -1,0 +1,51 @@
+{% extends 'layouts/front/base.html.twig' %}
+
+{% block title %}{{ parametres.structure.name ?? company_name }} | {{ title }}{% endblock %}
+{% block body %}
+    <div class="page-section">
+        <div class="container-fluid page__container">
+
+            <div class="d-flex flex-column flex-sm-row align-items-sm-center mb-24pt"
+                 style="white-space: nowrap;">
+                <small class="flex text-muted text-headings text-uppercase mr-3 mb-2 mb-sm-0">
+                    Affichage {{ products.count }}–{{ products.itemNumberPerPage }} sur {{ products.totalItemCount }} produits
+                </small>
+                <div class="w-auto ml-sm-auto table d-flex align-items-center mb-2 mb-sm-0">
+                    <small class="text-muted text-headings text-uppercase mr-3 d-none d-sm-block">Trier par</small>
+                    {{ knp_pagination_sortable(products, 'Nom', 'p.name') }}
+                    {{ knp_pagination_sortable(products, 'Catégorie', 'p.categories') }}
+                </div>
+
+            </div>
+
+            <div class="page-separator">
+                <div class="page-separator__text">Nos produits</div>
+            </div>
+
+            {% if products|length > 0 %}
+                <div class="row card-group-row">
+                    {% for product in products %}
+                        {% include 'web/shops/products/cards/card.html.twig' %}
+                    {% endfor %}
+                </div>
+
+                <div class="mb-32pt">
+                    {{ knp_pagination_render(products) }}
+                </div>
+            {% else %}
+                <div class="col-md-12">
+                    <div class="alert alert-soft-warning mb-0 p-8pt">
+                        <div class="d-flex align-items-start">
+                            <div class="mr-8pt">
+                                <i class="material-icons">error_outline</i>
+                            </div>
+                            <div class="flex">
+                                <small class="text-100">{{ data_none }}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

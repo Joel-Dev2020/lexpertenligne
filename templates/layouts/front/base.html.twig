@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.get('_locale') }}" dir="ltr">
+	<head>
+		<meta charset="UTF-8">
+		<title> {% block title %}{{ parametres.structure.name ?? company_name }} – {{ parametres.structure.slogan ?? 'Bienvenue' }}{% endblock %} </title>
+		<meta name="author" content="{{ parametres.structure.name ?? company_name }}">
+		<!-- keywords -->
+		<meta name="keywords" content="{{ parametres.structure.keywords ?? '' }}">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		{% if parametres.structure.filename2 %}
+			<!-- Favicons -->
+			<link rel="shortcut icon" href="{{ vich_uploader_asset(parametres.structure, 'imageFile2') | imagine_filter('favicon') }}" type="image/x-icon">
+		{% else %}
+			<!-- Favicons -->
+			<link rel="shortcut icon" href="{{ asset('assetics/images/logo/favicon.ico') }}" type="image/x-icon">
+		{% endif %}
+		{% block metadescription %}
+			<meta name="description" content="{{  parametres.structure.description ?? company_name }}">
+			<meta name="keywords" content="{{  parametres.structure.keywords ?? company_name }}">
+		{% endblock %}
+		{% include 'layouts/front/partials/__style.html.twig' %}
+		{% block stylesheets %}{% endblock %}
+	</head>
+	<body class="layout-boxed ">
+	{% if current_global is not defined or current_page is not defined %}
+		{% set current_global = '' %}
+		{% set current_page = '' %}
+	{% endif %}
+		<div class="preloader">
+			<div class="sk-chase">
+				<div class="sk-chase-dot"></div>
+				<div class="sk-chase-dot"></div>
+				<div class="sk-chase-dot"></div>
+				<div class="sk-chase-dot"></div>
+				<div class="sk-chase-dot"></div>
+				<div class="sk-chase-dot"></div>
+			</div>
+			<!-- <div class="sk-bounce">
+			<div class="sk-bounce-dot"></div>
+			<div class="sk-bounce-dot"></div>
+			</div> -->
+			<!-- More spinner examples at https://github.com/tobiasahlin/SpinKit/blob/master/examples.html -->
+		</div>
+
+		<!-- Drawer Layout -->
+		<div class="mdk-drawer-layout js-mdk-drawer-layout" data-push data-responsive-width="992px">
+			<div class="mdk-drawer-layout__content page-content">
+
+				<!-- Header -->
+				{% include 'layouts/front/partials/__header.html.twig' %}
+				<!-- // END Header -->
+
+				<!-- Page Content -->
+				{% block body %}{% endblock %}
+				<!-- // END Page Content -->
+
+				<!-- Footer -->
+				{% include 'layouts/front/partials/__footer.html.twig' %}
+				<!-- // END Footer -->
+
+			</div>
+			<!-- // END drawer-layout__content -->
+
+			<!-- Drawer -->
+			{% include 'layouts/front/partials/__sidebar.html.twig' %}
+			<!-- // END Drawer -->
+
+		</div>
+		<!-- // END Drawer Layout -->
+
+		{% include 'layouts/front/partials/__script.html.twig' %}
+		{% block javascripts %}{% endblock %}
+		{{ include('bundles/MercurySeriesFlashyBundle/flashy.html.twig') }}
+	</body>
+</html>

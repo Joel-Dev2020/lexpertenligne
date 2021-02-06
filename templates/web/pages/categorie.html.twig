@@ -1,0 +1,49 @@
+{% extends 'layouts/front/base.html.twig' %}
+
+{% block title %}{{ parametres.structure.name ?? company_name }} | {{ title }}{% endblock %}
+{% block body %}
+    {{ fil_arial(title) }}
+    <div class="container-fluid page__container page-section">
+        <div class="card stack">
+            <div class="list-group list-group-flush">
+                {% for page in pages %}
+                    <div class="list-group-item d-flex flex-column flex-sm-row align-items-sm-center px-12pt">
+                        <div class="flex d-flex align-items-center mr-sm-16pt mb-8pt mb-sm-0">
+                            <a href="javascript:void(0)" class="avatar overlay overlay--primary avatar-4by3 mr-12pt">
+                                {% include 'web/pages/cards/__img_small.html.twig' %}
+                                <span class="overlay__content"></span>
+                            </a>
+                            <div class="flex">
+                                <a class="card-title mb-4pt" href="{{ path('pages.show', {'id': page.id, 'slug': page.slug}) }}">
+                                   <strong>{{ page.name }}</strong>
+                                </a>
+                                <span>{{ page.extrait|raw }}</span>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="flex text-center d-flex align-items-center mr-16pt">
+                                <span class="badge badge-dark badge-notifications">
+                                    <i class="material-icons icon--left">remove_red_eye</i> {{ pluralize(page.view ?? 0, 'Vue') }}
+                                </span>
+                            </div>
+
+                            <div class="dropdown">
+                                <a href="#" data-toggle="dropdown" data-caret="false" class="text-muted">
+                                    <i class="material-icons">more_vert</i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <div class="dropdown-divider"></div>
+                                    <a href="{{ path('pages.show', {'id': page.id, 'slug': page.slug}) }}" class="dropdown-item text-danger">Plus de détails</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <ul class="pagination justify-content-start pagination-xsm m-0">
+            {{ knp_pagination_render(pages) }}
+        </ul>
+    </div>
+{% endblock %}

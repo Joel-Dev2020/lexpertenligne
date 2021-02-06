@@ -1,0 +1,7 @@
+{% for category in categories %}
+    <li class="sidebar-menu-item">
+        <a class="sidebar-menu-button" href="{{ path('documents.categorie', {'id': category.id, 'slug': category.slug}) }}">
+            <span class="sidebar-menu-text">{{ category.name }}</span>
+        </a>
+    </li>
+{% endfor %}

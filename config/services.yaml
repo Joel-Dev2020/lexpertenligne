@@ -4,6 +4,11 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    app.locales: [fr, en]
+    company_id: 1
+    pub_id: 1
+    isLocked: false
+    #lockPath: "%kernel.project_dir%/public/.lock"
 
 services:
     # default configuration for services in *this* file
@@ -14,18 +19,96 @@ services:
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
-        resource: '../src/'
-        exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/Kernel.php'
-            - '../src/Tests/'
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
     App\Controller\:
-        resource: '../src/Controller/'
+        resource: '../src/Controller'
         tags: ['controller.service_arguments']
+
+    App\EventListener\Images\:
+        resource: '../src/EventListener/Images'
+        tags: ['doctrine.event_subscriber']
+
+    App\EventListener\ImageCacheSubscriber:
+        arguments: ['@vich_uploader.storage.file_system', '@liip_imagine.cache.manager']
+        tags:
+            - { name: kernel.event_subscriber }
+
+    maintenance_listener:
+        class: App\EventListener\MaintenanceListener
+        arguments:
+            - "%isLocked%"
+            - "@twig"
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelRequest }
+
+    app.security.login_form_authenticator:
+        class: App\Security\CustomAuthenticator
+        autowire: true
+
+    Symfony\Component\Security\Core\User\UserCheckerInterface: '@App\Security\UserChecker'
+
+    App\Security\AccessDeniedHandler:
+        class: App\Security\AccessDeniedHandler
+        arguments:
+            - '@router'
+            - '@security.authorization_checker'
+            - '@session'
+            - '@translator'
+
+    setParametres:
+        class: App\Services\ParametresServices
+        public: true
+        arguments:
+            - '@Symfony\Component\DependencyInjection\ContainerInterface'
+            - '@doctrine.orm.entity_manager'
+
+    setPublicites:
+        class: App\Services\PublicitesServices
+        public: true
+        arguments:
+            - '@Symfony\Component\DependencyInjection\ContainerInterface'
+            - '@doctrine.orm.entity_manager'
+
+    chiffre_en_lettre:
+        public: true
+        class: App\Services\ChiffreEnLettre
+
+    # update users last activity
+    App\EventListener\ActivityListener:
+        class: App\EventListener\ActivityListener
+        public: true
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@security.token_storage'
+            - '@router'
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.controller', method: 'onCoreController' }
+
+    app.form.icon_choice_type:
+        class: App\Form\Types\ChoiceIconType
+        # Symfony has already a container parameter to the kernel root directory.
+        arguments: ['%kernel.project_dir%']
+        tags:
+            - { name: form.type }
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+knp_paginator:
+    page_range: 5                       # number of links showed in the pagination menu (e.g: you have 10 pages, a page_range of 3, on the 5th page you'll see links to page 4, 5, 6)
+    default_options:
+        page_name: page                 # page query parameter name
+        sort_field_name: sort           # sort field query parameter name
+        sort_direction_name: direction  # sort direction query parameter name
+        distinct: true                  # ensure distinct results, useful when ORM queries are using GROUP BY statements
+        filter_field_name: filterField  # filter field query parameter name
+        filter_value_name: filterValue  # filter value query parameter name
+    template:
+#        pagination: '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig'     # sliding pagination controls template
+        pagination: 'Resources/views/paginate/pagination.html.twig'
+        sortable: 'Resources/views/paginate/sortable.html.twig' # sort link template
+        filtration: '@KnpPaginator/Pagination/filtration.html.twig'  # filters template

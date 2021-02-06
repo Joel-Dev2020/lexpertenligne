@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('admin.metakeywords.delete', {'id': metakeyword.id}) }}" onsubmit="return confirm('Etes vous sûr de supprimer ce mot clé?');" style="display: inline !important;">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ metakeyword.id) }}">
+    <button class="btn text-white btn-xs btn-danger"><i class="icon feather icon-trash-2"></i></button>
+</form>

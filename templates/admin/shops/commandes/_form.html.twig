@@ -1,0 +1,21 @@
+{{ form_start(form) }}
+<div class="row form-group">
+    <div class="col-sm-12">
+        <label class="form-label">{{ form_label(form.status) }}</label>
+        {{ form_widget(form.status) }}
+        <a href="javascript:void(0)" class="small">{{ form_help(form.status) }}</a>
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-sm-12">
+        <label class="form-label">{{ form_label(form.motifs) }}</label>
+        {{ form_widget(form.motifs) }}
+        <a href="javascript:void(0)" class="small">{{ form_help(form.motifs) }}</a>
+    </div>
+</div>
+
+<div class="text-right mt-3">
+    <button type="submit" class="btn btn-primary">{{ button_label|default('Modifier') }}</button>&nbsp;
+    <button type="reset" class="btn btn-default">Annuler</button>
+</div>
+{{ form_end(form) }}

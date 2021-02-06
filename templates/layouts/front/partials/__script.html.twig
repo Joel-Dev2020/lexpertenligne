@@ -1,0 +1,26 @@
+<!-- jQuery -->
+<script src="{{ absolute_url(asset('assetics/vendor/jquery.min.js')) }}"></script>
+
+<!-- Bootstrap -->
+<script src="{{ absolute_url(asset('assetics/vendor/popper.min.js')) }}"></script>
+<script src="{{ absolute_url(asset('assetics/vendor/bootstrap.min.js')) }}"></script>
+
+<!-- Perfect Scrollbar -->
+<script src="{{ absolute_url(asset('assetics/vendor/perfect-scrollbar.min.js')) }}"></script>
+
+<!-- DOM Factory -->
+<script src="{{ absolute_url(asset('assetics/vendor/dom-factory.js')) }}"></script>
+
+<!-- MDK -->
+<script src="{{ absolute_url(asset('assetics/vendor/material-design-kit.js')) }}"></script>
+
+<!-- App JS -->
+<script src="{{ absolute_url(asset('assetics/js/app.js')) }}"></script>
+
+<!-- Preloader -->
+<script src="{{ absolute_url(asset('assetics/js/preloader.js')) }}"></script>
+
+<script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+<script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+{{ encore_entry_script_tags('app') | replace({'src=':'defer src='}) | raw }}

@@ -1,0 +1,38 @@
+{% if blogs|length > 0 %}
+    <div class="col-lg-5 card-group-row__col">
+        <div class="card card-group-row__card">
+            {% for blog in blogs %}
+                {% if loop.index == 1 %}
+                    <div class="card-body">
+                        <h6>Dernières actualités</h6>
+                        <div class="d-flex align-items-center">
+                            <div class="mr-12pt">
+                                <div class="avatar avatar-xl avatar-4by3">
+                                    {% include 'web/blogs/cards/__img_small.html.twig' %}
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <a href="#" class="card-title">{{ blog.name|u.truncate(25, '...') }}</a>
+                                <small class="text-50">{{ pluralize(blog.view ?? 0, 'vue') }}</small>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-8pt">
+                            <div class="mr-8pt">
+                                <div class="avatar avatar-sm avatar-4by3">
+                                    {% include 'web/blogs/cards/__img_small.html.twig' %}
+                                </div>
+                            </div>
+                            <div class="flex d-flex flex-column">
+                                <a href="#" class="card-title">{{ blog.name|u.truncate(30, '...') }}</a>
+                                <small class="text-50">{{ pluralize(blog.view ?? 0, 'vue') }}</small>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

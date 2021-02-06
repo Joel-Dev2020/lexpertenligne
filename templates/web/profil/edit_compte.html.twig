@@ -1,0 +1,93 @@
+{% extends 'layouts/front/base.html.twig' %}
+
+{% block title %}{{ parametres.structure.name ?? company_name }} | {{ title }}{% endblock %}
+
+{% block body %}
+
+    {{ fil_arial(title) }}
+
+    <div class="container-fluid page__container">
+        <div class="page-section">
+
+            <div class="page-separator">
+                <div class="page-separator__text">{{ title }}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <form>
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Informations personnelles</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label class="form-label">First name</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           value="Alexander"
+                                           placeholder="Your first name ...">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Last name</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           value="Watson"
+                                           placeholder="Your last name ...">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Email address</label>
+                                    <input type="email"
+                                           class="form-control"
+                                           value="alexander.watson@fake-mail.com"
+                                           placeholder="Your email address ...">
+                                    <small class="form-text text-muted">Note that if you change your email, you will have to confirm it again.</small>
+                                </div>
+                            </div>
+
+                            <div class="card-footer p-8pt">
+                                <button class="btn btn-primary">Sauvegarder les infos</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-md-6">
+                    <form>
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Changez mon mot de passe</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" placeholder="Votre adresse email ...">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Mot de passe actuel</label>
+                                    <input type="password" class="form-control" placeholder="Your last name ...">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Nouveau mot de passe</label>
+                                    <input type="email" class="form-control" placeholder="Your email address ...">
+                                    <small class="form-text text-muted">Votre mot de passe doit comprter au moin 6 caractères</small>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Nouveau mot de passe</label>
+                                    <input type="email" class="form-control" placeholder="Your email address ...">
+                                    <small class="form-text text-muted">Votre mot de passe doit comprter au moin 6 caractères</small>
+                                </div>
+                            </div>
+
+                            <div class="card-footer p-8pt">
+                                <button class="btn btn-primary">Modifer</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,146 @@
+.reveal{
+  cursor: pointer!important;
+}
+.feedback-none{
+  display: none;
+}
+#js-dictionnaires-wrapper{
+  position: relative;
+
+  #dictionnaire-feedback{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+
+    .is-loading{
+      position: absolute;
+      top: calc(0.7% - 1rem);
+      left: calc(50% - 1rem);
+      z-index: 5;
+    }
+  }
+
+}
+/*
+.ajs-message {
+  color: #fff !important;
+}
+
+.product-tags-left {
+  width: auto;
+  padding: 0px 3px;
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  color: #fff;
+  background-color: red;
+  border-radius: 5px;
+  font-size: 11px;
+}
+
+.product-tags-right {
+  width: auto;
+  padding: 0px 3px;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  color: #fff;
+  background-color: blue;
+  border-radius: 5px;
+  font-size: 11px;
+}
+
+.catalogue-wrap {
+  position: absolute;
+  bottom: 0px;
+  z-index: 10;
+  padding: 20px;
+  width: 100%;
+  color: #fff!important;
+  background-image: linear-gradient(to top, #2c2e32, #5b5c5f, #696969, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+
+  h5, h4{
+    color: inherit;
+    text-shadow: 0px 0px #222;
+  }
+  h4{
+    font-size: 30px!important;
+    font-weight: bold;
+  }
+  span{
+    color: #ffc700!important;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}
+.site-header-menu .main_nav_content{
+  background-color: #0c1762!important;
+  color: #fff!important;
+  display: flex;
+  flex-direction: row;
+  justify-content: center!important;
+  align-items: center!important;
+}
+
+nav.menu ul.nav > li > a {
+  font-size: 15px;
+  display: block;
+  padding: 15px 15px !important;
+  font-weight: 600;
+  background-color: #0c1762!important;
+  color: #fff !important;
+  outline: none;
+  margin-bottom: -2px;
+}
+
+.stickable-header.fixed-header {
+  z-index: 11;
+  background-color: #0c1762!important;
+  box-shadow: 0 4px 10px 0 rgba(0,0,0,0.06);
+}
+
+nav.menu ul.nav > li > a {
+  font-size: 15px;
+  display: block;
+  padding: 30px 15px;
+  font-weight: 600;
+  background-color: transparent;
+  color: #fff!important;
+  outline: none;
+  margin-bottom: -2px;
+}
+#site-header-menu #site-navigation .menu ul > li:hover > a, #site-header-menu #site-navigation .menu ul li.active > a {
+  color: #ffc700!important;
+}
+.ttm-header-style-03 .cat_menu_container .cat_menu {
+  padding: 0;
+  top: 8px!important;
+  &:hover{
+    background-color: #ffc700;
+  }
+}
+
+.carousel-indicators li {
+  position: relative;
+  bottom: 30px!important;
+  background-color: #0c1762!important;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+}
+
+nav.menu ul.nav > li > a {
+  font-size: 15px;
+  display: block;
+  padding: 15px 15px!important;
+  font-weight: 600;
+  background-color: transparent;
+  color: #fff !important;
+  outline: none;
+  margin-bottom: -2px;
+}*/

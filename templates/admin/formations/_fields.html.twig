@@ -1,0 +1,128 @@
+<div class="row">
+    <div class="col-md-8">
+
+        <div class="page-separator">
+            <div class="page-separator__text">{{ title }}</div>
+        </div>
+
+        <label class="form-label">{{ form_label(form.name) }}</label>
+        <div class="form-group mb-24pt">
+            {{ form_widget(form.name) }}
+            <small class="form-text text-muted">{{ form_help(form.name) }}</small>
+        </div>
+
+        <label class="form-label">{{ form_label(form.duree) }}</label>
+        <div class="form-group mb-24pt">
+            {{ form_widget(form.duree) }}
+            <small class="form-text text-muted">{{ form_help(form.duree) }}</small>
+        </div>
+
+        <label class="form-label">{{ form_label(form.niveau) }}</label>
+        <div class="form-group mb-24pt">
+            {{ form_widget(form.niveau) }}
+            <small class="form-text text-muted">{{ form_help(form.niveau) }}</small>
+        </div>
+
+        <label class="form-label">{{ form_label(form.objectif) }}</label>
+        <div class="form-group mb-24pt">
+            {{ form_widget(form.objectif) }}
+            <small class="form-text text-muted">{{ form_help(form.objectif) }}</small>
+        </div>
+
+        <label class="form-label">{{ form_label(form.publeshedAt) }}</label>
+        <div class="form-group mb-24pt">
+            {{ form_widget(form.publeshedAt) }}
+            <small class="form-text text-muted">{{ form_help(form.publeshedAt) }}</small>
+        </div>
+
+        <div class="form-group mb-32pt">
+            <label class="form-label">{{ form_label(form.extrait) }}</label>
+            {{ form_widget(form.extrait) }}
+            <small class="form-text text-muted">{{ form_help(form.extrait) }}</small>
+        </div>
+
+        <div class="form-group mb-32pt">
+            <label class="form-label">{{ form_label(form.content) }}</label>
+            {{ form_widget(form.content) }}
+            <small class="form-text text-muted">{{ form_help(form.content) }}</small>
+        </div>
+
+        <div class="form-group mb-32pt">
+            <label class="form-label">Image de couverture (900x611)</label>
+            {{ form_widget(form.imageFile) }}
+            <small class="form-text text-muted">{{ form_help(form.imageFile) }}</small>
+        </div>
+
+        <div class="form-group mb-32pt">
+            <label class="form-label">Image bandeau (1600x248)</label>
+            {{ form_widget(form.imageCoverFile) }}
+            <small class="form-text text-muted">{{ form_help(form.imageCoverFile) }}</small>
+        </div>
+
+    </div>
+    <div class="col-md-4">
+
+        <div class="card">
+            <div class="card-header text-center">
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fa fa-save fa-2x"></i> &nbsp;
+                    {{ button_label|default('Enregistrer') }}
+                </button>
+            </div>
+            {% if data is defined and data.id is not null %}
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item d-flex">
+                        <a class="flex" href="{{ path('admin.formations.show', {'id': data.id}) }}"><strong>Voir la fiche</strong></a>
+                        <i class="material-icons text-muted">check</i>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        {#<div class="page-separator">
+            <div class="page-separator__text">Video</div>
+        </div>
+
+        <div class="card">
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/97243285?title=0&amp;byline=0&amp;portrait=0" allowfullscreen=""></iframe>
+            </div>
+            <div class="card-body">
+                <label class="form-label">URL</label>
+                <input type="text"
+                       class="form-control"
+                       value="https://player.vimeo.com/video/97243285?title=0&amp;byline=0&amp;portrait=0"
+                       placeholder="Enter Video URL">
+                <small class="form-text text-muted">Enter a valid video URL.</small>
+            </div>
+        </div>#}
+
+        <div class="page-separator">
+            <div class="page-separator__text">Options</div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group">
+                    <label class="form-label">{{ form_label(form.categories) }}</label>
+                    {{ form_widget(form.categories) }}
+                    <small class="form-text text-muted">{{ form_help(form.categories) }}</small>
+                </div>
+                <div class="form-group">
+                    {{ form_widget(form.online) }}
+                </div>
+                <div class="form-group">
+                    {{ form_widget(form.featured) }}
+                </div>
+                <div class="form-group mb-0">
+                    <label class="form-label">{{ form_label(form.tags) }}</label>
+                    {{ form_widget(form.tags) }}
+                    <small class="form-text text-muted">{{ form_help(form.tags) }}</small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

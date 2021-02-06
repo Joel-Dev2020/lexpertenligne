@@ -1,0 +1,106 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Admin - {{ parametres.structure ? parametres.structure.name : company_name }} - {{ title }}{% endblock %}
+
+{% block body %}
+    <div class="pt-32pt">
+        <div class="container-fluid page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+            {{ fil_arial_admin_categories(title, 'Documents', '') }}
+            <div class="row" role="tablist">
+                <div class="col-auto">
+                    <a href="{{ path('admin.documents.new') }}" class="btn btn-outline-primary">
+                        <i class="material-icons">add</i>
+                        {{ libelle_ajouter }}
+                    </a> &nbsp;
+                    <a href="{{ path('admin.documentscategories.new') }}" class="btn btn-outline-success">
+                        <i class="material-icons">add</i>
+                        Nouvelle catégorie
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid page__container">
+        <div class="page-section">
+
+            {% include 'flash/__flash.html.twig' %}
+
+            <div class="page-separator">
+                <div class="page-separator__text">Liste des documents</div>
+            </div>
+
+            <div class="card mb-0">
+
+                <div class="table-responsive" data-toggle="lists" data-lists-sort-by="js-lists-values-employee-name" data-lists-values='["js-lists-values-employee-name", "js-lists-values-employer-name", "js-lists-values-projects", "js-lists-values-activity", "js-lists-values-earnings"]'>
+
+                    <div class="card-header">
+                        <form class="form-inline">
+                            <label class="mr-sm-2 form-label" for="inlineFormFilterBy">Filtrer par:</label>
+                            <input type="text" class="form-control search mb-2 mr-sm-2 mb-sm-0" id="inlineFormFilterBy" placeholder="Rechercher ...">
+                        </form>
+                    </div>
+
+                    <table class="table mb-0 thead-border-top-0 table-nowrap">
+                        <thead>
+                        <tr>
+                            <th>
+                                <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-employee-name">Documents</a>
+                            </th>
+                            <th style="width: 150px;">
+                                <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-employer-name">Publié</a>
+                            </th>
+                            <th style="width: 150px;">
+                                <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-employer-name">Catégorie</a>
+                            </th>
+                            <th style="width: 24px;" class="pl-0"></th>
+                        </tr>
+                        </thead>
+                        <tbody class="list" id="staff">
+                        {% for document in documents %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="{{ path('admin.documents.edit', {'id': document.id}) }}" class="text-70">{{ document.name }}</a>
+                                    </div>
+                                </td>
+                                <td class="text-50 js-lists-values-activity small">
+                                    {% if document.online == true %}
+                                        <span class="badge badge-success"><i class="fa fa-circle text-success"></i> En ligne</span>
+                                    {% else %}
+                                        <span class="badge badge-danger"><i class="fa fa-circle text-danger"></i> Hors ligne</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        {% for categorie in document.categories %}
+                                            <a class="text-70" href="javascript:">
+                                                {{ categorie.name }}
+                                            </a>
+                                        {% endfor %}
+                                    </div>
+                                </td>
+                                <td class="text-right pl-0">
+                                    <a href="{{ path('admin.documents.show', {'id': document.id}) }}" class="text-50"><i class="material-icons">folder</i></a>
+                                    <a href="{{ path('admin.documents.edit', {'id': document.id}) }}" class="text-50"><i class="material-icons">edit</i></a>
+                                    {% include 'admin/documents/_delete_form.html.twig' %}
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="4">{{ data_none }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-footer p-8pt">
+                    {{ knp_pagination_render(documents) }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+

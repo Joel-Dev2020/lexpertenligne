@@ -1,0 +1,53 @@
+<div class="row">
+    <div class="col-md-8">
+        <div class="page-separator">
+            <div class="page-separator__text">{{ title }}</div>
+        </div>
+
+        <label class="form-label">{{ form_label(form.name) }}</label>
+        <div class="form-group mb-24pt">
+            {{ form_widget(form.name) }}
+            <small class="form-text text-muted">{{ form_help(form.name) }}</small>
+        </div>
+
+        <div class="form-group mb-32pt">
+            <label class="form-label">{{ form_label(form.content) }}</label>
+            {{ form_widget(form.content) }}
+            <small class="form-text text-muted">{{ form_help(form.content) }}</small>
+        </div>
+    </div>
+    <div class="col-md-4">
+
+        <div class="card">
+            <div class="card-header text-center">
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fa fa-save fa-2x"></i> &nbsp;
+                    {{ button_label|default('Enregistrer') }}
+                </button>
+            </div>
+            {% if data is defined and data.id is not null %}
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item d-flex">
+                        <a class="flex" href="{{ path('admin.articles.show', {'id': data.id}) }}"><strong>Voir la fiche</strong></a>
+                        <i class="material-icons text-muted">check</i>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="page-separator">
+            <div class="page-separator__text">Options</div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group">
+                    <label class="form-label">{{ form_label(form.categories) }}</label>
+                    {{ form_widget(form.categories) }}
+                    <small class="form-text text-muted">{{ form_help(form.categories) }}</small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

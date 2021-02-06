@@ -1,0 +1,14 @@
+<div class="page-section border-bottom-2">
+    <div class="container-fluid page__container">
+        <div class="page-separator">
+            <div class="page-separator__text">Formations</div>
+        </div>
+
+        <div class="row card-group-row">
+            {{ last_formations() }}
+        </div>
+        <div class="d-flex flex-column flex-sm-row flex-wrap align-items-center justify-content-center justify-content-sm-end mt-8pt">
+            <a href="{{ path('formations.index') }}" class="btn btn-accent flex-auto mb-8pt mb-sm-0 mr-sm-16pt">Voir plus de formation</a>
+        </div>
+    </div>
+</div>

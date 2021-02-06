@@ -1,0 +1,356 @@
+{% extends 'layouts/front/base.html.twig' %}
+
+{% block title %}{{ parametres.structure.name ?? company_name }} | {{ title }}{% endblock %}
+{% block breadcrumb %}
+    <!-- page-title -->
+    <div class="ttm-page-title-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-flex justify-content-between align-items-center">
+                        {{ fil_arial(title) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block body %}
+    <!-- single-product-section -->
+    <section class="single-product-section layout-2 clearfix">
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ttm-single-product-details">
+                        <div class="ttm-single-product-info clearfix">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 ml-auto mr-auto">
+                                    <div class="product-gallery easyzoom-product-gallery clearfix">
+                                        <div class="product-look-preview-plus left">
+                                            <div class="pr-35 res-767-pr-15">
+                                                <div class="easyzoom easyzoom--overlay easyzoom--with-thumbnails">
+                                                    {% if product.filename %}
+                                                        <a href="{{ vich_uploader_asset(product, 'imageFile') | imagine_filter('medium') }}">
+                                                            <img class="img-fluid" src="{{ vich_uploader_asset(product, 'imageFile') | imagine_filter('medium') }}" {{ product.name }} />
+                                                        </a>
+                                                    {% else %}
+                                                        <a href="{{ asset('assetics/images/product-thumb-empty.png') }}">
+                                                            <img class="img-fluid" src="{{ asset('assetics/images/product-thumb-empty.png') }}" alt="{{ product.name }}" />
+                                                        </a>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-look-views right">
+                                            <div class="mt-35 mb-35">
+                                                <ul class="thumbnails easyzoom-gallery-slider" data-slick='{"slidesToShow": 4, "slidesToScroll": 1, "arrows":true, "infinite":true, "vertical":true}'>
+                                                    {% if product.mediasproducts.count > 0 %}
+                                                        {% for media in product.mediasproducts %}
+                                                            <li>
+                                                                <a href="{{ vich_uploader_asset(media, 'imageFile') | imagine_filter('medium') }}" data-standard="{{ vich_uploader_asset(media, 'imageFile') | imagine_filter('medium') }}">
+                                                                    <img class="img-fluid" src="{{ vich_uploader_asset(media, 'imageFile') | imagine_filter('medium') }}" alt="{{ media.name ?? product.name }}" />
+                                                                </a>
+                                                            </li>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        {% if product.filename %}
+                                                            <li>
+                                                                <a href="{{ vich_uploader_asset(product, 'imageFile') | imagine_filter('medium') }}" data-standard="{{ vich_uploader_asset(product, 'imageFile') | imagine_filter('medium') }}">
+                                                                    <img class="img-fluid" src="{{ vich_uploader_asset(product, 'imageFile') | imagine_filter('medium') }}" alt="{{ product.name }}" />
+                                                                </a>
+                                                            </li>
+                                                        {% else %}
+                                                            <li>
+                                                                <a href="{{ asset('assetics/images/product-thumb-empty.png') }}" data-standard="{{ asset('assetics/images/product-thumb-empty.png') }}">
+                                                                    <img class="img-fluid" src="{{ asset('assetics/images/product-thumb-empty.png') }}" alt="{{ product.name }}" />
+                                                                </a>
+                                                            </li>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="summary entry-summary pl-30 res-991-pl-0 res-991-pt-40">
+                                        <h2 class="product_title entry-title">{{ product.name }}</h2>
+                                        <div class="share-icons social-links">
+                                            <span>Partager :</span>
+                                            <a href="#"><i class="ti ti-facebook"></i></a>
+                                            <a href="#"><i class="ti ti-twitter-alt"></i></a>
+                                            <a href="#"><i class="ti ti-google"></i></a>
+                                            <a href="#"><i class="ti ti-linkedin"></i></a>
+                                        </div>
+                                        <div class="comments-notes clearfix">
+                                            &nbsp;&nbsp;<a href="javascript:void(0)" class="review-link" rel="nofollow">(No review)</a>
+                                            &nbsp;&nbsp;<a href="javascript:void(0)" class="review-link" rel="nofollow">Write to Review</a>
+                                            <div class="product-rating clearfix">
+                                                <ul class="star-rating clearfix">
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="product_in-stock">
+                                            {% if product.quantity < parametres.structure.seuilproduct  %}
+                                                <i class="fa fa-times-circle text-danger"></i>
+                                                <span class="text-danger">Stock faible ({{ product.quantity }})</span>
+                                            {% else %}
+                                                <i class="fa fa-check-circle text-success"></i>
+                                                <span class="text-success">En stock ({{ product.quantity }} disponibles)</span>
+                                            {% endif %}
+                                        </div>
+                                        {% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}
+                                            <span class="price">{% include 'pages/shops/products/partials/__price.html.twig' %}</span>
+                                        {% endif %}
+                                        <div class="product-details__short-description">{{ product.extrait|nl2br }}</div>
+                                        {#<div class="mt-15 mb-25">
+                                            <div class="quantity">
+                                                <label for="qty">Quantité: </label>
+                                                <input type="text" name="qty" min="1" max="{{ product.quantity }}" value="1" class="qty">
+                                                <span class="inc quantity-button">+</span>
+                                                <span class="dec quantity-button">-</span>
+                                            </div>
+                                        </div>
+                                        <div class="actions">
+                                            <div class="add-to-cart">
+                                                <a class="ttm-btn ttm-btn-size-md ttm-btn-shape-square ttm-btn-style-fill ttm-btn-color-skincolor" href="#">Ajouter au panier</a>
+                                            </div>
+                                        </div>#}
+                                        <div class="buttons">
+                                            <a href="#" rel="nofollow" data-product-id="24006456" data-product-type="simple" class="add_to_wishlist">
+                                                <i class="fa fa-heart" aria-hidden="true"></i>
+                                                <span class="wishlist-text">Ajouter à ma liste de souhait</span>
+                                            </a>
+                                        </div>
+                                        <div id="block-reassurance-1" class="block-reassurance">
+                                            <ul>
+                                                <li>
+                                                    <div class="block-reassurance-item">
+                                                        <i class="fa fa-lock"></i>
+                                                        <span>Politique de sécurité (modifier avec le module de réassurance client)</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="block-reassurance-item">
+                                                        <i class="fa fa-truck"></i>
+                                                        <span>Politique de livraison (modifier avec le module de réassurance client)</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="block-reassurance-item">
+                                                        <i class="fa fa-arrows"></i>
+                                                        <span>Politique de retour (modifier avec le module de réassurance client)</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-30 pb-60 res-991-pt-0 res-991-pb-30">
+                            <div class="row no-gutters ttm-bgcolor-grey border">
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <!-- featured-icon-box -->
+                                    <div class="featured-icon-box style3 text-center">
+                                        <div class="ttm-icon ttm-icon_element-color-skincolor ttm-icon_element-size-md">
+                                            <i class="themifyicon ti-truck"></i>
+                                        </div>
+                                        <div class="featured-content">
+                                            <div class="featured-title">
+                                                <h5>Fast & Free Shopping</h5>
+                                            </div>
+                                            <div class="featured-desc">
+                                                <p>All Order Over $199</p>
+                                            </div>
+                                        </div>
+                                    </div><!-- featured-icon-box end-->
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <!-- featured-icon-box -->
+                                    <div class="featured-icon-box style3 text-center">
+                                        <div class="ttm-icon ttm-icon_element-color-skincolor ttm-icon_element-size-md">
+                                            <i class="themifyicon ti-reload"></i>
+                                        </div>
+                                        <div class="featured-content">
+                                            <div class="featured-title">
+                                                <h5>100% Money Back Guaranty</h5>
+                                            </div>
+                                            <div class="featured-desc">
+                                                <p>30 Days Money Return</p>
+                                            </div>
+                                        </div>
+                                    </div><!-- featured-icon-box end-->
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <!-- featured-icon-box -->
+                                    <div class="featured-icon-box style3 text-center">
+                                        <div class="ttm-icon ttm-icon_element-color-skincolor ttm-icon_element-size-md">
+                                            <i class="themifyicon ti-comments"></i>
+                                        </div>
+                                        <div class="featured-content">
+                                            <div class="featured-title">
+                                                <h5>Support 24/7 Days</h5>
+                                            </div>
+                                            <div class="featured-desc">
+                                                <p>Hot Line: +123 456 789</p>
+                                            </div>
+                                        </div>
+                                    </div><!-- featured-icon-box end-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ttm-tabs tabs-for-single-products" data-effect="fadeIn">
+                            <ul class="tabs clearfix">
+                                <li class="tab active"><a href="#">Description du produit</a></li>
+                                <li class="tab"><a href="#">Politique de confidentialité</a></li>
+                                <li class="tab"><a href="#">Avis client</a></li>
+                                <li class="tab"><a href="#">Conditions d'utilisation</a></li>
+                            </ul>
+                            <div class="content-tab">
+                                <!-- content-inner -->
+                                <div class="content-inner">
+                                    {{ product.description|raw }}
+                                </div><!-- content-inner end-->
+                                <!-- content-inner -->
+                                <div class="content-inner">
+                                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+                                    <strong>Contrary to popular belief</strong>
+                                    <p>Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.</p>
+                                    <strong>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below:</strong>
+                                    - It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                                    - The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.
+                                    - Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.
+                                    - Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                                    <p> It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                    [[INSERT ANY OTHER INFORMATION YOU COLLECT: OFFLINE DATA, PURCHASED MARKETING DATA/LISTS]]
+                                </div><!-- content-inner end-->
+                                <!-- content-inner -->
+                                <div class="content-inner">
+                                    <div id="reviews" class="woocommerce-Reviews">
+                                        <div id="comments">
+                                            <ol class="commentlist">
+                                                <li class="review">
+                                                    <div class="comment_container">
+                                                        <img class="avatar" src="images/blog/blog-comment-01.jpg" alt="comment-img" >
+                                                        <div class="comment-text">
+                                                            <ul class="star-rating">
+                                                                <li class="fa fa-star"></li>
+                                                                <li class="fa fa-star"></li>
+                                                                <li class="fa fa-star"></li>
+                                                                <li class="fa fa-star"></li>
+                                                                <li class="fa fa-star"></li>
+                                                            </ul>
+                                                            <p class="meta">
+                                                                <strong class="eview__author">Cherie </strong><span class="review__dash">–</span>
+                                                                <time class="woocommerce-review__published-date" datetime="2018-11-01T04:58:58+00:00">Apr 1, 2019</time>
+                                                            </p>
+                                                            <div class="description">
+                                                                <p>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante<br>Very good product and amazing quality.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="review">
+                                                    <div class="comment_container">
+                                                        <img class="avatar" src="images/blog/blog-comment-02.jpg" alt="comment-img" >
+                                                        <div class="comment-text">
+                                                            <ul class="star-rating">
+                                                                <li class="fa fa-star"></li>
+                                                                <li class="fa fa-star"></li>
+                                                                <li class="fa fa-star"></li>
+                                                                <li class="fa fa-star"></li>
+                                                                <li class="fa fa-star"></li>
+                                                            </ul>
+                                                            <p class="meta">
+                                                                <strong class="eview__author">Cherie </strong><span class="review__dash">–</span>
+                                                                <time class="woocommerce-review__published-date" datetime="2018-11-01T04:58:58+00:00">Apr 1, 2019</time>
+                                                            </p>
+                                                            <div class="description">
+                                                                <p>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante<br>Very good product and amazing quality.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ol>
+                                        </div>
+                                        <div id="review_form_wrapper">
+                                            <div class="comment-respond">
+                                                    <span class="comment-reply-title">Add a review
+                                                        <small><a rel="nofollow" id="cancel-comment-reply-link" href="#">Cancel reply</a></small>
+                                                    </span>
+                                                <form action="#" method="post" id="commentform" class="comment-form">
+                                                    <p class="comment-notes">
+                                                        <span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span>
+                                                    </p>
+                                                    <div class="comment-form-rating">
+                                                        <label for="rating">Your rating</label>
+                                                        <ul class="stars">
+                                                            <li class="fa fa-star-o"></li>
+                                                            <li class="fa fa-star-o"></li>
+                                                            <li class="fa fa-star-o"></li>
+                                                            <li class="fa fa-star-o"></li>
+                                                            <li class="fa fa-star-o"></li>
+                                                        </ul>
+                                                        <select name="rating" id="rating" required="" tabindex="-1">
+                                                            <option value="">Rate…</option>
+                                                            <option value="5">Perfect</option>
+                                                            <option value="4">Good</option>
+                                                            <option value="3">Average</option>
+                                                            <option value="2">Not that bad</option>
+                                                            <option value="1">Very poor</option>
+                                                        </select>
+                                                    </div>
+                                                    <p class="comment-form-comment">
+                                                        <label for="comment">Your review&nbsp;<span class="required">*</span></label>
+                                                        <textarea id="comment" name="comment" cols="45" rows="8" required=""></textarea>
+                                                    </p>
+                                                    <p class="comment-form-author">
+                                                        <label for="author">Name&nbsp;<span class="required">*</span></label>
+                                                        <input id="author" name="author" type="text" value="" required="">
+                                                    </p>
+                                                    <p class="comment-form-email">
+                                                        <label for="email">Email&nbsp;<span class="required">*</span></label>
+                                                        <input id="email" name="email" type="email" value="" required="">
+                                                    </p>
+                                                    <p class="form-submit">
+                                                        <input name="submit" type="submit" class="submit" value="Submit">
+                                                    </p>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- content-inner -->
+                                <div class="content-inner">
+                                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+                                    <strong>Contrary to popular belief</strong>
+                                    <p>Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.</p>
+                                    <strong>section-1</strong>
+                                    <p>Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.</p>
+                                    <strong>section-2</strong>
+                                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+                                    <p> It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                    [[INSERT ANY OTHER INFORMATION YOU COLLECT: OFFLINE DATA, PURCHASED MARKETING DATA/LISTS]]
+                                    <br><br>
+                                    <strong>CONTACT_INFORMATION</strong>
+                                    Questions about the Terms of Service should be sent to us.....
+                                </div><!-- content-inner end-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-35 related products">
+                        {{ last_products_details() }}
+                    </div>
+                </div>
+            </div><!-- row end -->
+        </div>
+    </section>
+    <!-- single-product-section end -->
+{% endblock %}
+{% block modals %}{{ products_modals() }}{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'layouts/front/base.html.twig' %}
+
+{% block title %}{{ parametres.structure.name ?? company_name }} | {{ title }}{% endblock %}
+{% block breadcrumb %}
+    <!-- page-title -->
+    <div class="ttm-page-title-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-flex justify-content-between align-items-center">
+                        {{ fil_arial(title) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block body %}
+    <!--banner-box-section-->
+    <section class="banner-box-section clearfix">
+        <div class="container">
+            <div class="d-md-flex flex-row justify-content-start">
+                <div class="left-image-group">
+                    <div class="d-sm-flex flex-row justify-content-start" style="flex-wrap: wrap;flex-basis: 33.333333%">
+                        <!-- banner-image -->
+                        <div class="banner-image pt-20 mr-20">
+                            <a href="javascript:"><img class="img-fluid" src="{{ asset('assetics/images/banner-one.jpg') }}" alt=""></a>
+                        </div>
+                        <!-- banner-image end -->
+                        <!-- banner-image -->
+                        <div class="banner-image pt-20 mr-20">
+                            <a href="javascript:"><img class="img-fluid" src="{{ asset('assetics/images/banner-one.jpg') }}" alt=""></a>
+                        </div>
+                        <!-- banner-image end -->
+                        <!-- banner-image -->
+                        <div class="banner-image pt-20 mr-20">
+                            <a href="javascript:"><img class="img-fluid" src="{{ asset('assetics/images/banner-one.jpg') }}" alt=""></a>
+                        </div>
+                        <!-- banner-image end -->
+                        <!-- banner-image -->
+                        <div class="banner-image pt-20 mr-20">
+                            <a href="javascript:"><img class="img-fluid" src="{{ asset('assetics/images/banner-one.jpg') }}" alt=""></a>
+                        </div>
+                        <!-- banner-image end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--banner-box-section end-->
+{% endblock %}

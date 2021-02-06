@@ -1,0 +1,8 @@
+{{ form_start(form, {'action': path('admin.search.products')}) }}
+<label class="nav-item navbar-text navbar-search-box p-0 active">
+    <i class="feather icon-search navbar-icon align-middle"></i>
+    <span class="navbar-search-input pl-2">
+        {{ form_widget(form.q) }}
+    </span>
+</label>
+{{ form_end(form) }}

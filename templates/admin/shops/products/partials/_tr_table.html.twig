@@ -1,0 +1,39 @@
+<tr>
+    <td>
+        <div class="media flex-nowrap align-items-center" style="white-space: nowrap;">
+            <div class="avatar avatar-sm mr-8pt">
+                {% if product.filename %}
+                    <img class="avatar-img rounded-circle" src="{{ vich_uploader_asset(product, 'imageFile') | imagine_filter('avatar') }}" alt="{{ product.name }}">
+                {% else %}
+                    <img  class="avatar-img rounded-circle" src="{{ asset('assetics/images/empty/small.png') }}" alt="{{ product.name }}">
+                {% endif %}
+            </div>
+            <div class="media-body">
+                <div class="d-flex flex-column">
+                    <p class="mb-0"><strong class="js-lists-values-employee-name">{{ product.name }}</strong></p>
+                    <small class="js-lists-values-employee-email text-50">{{ product.createdAt|date('d/m/Y') }}</small>
+                </div>
+            </div>
+        </div>
+    </td>
+    <td class="text-50 js-lists-values-activity small">
+        {% if product.online == true %}
+            <span class="badge badge-success"><i class="fa fa-circle text-success"> </i> En ligne</span>
+        {% else %}
+            <span class="badge badge-danger"><i class="fa fa-circle text-danger"> </i> Hors ligne</span>
+        {% endif %}
+    </td>
+    <td class="text-50 js-lists-values-activity small">{{ product.price }}</td>
+    <td class="text-50 js-lists-values-activity small">{{ product.quantity }}</td>
+    <td>
+        <div class="d-flex align-items-center">
+            <a href="{{ path('admin.categories.edit', {'id': product.categories.id}) }}" class="text-warning"><i class="material-icons mr-8pt">star</i></a>
+            <a href="{{ path('admin.categories.edit', {'id': product.categories.id}) }}" class="text-70">{{ product.categories.name }}</a>
+        </div>
+    </td>
+    <td class="text-right pl-0">
+        <a href="{{ path('admin.products.show', {'id': product.id}) }}" class="text-50"><i class="material-icons">folder</i></a>
+        <a href="{{ path('admin.products.edit', {'id': product.id}) }}" class="text-50"><i class="material-icons">edit</i></a>
+        {% include 'admin/shops/products/_delete_form.html.twig' %}
+    </td>
+</tr>

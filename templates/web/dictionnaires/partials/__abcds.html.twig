@@ -1,0 +1,5 @@
+{% for abcd in abcds %}
+    <button data-label="{{ abcd }}" data-action="{{ url('dictionnaires.index') }}" class="js-filter-dictionnaires dropdown-item {% if searched == abcd %}active{% endif %}">
+        {{ abcd }}
+    </button>
+{% endfor %}

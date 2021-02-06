@@ -1,0 +1,77 @@
+{#<aside class="widget menu-content">
+{{ sidebar_categories_nav() }}
+</aside>#}
+{% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}
+<aside class="widget widget-price-filter">
+    <h3 class="widget-title"><i class="fa fa-bars"></i>Produits</h3>
+    <div class="product_content">
+        {{ form_start(form) }}
+        {{ form_widget(form.q) }}
+        <br><br><br>
+
+        <div class="price_slider_wrapper">
+            <h5>Prix :</h5>
+            <div id="slider-range" class="price-filter-range"></div>
+            <!-- price_slider_amount -->
+            <div class="price_slider_amount">
+                <div style="display: flex; flex-direction: row;justify-content: space-between;">
+                    {{ form_row(form.min, {'attr': {'value': min, 'data-min': min}}) }}
+                    {{ form_row(form.max, {'attr': {'value': max, 'data-max': min}}) }}
+                </div>
+                <script src="{{ asset('assetics/js/jquery.min.js') }}"></script>
+                <script>
+                    $(function () {
+                        $('#slider-range').slider({
+                            range: true,
+                            orientation: "horizontal",
+                            min: {{ min }},
+                            max: {{ max }},
+                            values: [{{ min }}, {{ max }}],
+                            slide: function (event, ui) {
+                                if (ui.values[0] === ui.values[1]) {
+                                    return false;
+                                }
+                                $("#min").val(ui.values[0]);
+                                $("#max").val(ui.values[1]);
+                            }
+                        });
+                        $("#min").val($("#slider-range").slider("values", 0));
+                        $("#max").val($("#slider-range").slider("values", 1));
+                    });
+                </script>
+            </div>
+        </div>
+
+        <div class="size_wrapper">
+            <h5>Catégories</h5>
+            <div class="">
+                {{ form_widget(form.categories) }}
+            </div>
+        </div>
+        <div class="color_wrapper">
+            <h5>Marques</h5>
+            <div class="">
+                {{ form_widget(form.marques) }}
+            </div>
+        </div>
+        <div class="price_slider_wrapper">
+            <div class="price-filter-range"></div>
+            <!-- price_slider_amount -->
+            <div class="price_slider_amount">
+                <button type="submit" style="width:100%;" class="button">Filter</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</aside>
+{% endif %}
+<aside class="widget products top-rated-products">
+    {{ vedette_sidebar_products() }}
+</aside>
+{% if pubs.publicite.filenamepubblock4 %}
+    <aside class="widget widget_media_image banner-image">
+        <a href="{{ pubs.publicite.urlpubblock4 }}">
+            <img class="img-fluid" src="{{ vich_uploader_asset(pubs.publicite, 'imageFile4') | imagine_filter('pubportrait') }}" alt="{{ pubs.publicite.pubblock4 }}">
+        </a>
+    </aside>
+{% endif %}

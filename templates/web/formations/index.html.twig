@@ -1,0 +1,42 @@
+{% extends 'layouts/front/base.html.twig' %}
+
+{% block title %}{{ parametres.structure.name ?? company_name }} | {{ title }}{% endblock %}
+
+{% block body %}
+    <div class="page-section">
+        <div class="container-fluid page__container">
+
+            <div class="d-flex flex-column flex-sm-row align-items-sm-center mb-24pt" style="white-space: nowrap;">
+                <small class="flex text-muted text-headings text-uppercase mr-3 mb-2 mb-sm-0">
+                    Affichage {{ formations.count }}–{{ formations.itemNumberPerPage }} sur {{ formations.totalItemCount }} formations
+                </small>
+                <div class="w-auto ml-sm-auto table d-flex align-items-center mb-2 mb-sm-0">
+                    <small class="text-muted text-headings text-uppercase mr-3 d-none d-sm-block">Trier par</small>
+                    {{ knp_pagination_sortable(formations, 'Nom', 'f.name') }}
+                    {{ knp_pagination_sortable(formations, 'Catégorie', 'f.categories') }}
+                </div>
+
+                <a href="javascript:" data-target="#library-drawer" data-toggle="sidebar" class="btn btn-sm btn-outline-danger ml-sm-16pt">
+                    <i class="material-icons icon--left">tune</i> Demander une formation
+                </a>
+
+            </div>
+
+            <div class="page-separator">
+                <div class="page-separator__text">{{ title }}</div>
+            </div>
+
+            {% if formations|length > 0 %}
+                <div class="row card-group-row">
+                    {% for formation in formations %}
+                        {% include 'web/formations/cards/card.html.twig' %}
+                    {% endfor %}
+                </div>
+
+                <div class="mb-32pt">
+                    {{ knp_pagination_render(formations) }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

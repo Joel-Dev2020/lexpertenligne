@@ -1,0 +1,5 @@
+{% if dossier.filename %}
+    <img src="{{ vich_uploader_asset(dossier, 'imageFile') | imagine_filter('small') }}" alt="{{ dossier.name }}" class="avatar-img rounded">
+{% else %}
+    <img src="{{ asset('assetics/images/empty/small.png') | imagine_filter('small') }}" alt="{{ dossier.name }}" class="avatar-img rounded">
+{% endif %}

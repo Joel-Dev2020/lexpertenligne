@@ -1,0 +1,63 @@
+<h3>Votre panier</h3>
+<div class="order_table table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in products %}
+            <tr>
+                <td> {{ item.product.name }} <strong> × {{ item.qte }}</strong></td>
+                <td>
+                    {% if item.product.pricepromo %}
+                        <span class="current_price">{{ (item.product.pricepromo * item.qte)|devise }}</span>
+                    {% else %}
+                        <span class="current_price">{{ (item.product.price * item.qte)|devise }}</span>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>TOTAL HT</th>
+            <td>{{ totalht|devise }}</td>
+        </tr>
+        <tr>
+            <th>Total TVA({{ parametres.structure.tva }}%)</th>
+            <td><strong>{{ totaltva|devise }}</strong></td>
+        </tr>
+        <tr class="order_total">
+            <th>TOTAL TTC</th>
+            <td><strong>{{ totalttc|devise }}</strong></td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<div class="payment_method">
+    {% if app.session.get('pointretrait') or app.session.get('mode')[0]['key'] == 1 %}
+        <form action="{{ path('shop.commandes.checkout') }}" method="post">
+            <div class="order-notes">
+                <label for="order_note">Note de commande (Facultative)</label>
+                <textarea id="order_note" name="note" rows="5" placeholder="Remarques sur votre commande, par exemple notes spéciales pour la livraison."></textarea>
+            </div>
+            {#<div class="row">
+                <div class="col-12 mb-20">
+                    <label for="modepaiement">Mode de paiement <span>*</span></label>
+                    <select class="niceselect_option" name="modepaiement" id="modepaiement">
+                        <option value="none">Sélectionnez un mode de paiement</option>
+                        <option value="0">Payer à la livraison</option>
+                        <option value="1">Paiement par carte bleu</option>
+                        <option value="2">Paiement par orange money</option>
+                    </select>
+                </div>
+            </div>#}
+            <div class="order_button" style="margin-top: 30px!important;">
+                <button type="submit">Payer maintenant</button>
+            </div>
+        </form>
+    {% endif %}
+</div>

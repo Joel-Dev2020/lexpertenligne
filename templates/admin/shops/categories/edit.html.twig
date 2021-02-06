@@ -1,0 +1,26 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Admin - {{ parametres.structure ? parametres.structure.name : company_name }} - {{ title }}{% endblock %}
+
+{% block body %}
+    <div class="pt-32pt">
+        <div class="container-fluid page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+            {{ fil_arial_admin_categories(title, 'Catégories', '') }}
+        </div>
+    </div>
+
+    <div class="page-section container-fluid page__container">
+        <div class="page-separator">
+            <div class="page-separator__text">Editer une catégorie</div>
+        </div>
+        {% include 'flash/__flash.html.twig' %}
+        <div class="col-md-7 p-0">
+            <div class="card p-relativemb-0">
+                <div class="card-body">
+                    {{ include('admin/shops/categories/_form.html.twig', {'button_label': 'Sauvegarder les informations'}) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

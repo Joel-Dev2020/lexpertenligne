@@ -1,0 +1,163 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Admin - {{ parametres.structure ? parametres.structure.name : company_name }} - {{ title }}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid flex-grow-1 container-p-y">
+        <h4 class="font-weight-bold py-3 mb-0">{{ title }}</h4>
+        <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
+            {{ fil_arial_admin_categories(title, 'Shop', 'Commande') }}
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                {% include 'flash/__flash.html.twig' %}
+                <div class="card">
+                    <div class="card-body p-5">
+                        <div class="row">
+                            <div class="col-sm-6 pb-4">
+                                <div class="media align-items-center mb-4">
+                                    <a href="{{ path('admin.home') }}" class="navbar-brand app-brand demo py-0 mr-4">
+                                <span class="app-brand-logo demo">
+                                   {% include 'layouts/partials/__logo.html.twig' %}
+                                </span>
+                                        <span class="app-brand-text demo font-weight-bold text-dark ml-2"></span>
+                                    </a>
+                                </div>
+                                <div class="mb-1">{{ parametres.structure.adresses ?? company_adress }}</div>
+                                <div class="mb-1">{{ parametres.structure.email ?? company_email }}</div>
+                                <div>{{ parametres.structure.contacts ?? company_number }}</div>
+                            </div>
+                            <div class="col-sm-6 text-right pb-4">
+                                <h6 class="text-big text-large font-weight-bold mb-3">FACTURE #{{ commande.reference }}</h6>
+                                <div class="mb-1">Date:
+                                    <strong class="font-weight-semibold">{{ commande.date|date('d/m/Y') }}</strong>
+                                </div>
+                                <div>Due date:
+                                    <strong class="font-weight-semibold">May 12, 2015</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="mb-4">
+                        <div class="row">
+                            <div class="col-sm-8 mb-4">
+                                <div class="font-weight-bold mb-2">Facture de:</div>
+                                <div>{{ commande.user.nom }} {{ commande.user.prenoms }}</div>
+                                {% if commande.adresses['livraison'] and commande.adresses['facturation'] %}
+                                <div><u>Add. Livraison:</u> {{ commande.adresses['livraison'].adresse }}</div>
+                                <div><u>Add. Facturation:</u> {{ commande.adresses['facturation'].adresse }}</div>
+                                {% else %}
+                                    <div><u>Mode:</u> {{ commande.modelivraison }}</div>
+                                    <div><u>Point relais:</u> {{ commande.pointrelais }}</div>
+                                {% endif %}
+                                <div>{{ commande.user.contacts }}</div>
+                                <div>{{ commande.user.email }}</div>
+                            </div>
+                            <div class="col-sm-4 mb-4">
+                                <div class="font-weight-bold mb-2">Détails du paiement:</div>
+                                <table>
+                                    <tbody>
+                                    <tr>
+                                        <td class="pr-3">Total HT:</td>
+                                        <td>
+                                            <strong>{{ commande.totalht|devise }}</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pr-3">Total TVA ({{ parametres.structure.tva }}%):</td>
+                                        <td>
+                                            <strong>{{ commande.totaltva|devise }}</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pr-3">Total TTC:</td>
+                                        <td>
+                                            <strong>{{ commande.totalttc|devise }}</strong>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="table-responsive mb-4">
+                            <table class="table m-0">
+                                <thead>
+                                <tr>
+                                    <th class="py-3">
+                                        Détails des produits
+                                    </th>
+                                    <th class="py-3">
+                                        Prix Unitaire
+                                    </th>
+                                    <th class="py-3">
+                                        Quantité
+                                    </th>
+                                    <th class="py-3">
+                                        Total
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in commande.products %}
+                                    <tr>
+                                        <td class="py-3">
+                                            <div class="font-weight-semibold">{{ item.product.name }}</div>
+                                            <div class="text-muted">
+                                                Catégorie:
+                                                {% for cat in item['product'].categories %}
+                                                    <strong>{{ cat.name|lower }}</strong>
+                                                {% endfor %} |
+                                                Couleur: {{ item.product.colors.name ?? '-------' }}
+                                                {% if item.product.matieres|length != 0 %} |
+                                                    Matériau:
+                                                    {% for mat in item.product.matieres %}
+                                                        <strong>{{ mat.name }}</strong>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </td>
+                                        <td class="py-3">
+                                            <strong>{{ item.product.price|devise }}</strong>
+                                        </td>
+                                        <td class="py-3">
+                                            <strong>{{ item.qte }}</strong>
+                                        </td>
+                                        <td class="py-3">
+                                            <strong>{{ (item.product.price * item.qte)|devise }}</strong>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td colspan="3" class="text-right py-3">
+                                        Total HT:
+                                        <br> Taxe({{ parametres.structure.tva }}%):
+                                        <br>
+                                        <span class="d-block text-big mt-2">Total TTC:</span>
+                                    </td>
+                                    <td class="py-3">
+                                        <strong>{{ commande.totalht|devise }}</strong>
+                                        <br>
+                                        <strong>{{ commande.totaltva|devise }}</strong>
+                                        <br>
+                                        <strong class="d-block text-big mt-2">{{ commande.totalttc|devise }}</strong>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-muted">
+                            <strong>Note:</strong> {{ commande.note ?? 'Aucune Note' }} <br>
+                            Arrêter la présente facture à la somme de <strong><u>{{ commande.chiffreenlettre|lower }}</u></strong> Fcfa
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <a href="{{ path('admin.commandes.index') }}" class="btn btn-primary"><i class="ion ion-md-list"></i>&nbsp; Liste des commandes</a>
+                        <a href="{{ path('shop.commandes.generatepdf', {'id': commande.id}) }}" class="btn btn-default"><i class="ion ion-md-print"></i>&nbsp; Imprimer la facture en pdf</a>
+                        {#<button type="button" class="btn btn-primary ml-2"><i class="ion ion-ios-paper-plane"></i>&nbsp; Send</button>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

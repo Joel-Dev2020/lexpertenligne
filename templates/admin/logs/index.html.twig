@@ -1,0 +1,74 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Admin - {{ parametres.structure ? parametres.structure.name : company_name }} - {{ title }}{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid flex-grow-1 container-p-y">
+        <h4 class="font-weight-bold py-3 mb-0">Activités récentes</h4>
+        <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('admin.home') }}"><i class="feather icon-home"></i></a></li>
+                <li class="breadcrumb-item" >Activités récentes</li>
+                <li class="breadcrumb-item active" >{{ title }}</li>
+            </ol>
+        </div>
+
+        <!-- DataTable within card -->
+
+        <div class="row">
+            <div class="col-md-8 offset-sm-2">
+                <div class="card">
+                    <div class="card-header" style="padding: 1rem 1rem;">
+                        <div class="row align-items-center m-l-0">
+                            <div class="col-sm-6">
+                                <h6 class="align-items-center m-l-0">Liste des activités récentes</h6>
+                            </div>
+                            <div class="col-sm-6 text-right">
+                                {% if logs|length != 0 %}
+                                <a class="btn btn-danger text-white btn-sm btn-round" onclick="return confirm('Etes vous sûr de vider toutes les activités?');" href="{{ path('admin.logs.clear') }}">
+                                    <i class="feather icon-trash"></i> Vider toutes les activités
+                                </a>
+                                {% else %}
+                                    <button disabled="disabled" class="btn btn-danger text-white btn-sm btn-round">
+                                        <i class="feather icon-trash"></i> Vider toutes les activités
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-datatable table-responsive">
+                        <table class="datatables-demo table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Description</th>
+                                <th>Date</th>
+                                <th width="80"  style="text-align: center;">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for log in logs %}
+                                <tr>
+                                    <td>{{ log.id }}</td>
+                                    <td>
+                                        <a href="javascript:;" style="color: {{ log.color }}">{{ log.action }}</a>
+                                        <p class="mb-2">{{ log.content }}</p>
+                                    </td>
+                                    <td>{{ log.createdAt|ago }}</td>
+                                    <td style="text-align: center;">{% include 'admin/logs/_delete_form.html.twig' %}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="4"><i class="glyph-icon icon-warning"></i> Aucun log à afficher pour le moment</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

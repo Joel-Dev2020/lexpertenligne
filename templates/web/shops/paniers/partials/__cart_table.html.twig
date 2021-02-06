@@ -1,0 +1,137 @@
+{% if products|length != 0 %}
+    <form action="{{ path('cart.update.all') }}" method="post">
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- cart_table -->
+                <table class="table cart_table shop_table_responsive">
+                    <thead>
+                        <tr>
+                            <th class="product-thumbnail">&nbsp;</th>
+                            <th class="product-name">Produit</th>
+                            <th class="product-price">Prix</th>
+                            <th class="product-quantity">Quantité</th>
+                            <th class="product-subtotal">Total</th>
+                            <th class="product-remove">&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in products %}
+                        <tr class="cart_item">
+                            <td class="product-thumbnail">
+                                <a href="{{ path('shop.products.show', {'id': item.product.id, 'slug': item.product.slug}) }}">
+                                    {% if item.product.filename %}
+                                        <img class="img-fluid" src="{{ vich_uploader_asset(item.product, 'imageFile') | imagine_filter('small') }}" alt="{{ item.product.name }}">
+                                    {% else %}
+                                        <img class="img-fluid" src="{{asset('assetics/images/product-card-empty.jpg') | imagine_filter('small') }}" alt="{{ item.product.name }}">
+                                    {% endif %}
+                                </a>
+                            </td>
+                            <td class="product-name" data-title="Product">
+                                <a href="{{ path('shop.products.show', {'id': item.product.id, 'slug': item.product.slug}) }}">{{ item.product.name }}</a>
+                                <span>{{ item.product.extrait|nl2br }}</span>
+                            </td>
+                            <td class="product-price" data-title="Price">
+                                <span class="Price-amount">
+                                    {% include 'pages/shops/products/partials/__price.html.twig' with {product: item.product} %}
+                                </span>
+                            </td>
+                            <td class="product-quantity" data-title="Quantity">
+                                <input name="product[]" value="{{ item.product.id }}" type="hidden">
+                                <div class="quantity">
+                                    <input class="qty" size="4" name="qty[]" min="0" max="{{ item.product.quantity }}" value="{{ item.qte }}" type="text">
+                                    <span class="inc quantity-button">+</span>
+                                    <span class="dec quantity-button">-</span>
+                                </div>
+                            </td>
+                            <td class="product-subtotal" data-title="Total">
+                                <span class="Price-amount">
+                                    {% if item.product.pricepromo %}
+                                        <span class="Price-currencySymbol">{{ (item.product.pricepromo * item.qte)|devise }}</span>
+                                        {% else %}
+                                        <span class="Price-currencySymbol"> {{ (item.product.price * item.qte)|devise }}</span>
+                                    {% endif %}
+                                </span>
+                            </td>
+                            <td class="product-remove">
+                                <a href="{{ path('cart.remove', {'id': item.product.id}) }}" class="remove">×</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="6" class="actions">
+                            <div class="coupon">
+                                <a class="ttm-btn ttm-btn-size-md ttm-btn-shape-square ttm-btn-style-fill ttm-icon-btn-left ttm-btn-color-skincolor" href="{{ path('shop.index') }}">
+                                    <i class="ti ti-arrow-left"></i> Retour à la boutique
+                                </a>
+                            </div>
+                            <button class="ttm-btn ttm-btn-size-md ttm-btn-shape-square ttm-btn-style-fill ttm-icon-btn-left ttm-btn-color-skincolor" type="submit">
+                                <i class="ti ti-reload"></i> Recalculer le panier
+                            </button>
+                            <a class="ttm-btn ttm-btn-size-md ttm-btn-shape-square ttm-btn-style-fill ttm-icon-btn-left ttm-btn-color-skincolor" href="{{ path('cart.clear') }}">
+                                <i class="ti ti-close"></i> Vider le panier
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-12">
+                <!-- cart-collaterals -->
+                <div class="cart-collaterals">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="cart_shipping mt-30">
+                                <h5>Calculate Shipping<span class="ti ti-angle-down"></span></h5>
+                                <p class="text-input orderby">
+                                    <select><option>United Kingdom (UK)</option>
+                                        <option>Other</option>
+                                    </select>
+                                </p>
+                                <p class="text-input"><input type="text" class="input-text zip-code" name="shipping_name" placeholder="Postal Code / Zip"></p>
+                                <div class="pt-20">
+                                    <p class="text-input"><input type="button" class="ttm-btn ttm-btn-size-md ttm-btn-shape-square ttm-btn-style-fill ttm-btn-color-skincolor" name="update_cart" value="update total"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="cart_discount mt-30">
+                                <h5>Coupon Discount<span class="ti ti-angle-down"></span></h5>
+                                <p class="pt-10">Enter Your Coupon Code If You Have Done.</p>
+                                <p class="text-input"><input type="text" class="input-text zip-code" name="shipping_name" placeholder="Coupon Code"></p>
+                                <div class="pt-20">
+                                    <p class="text-input"><input type="button" class="ttm-btn ttm-btn-size-md ttm-btn-shape-square ttm-btn-style-fill ttm-btn-color-skincolor" name="update_cart" value="Apply Coupon"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="cart_totals res-767-mt-30">
+                                <h5>Total HT<span>{{ totalht|devise }}</span></h5>
+                                <h5>TVA({{ parametres.structure.tva }}%)</h5>
+                                <p class="text-input">
+                                    Montant <span>+ {{ totaltva|devise }}</span>
+                                </p>
+                                <h5>Total TTC<span>{{ totalttc|devise }}</span></h5>
+                            </div>
+                            <div class="proceed-to-checkout">
+                                <a href="{{ path('shop.adresses.index') }}" class="checkout-button button">Procédez à l'achat</a>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- cart-collaterals end-->
+            </div>
+        </div>
+    </form>
+{% else %}
+    <div class="row">
+        <div class="col-lg-12">
+            <blockquote class="text-center" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <h3><i class="fa fa-shopping-cart"></i> Votre panier est vide</h3>
+                <div class="coupon">
+                    <a class="ttm-btn ttm-btn-size-md ttm-btn-shape-square ttm-btn-style-fill ttm-icon-btn-left ttm-btn-color-skincolor" href="{{ path('shop.index') }}">
+                        <i class="ti ti-arrow-left"></i> Commencé votre achat
+                    </a>
+                </div>
+            </blockquote>
+        </div>
+    </div>
+{% endif %}

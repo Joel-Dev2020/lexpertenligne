@@ -1,0 +1,6 @@
+{% if count_seuil_qte_products() > 0 %}
+    <div class="alert alert-danger alert-dismissible fade show">
+        <button type="button" class="close" data-dismiss="alert" style="position: relative; top: -17px">×</button>
+        Attention, il y a des produits dont les quantités seuils minimum sont atteints, <a href="{{ path('admin.products.qteseuil') }}">Voir les produits</a>
+    </div>
+{% endif %}

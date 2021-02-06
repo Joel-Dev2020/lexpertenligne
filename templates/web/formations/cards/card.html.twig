@@ -1,0 +1,81 @@
+<div class="col-md-6 col-lg-4 col-xl-3 card-group-row__col">
+    <div class="card card-sm card--elevated p-relative o-hidden overlay overlay--primary-dodger-blue js-overlay mdk-reveal js-mdk-reveal card-group-row__card"
+         {% if loop.index == 1 %}
+         data-overlay-onload-show
+         data-popover-onload-show
+         data-force-reveal
+         {% endif %}
+         data-partial-height="44"
+         data-toggle="popover"
+         data-trigger="click">
+
+        <a href="{{ path('formations.show', {'id': formation.id, 'slug': formation.slug}) }}" class="js-image" data-position="">
+            {% include 'web/formations/cards/__img.html.twig' %}
+            <span class="overlay__content align-items-start justify-content-start">
+                <span class="overlay__action card-body d-flex align-items-center">
+                    <i class="material-icons mr-4pt">info</i>
+                    <span class="card-title text-white">Infos</span>
+                </span>
+            </span>
+        </a>
+
+        <div class="mdk-reveal__content">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="flex">
+                        <a class="card-title" href="{{ path('formations.show', {'id': formation.id, 'slug': formation.slug}) }}">
+                            {{ formation.name|u.truncate(30, '...') }}
+                        </a>
+                        <small class="text-50 font-weight-bold mb-4pt">{{ formation.categories.name }}</small>
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <div class="rating flex">
+                        <span class="rating__item"><span class="material-icons">star</span></span>
+                        <span class="rating__item"><span class="material-icons">star</span></span>
+                        <span class="rating__item"><span class="material-icons">star</span></span>
+                        <span class="rating__item"><span class="material-icons">star</span></span>
+                        <span class="rating__item"><span class="material-icons">star_border</span></span>
+                    </div>
+                    <small class="text-50">{{ formation.duree }}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="popoverContainer d-none">
+        <div class="media">
+            <div class="media-left mr-12pt">
+                {% include 'web/formations/cards/__img_small.html.twig' %}
+            </div>
+            <div class="media-body">
+                <div class="card-title mb-0">{{ formation.name|u.truncate(30, '...') }}</div>
+                <p class="lh-1 mb-0">
+                    <span class="text-50 small">Avec</span>
+                    <span class="text-50 small font-weight-bold">{{ parametres.structure.name ?? company_name }}</span>
+                </p>
+            </div>
+        </div>
+
+        <p class="my-16pt text-70">{{ formation.extrait|nl2br }}</p>
+
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <div class="d-flex align-items-center mb-4pt">
+                    <span class="material-icons icon-16pt text-50 mr-4pt">access_time</span>
+                    <p class="flex text-50 lh-1 mb-0"><small>{{ formation.duree }}</small></p>
+                </div>
+                <div class="d-flex align-items-center mb-4pt">
+                    <span class="material-icons icon-16pt text-50 mr-4pt">play_circle_outline</span>
+                    <p class="flex text-50 lh-1 mb-0"><small>{{ pluralize(formation.programformations.count, 'Thème') }}</small></p>
+                </div>
+                <div class="d-flex align-items-center">
+                    <span class="material-icons icon-16pt text-50 mr-4pt">assessment</span>
+                    <p class="flex text-50 lh-1 mb-0"><small>Difficile</small></p>
+                </div>
+            </div>
+            <div class="col text-right">
+                <a href="{{ path('formations.show', {'id': formation.id, 'slug': formation.slug}) }}" class="btn btn-primary">Plus de détails</a>
+            </div>
+        </div>
+    </div>
+</div>

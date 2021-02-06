@@ -1,0 +1,52 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Admin - {{ parametres.structure ? parametres.structure.name : company_name }} - {{ title }}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid flex-grow-1 container-p-y">
+        <h4 class="font-weight-bold py-3 mb-0">{{ products.name }}</h4>
+        <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
+            {{ fil_arial_admin_categories(products.name, 'Shop', 'Produits') }}
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="nav-tabs-top nav-responsive-sm">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#item-overview">Edition fiche produit</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+
+                        <!-- Details -->
+                        <div class="tab-pane fade show active" id="item-overview">
+                            <div class="card-header">
+                                <a href="{{ path('admin.products.new') }}" class="btn btn-md btn-info">
+                                    <i class="fa fa-plus"></i> {{ libelle_ajouter }}
+                                </a>
+                                <a href="{{ path('admin.products.index') }}" class="btn btn-md btn-success">
+                                    <i class="fa fa-list"></i> {{ libelle_liste }}
+                                </a>
+                                <a href="{{ path('admin.products.show', {'id': products.id}) }}" class="btn btn-md btn-warning">
+                                    <i class="fa fa-file"></i> Voir la fiche
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                {{ include('admin/shops/products/_form.html.twig', {'button_label': 'Sauvegarder les informations'}) }}
+                            </div>
+                        </div>
+                        <!-- / Details -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $('.switcher-input').unwrap();
+    </script>
+{% endblock %}
+

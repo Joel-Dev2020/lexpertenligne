@@ -1,0 +1,48 @@
+{% extends 'layouts/front/base.html.twig' %}
+
+{% block title %}{{ parametres.structure.name ?? company_name }} | {{ title }}{% endblock %}
+{% block body %}
+    {{ fil_arial(title) }}
+    <div class="container-fluid page__container">
+        <div class="page-section">
+
+            <div class="page-separator">
+                <div class="page-separator__text">{{ title }}</div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center" style="white-space: nowrap;">
+                        <div class="col-lg-auto">
+                            <form class="search-form search-form--dark d-lg-inline-flex mb-8pt mb-lg-0">
+                                <input id="searchInput" data-action="{{ url('dictionnaires.index') }}" name="search" type="text" class="form-control w-lg-auto" placeholder="Trouver un lexique">
+                                <button class="btn" type="button"><i class="material-icons">search</i></button>
+                            </form>
+                        </div>
+                        <strong id="result" class="col-lg text-center" style="text-align: center!important;font-size: 20px!important;"></strong>
+                        <div class="col-lg d-flex flex-wrap align-items-end">
+                            <div class="ml-lg-auto dropdown">
+                                <a href="javascript:" class="btn btn-link dropdown-toggle text-70" data-toggle="dropdown">Filtrer par lettre</a>
+                                <div class="dropdown-menu dropdown-menu-right" id="js-dictionnaires-abcds">
+                                    {% include 'web/dictionnaires/partials/__abcds.html.twig' %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="list-group list-group-flush" id="js-dictionnaires-wrapper">
+                    <div id="js-dictionnaires-filter">
+                        {% include 'web/dictionnaires/partials/row.html.twig' %}
+                    </div>
+                    <div id="dictionnaire-feedback">
+                        <div class="is-loading"></div>
+                    </div>
+                </div>
+
+                {% include 'web/dictionnaires/partials/__pagination.html.twig' %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

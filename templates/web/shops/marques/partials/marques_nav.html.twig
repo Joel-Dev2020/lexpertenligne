@@ -1,0 +1,4 @@
+{% for marque in marques %}
+<li><a href="{{ path('shop.products.marques', {'id': marque.id, 'slug': marque.slug}) }}">{{ marque.name }}</a> <span>({{ marque.products.count }})</span></li>
+{% endfor %}
+<li><a href="javascript:"><i class="fa fa-plus"></i> Voir plus de marques</a> </li>

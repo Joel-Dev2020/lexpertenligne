@@ -1,0 +1,91 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Admin - {{ parametres.structure ? parametres.structure.name : company_name }} - {{ title }}{% endblock %}
+
+{% block body %}
+    <div class="pt-32pt">
+        <div class="container-fluid page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+            {{ fil_arial_admin_categories(title, 'Catégories', '') }}
+            <div class="row" role="tablist">
+                <div class="col-auto">
+                    <a href="{{ path('admin.categories.new') }}" class="btn btn-outline-secondary">
+                        <i class="material-icons">add</i>
+                        {{ libelle_ajouter }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid page__container">
+        <div class="page-section">
+
+            {% include 'flash/__flash.html.twig' %}
+
+            <div class="page-separator">
+                <div class="page-separator__text">Catégories</div>
+            </div>
+
+            <div class="card mb-0">
+
+                <div class="table-responsive" data-toggle="lists" data-lists-sort-by="js-lists-values-employee-name" data-lists-values='["js-lists-values-employee-name", "js-lists-values-employer-name", "js-lists-values-projects", "js-lists-values-activity", "js-lists-values-earnings"]'>
+
+                    <div class="card-header">
+                        <form class="form-inline">
+                            <label class="mr-sm-2 form-label" for="inlineFormFilterBy">Filtrer par:</label>
+                            <input type="text" class="form-control search mb-2 mr-sm-2 mb-sm-0" id="inlineFormFilterBy" placeholder="Rechercher ...">
+                        </form>
+                    </div>
+
+                    <table class="table mb-0 thead-border-top-0 table-nowrap">
+                        <thead>
+                        <tr>
+                            <th>
+                                <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-employee-name">Catégorie</a>
+                            </th>
+                            <th style="width: 150px;">
+                                <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-employer-name">Slug</a>
+                            </th>
+                            <th style="width: 150px;">
+                                <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-employer-name">Ordre</a>
+                            </th>
+                            <th style="width: 150px;">
+                                <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-employer-name">Parent</a>
+                            </th>
+                            <th style="width: 24px;" class="pl-0"></th>
+                        </tr>
+                        </thead>
+                        <tbody class="list" id="staff">
+                        {% for categorie in categories %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="{{ path('admin.categories.edit', {'id': categorie.id}) }}" class="text-warning"><i class="material-icons mr-8pt">star</i></a>
+                                        <a href="{{ path('admin.categories.edit', {'id': categorie.id}) }}" class="text-70">{{ categorie.name }}</a>
+                                    </div>
+                                </td>
+                                <td class="text-50 js-lists-values-activity small">{{ categorie.slug }}</td>
+                                <td class="text-50 js-lists-values-activity small">{{ categorie.ordre }}</td>
+                                <td class="text-50 js-lists-values-activity small">{{ categorie.parent }}</td>
+                                <td class="text-right pl-0">
+                                    <a href="{{ path('admin.categories.edit', {'id': categorie.id}) }}" class="text-50"><i class="material-icons">edit</i></a>
+                                    {% include 'admin/shops/categories/_delete_form.html.twig' %}
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5">{{ data_none }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-footer p-8pt">
+                    {{ knp_pagination_render(categories) }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

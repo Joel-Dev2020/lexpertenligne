@@ -1,0 +1,236 @@
+<div class="row mb-32pt">
+    <div class="col-lg-12 d-flex align-items-center">
+        <div class="flex" style="max-width: 100%">
+            <div class="nav-tabs-top nav-responsive-sm card p-relative o-hidden mb-0">
+                <ul class="nav nav-tabs card-header card-header-tabs-basic nav px-0">
+                    <li class="nav-item">
+                        <a class="nav-link active show" data-toggle="tab" href="#item-info">Infos basics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link show" data-toggle="tab" href="#item-description">Description</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link show" data-toggle="tab" href="#item-options">Options</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link show" data-toggle="tab" href="#item-videos">Vidéos URL</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link show" data-toggle="tab" href="#item-images-uploads">Images UPLOADS</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <!-- Basic info -->
+                    <div class="tab-pane fade active show" id="item-info">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-label">{{ form_label(form.name) }}</label>
+                                        {{ form_widget(form.name) }}
+                                        <a href="javascript:void(0)" class="small">{{ form_help(form.name) }}</a>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-label">{{ form_label(form.price) }}</label>
+                                        {{ form_widget(form.price) }}
+                                        <a href="javascript:void(0)" class="small">{{ form_help(form.price) }}</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-label">{{ form_label(form.sku) }}</label>
+                                        {{ form_widget(form.sku) }}
+                                        <a href="javascript:void(0)" class="small">{{ form_help(form.sku) }}</a>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-label">{{ form_label(form.pricepromo) }}</label>
+                                        {{ form_widget(form.pricepromo) }}
+                                        <a href="javascript:void(0)" class="small">{{ form_help(form.pricepromo) }}</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-label">{{ form_label(form.quantity) }}</label>
+                                        {{ form_widget(form.quantity) }}
+                                        <a href="javascript:void(0)" class="small">{{ form_help(form.quantity) }}</a>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-label">{{ form_label(form.publishedAt) }}</label>
+                                        {{ form_widget(form.publishedAt) }}
+                                        <a href="javascript:void(0)" class="small">{{ form_help(form.publishedAt) }}</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-label">{{ form_label(form.delaislivraison) }}</label>
+                                        {{ form_widget(form.delaislivraison) }}
+                                        <a href="javascript:void(0)" class="small">{{ form_help(form.delaislivraison) }}</a>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-label">{{ form_label(form.garantie) }}</label>
+                                        {{ form_widget(form.garantie) }}
+                                        <a href="javascript:void(0)" class="small">{{ form_help(form.garantie) }}</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <hr class="m-0">
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3 offset-1">
+                                    <div class="form-group">
+                                        {{ form_widget(form.online) }}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        {{ form_widget(form.featured) }}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        {{ form_widget(form.nouveau) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- / Basic info -->
+
+                    <!-- Description -->
+                    <div class="tab-pane fade" id="item-description">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-label">{{ form_label(form.extrait) }}</label>
+                                        {{ form_widget(form.extrait) }}
+                                        <a href="javascript:void(0)" class="small">{{ form_help(form.extrait) }}</a>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-label">{{ form_label(form.metadescription) }}</label>
+                                        {{ form_widget(form.metadescription) }}
+                                        <a href="javascript:void(0)" class="small">{{ form_help(form.metadescription) }}</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">{{ form_label(form.description) }}</label>
+                                {{ form_widget(form.description) }}
+                                <a href="javascript:void(0)" class="small">{{ form_help(form.description) }}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- / Description -->
+
+                    <!-- Options -->
+                    <div class="tab-pane fade" id="item-options">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">{{ form_label(form.categories) }}</label>
+                                        {{ form_widget(form.categories) }}
+                                        <a href="javascript:void(0)" class="small">{{ form_help(form.categories) }}</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="select2-success">
+                                            <label class="form-label">{{ form_label(form.association) }}</label>
+                                            {{ form_widget(form.association) }}
+                                            <a href="javascript:void(0)" class="small">{{ form_help(form.association) }}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">{{ form_label(form.metakeywords) }}</label>
+                                        {{ form_widget(form.metakeywords) }}
+                                        <a href="javascript:void(0)" class="small">{{ form_help(form.metakeywords) }}</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">{{ form_label(form.weight) }}</label>
+                                        {{ form_widget(form.weight) }}
+                                        <a href="javascript:void(0)" class="small">{{ form_help(form.weight) }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- / Options -->
+
+                    <!-- Videos -->
+                    <div class="tab-pane fade" id="item-videos">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="form-label">{{ form_label(form.videourl) }}</label>
+                                {{ form_widget(form.videourl) }}
+                                <a href="javascript:void(0)" class="small">{{ form_help(form.videourl) }}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- / Videos -->
+
+                    <!-- Images UPLOADS -->
+                    <div class="tab-pane fade" id="item-images-uploads">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Photo principale (768x1035)</label>
+                                        {{ form_widget(form.imageFile) }}
+                                        <a href="javascript:void(0)" class="small">{{ form_help(form.imageFile) }}</a>
+                                        {{ form_errors(form.imageFile) }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Photo au survol (768x1035)</label>
+                                        {{ form_widget(form.imageFileHover) }}
+                                        <a href="javascript:void(0)" class="small">{{ form_help(form.imageFileHover) }}</a>
+                                        {{ form_errors(form.imageFileHover) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- / Images UPLOADS -->
+
+                </div>
+            </div>
+            <div class="text-left mt-3">
+                <button type="reset" class="btn btn-default">Annuler</button> &nbsp;
+                <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> &nbsp;{{ button_label|default('Enregistrer') }}</button>
+            </div>
+        </div>
+    </div>
+</div>

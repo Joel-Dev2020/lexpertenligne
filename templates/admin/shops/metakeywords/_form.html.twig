@@ -1,0 +1,12 @@
+{{ form_start(form) }}
+<div class="form-group">
+    <label class="form-label">{{ form_label(form.name) }}</label>
+    {{ form_widget(form.name) }}
+    <a href="javascript:void(0)" class="small">{{ form_help(form.name) }}</a>
+</div>
+
+<div class="text-right mt-3">
+    <button type="submit" class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>&nbsp;
+    <button type="reset" class="btn btn-default">Annuler</button>
+</div>
+{{ form_end(form) }}

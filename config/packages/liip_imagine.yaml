@@ -1,0 +1,273 @@
+# See dos how to configure the bundle: https://symfony.com/doc/current/bundles/LiipImagineBundle/basic-usage.html
+liip_imagine:
+    # valid drivers options include "gd" or "gmagick" or "imagick"
+    driver: "gd"
+
+    # paramètre de chargement des fichiers d’origine
+    resolvers:
+        default:
+            web_path:
+                web_root: '%kernel.project_dir%/public'
+                cache_prefix: 'media/cache'
+
+    loaders:
+        default:
+            filesystem:
+                data_root:
+                    - '%kernel.project_dir%/public'
+
+    # define your filter sets under this option
+    filter_sets:
+        filgran_filter:
+            filters:
+                watermark_image:
+                    image: "%kernel.project_dir%/public/admin/img/logo.png"
+                    size: 0.5
+                    position: bottomright
+
+        elfinder_thumbnail:
+            data_loader: cmf_media_doctrine_phpcr
+            quality: 85
+            filters:
+                thumbnail: { size: [48, 48], mode: inset }
+        # an example thumbnail transformation definition
+        # https://symfony.com/doc/current/bundles/LiipImagineBundle/basic-usage.html#create-thumbnails
+
+        logo:
+            # set your image quality defaults
+            jpeg_quality:          75
+            png_compression_level: 8
+            # setup the filter steps to apply for this transformation
+            filters:
+                # auto rotate the image using EXIF metadata
+                auto_rotate: ~
+                # strip the image of all metadata
+                strip: ~
+                # scale and square the image to the given dimensions
+                thumbnail:
+                    size:          [100, 100]
+                    mode:          outbound
+
+        favicon:
+            # set your image quality defaults
+            jpeg_quality:          75
+            png_compression_level: 8
+            # setup the filter steps to apply for this transformation
+            filters:
+                # auto rotate the image using EXIF metadata
+                auto_rotate: ~
+                # strip the image of all metadata
+                strip: ~
+                # scale and square the image to the given dimensions
+                thumbnail:
+                    size:          [100, 100]
+                    mode:          outbound
+
+        avatar:
+            # set your image quality defaults
+            jpeg_quality:          75
+            png_compression_level: 8
+            # setup the filter steps to apply for this transformation
+            filters:
+                # auto rotate the image using EXIF metadata
+                auto_rotate: ~
+                # strip the image of all metadata
+                strip: ~
+                # scale and square the image to the given dimensions
+                thumbnail:
+                    size:          [200, 200]
+                    mode:          outbound
+        large:
+            # set your image quality defaults
+            jpeg_quality:          75
+            png_compression_level: 8
+            # setup the filter steps to apply for this transformation
+            filters:
+                # auto rotate the image using EXIF metadata
+                auto_rotate: ~
+                # strip the image of all metadata
+                strip: ~
+                # scale and square the image to the given dimensions
+                thumbnail:
+                    size:          [1311, 516]
+                    mode:          outbound
+
+        product_thumb:
+            # set your image quality defaults
+            jpeg_quality:          75
+            png_compression_level: 8
+            # setup the filter steps to apply for this transformation
+            filters:
+                # auto rotate the image using EXIF metadata
+                auto_rotate: ~
+                # strip the image of all metadata
+                strip: ~
+                # scale and square the image to the given dimensions
+                thumbnail:
+                    size:          [271, 300]
+                    mode:          outbound
+
+        medium:
+            # set your image quality defaults
+            jpeg_quality:          75
+            png_compression_level: 8
+            # setup the filter steps to apply for this transformation
+            filters:
+                # auto rotate the image using EXIF metadata
+                auto_rotate: ~
+                # strip the image of all metadata
+                strip: ~
+                # scale and square the image to the given dimensions
+                thumbnail:
+                    size:          [645, 320]
+                    mode:          outbound
+
+        thumbnail:
+            # set your image quality defaults
+            jpeg_quality:          75
+            png_compression_level: 8
+            # setup the filter steps to apply for this transformation
+            filters:
+                # auto rotate the image using EXIF metadata
+                auto_rotate: ~
+                # strip the image of all metadata
+                strip: ~
+                # scale and square the image to the given dimensions
+                thumbnail:
+                    size:          [430, 168]
+                    mode:          outbound
+
+        small:
+            # set your image quality defaults
+            jpeg_quality:          75
+            png_compression_level: 8
+            # setup the filter steps to apply for this transformation
+            filters:
+                # auto rotate the image using EXIF metadata
+                auto_rotate: ~
+                # strip the image of all metadata
+                strip: ~
+                # scale and square the image to the given dimensions
+                thumbnail:
+                    size:          [200, 168]
+                    mode:          outbound
+
+        admin_thumbnail:
+            # set your image quality defaults
+            jpeg_quality:          75
+            png_compression_level: 8
+            # setup the filter steps to apply for this transformation
+            filters:
+                # auto rotate the image using EXIF metadata
+                auto_rotate: ~
+                # strip the image of all metadata
+                strip: ~
+                # scale and square the image to the given dimensions
+                thumbnail:
+                    size:          [310, 207]
+                    mode:          outbound
+
+        mini:
+            # set your image quality defaults
+            jpeg_quality:          75
+            png_compression_level: 8
+            # setup the filter steps to apply for this transformation
+            filters:
+                # auto rotate the image using EXIF metadata
+                auto_rotate: ~
+                # strip the image of all metadata
+                strip: ~
+                # scale and square the image to the given dimensions
+                thumbnail:
+                    size:          [200, 200]
+                    mode:          outbound
+
+        panier_cart:
+            # set your image quality defaults
+            jpeg_quality:          75
+            png_compression_level: 8
+            # setup the filter steps to apply for this transformation
+            filters:
+                # auto rotate the image using EXIF metadata
+                auto_rotate: ~
+                # strip the image of all metadata
+                strip: ~
+                # scale and square the image to the given dimensions
+                thumbnail:
+                    size:          [300, 210]
+                    mode:          outbound
+
+        pubblock:
+            # set your image quality defaults
+            jpeg_quality:          75
+            png_compression_level: 8
+            # setup the filter steps to apply for this transformation
+            filters:
+                # auto rotate the image using EXIF metadata
+                auto_rotate: ~
+                # strip the image of all metadata
+                strip: ~
+                # scale and square the image to the given dimensions
+                thumbnail:
+                    size:          [747, 226]
+                    mode:          outbound
+
+        banner644x150:
+            # set your image quality defaults
+            jpeg_quality:          75
+            png_compression_level: 8
+            # setup the filter steps to apply for this transformation
+            filters:
+                # auto rotate the image using EXIF metadata
+                auto_rotate: ~
+                # strip the image of all metadata
+                strip: ~
+                # scale and square the image to the given dimensions
+                thumbnail:
+                    size:          [644, 150]
+                    mode:          outbound
+
+        pubpaysage:
+            # set your image quality defaults
+            jpeg_quality:          75
+            png_compression_level: 8
+            # setup the filter steps to apply for this transformation
+            filters:
+                # auto rotate the image using EXIF metadata
+                auto_rotate: ~
+                # strip the image of all metadata
+                strip: ~
+                # scale and square the image to the given dimensions
+                thumbnail:
+                    size:          [1170, 210]
+                    mode:          outbound
+
+        pubportrait:
+            # set your image quality defaults
+            jpeg_quality:          75
+            png_compression_level: 8
+            # setup the filter steps to apply for this transformation
+            filters:
+                # auto rotate the image using EXIF metadata
+                auto_rotate: ~
+                # strip the image of all metadata
+                strip: ~
+                # scale and square the image to the given dimensions
+                thumbnail:
+                    size:          [270, 264]
+                    mode:          outbound
+
+        blogs:
+            # set your image quality defaults
+            jpeg_quality:          75
+            png_compression_level: 8
+            # setup the filter steps to apply for this transformation
+            filters:
+                # auto rotate the image using EXIF metadata
+                auto_rotate: ~
+                # strip the image of all metadata
+                strip: ~
+                # scale and square the image to the given dimensions
+                thumbnail:
+                    size:          [900, 611]
+                    mode:          outbound

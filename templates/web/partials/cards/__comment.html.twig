@@ -1,0 +1,30 @@
+<div class="ml-sm-32pt mt-3 card p-3">
+    <div class="d-flex">
+        <a href="#" class="avatar avatar-sm mr-12pt">
+            <!-- <img src="../../public/images/people/110/guy-6.jpg" alt="Guy" class="avatar-img rounded-circle"> -->
+            {% if commentaire.user.filename %}
+                <img src="{{ vich_uploader_asset(commentaire.user, 'imageFile') | imagine_filter('avatar') }}" width="40" alt="{{ commentaire.user.username }}" class="avatar-img rounded-circle">
+            {% else %}
+                <img src="{{ asset('assetics/images/avatar.png') }}" width="40" height="40" alt="{{ commentaire.user.username }}" class="avatar-img rounded-circle">
+            {% endif %}
+        </a>
+        <div class="flex">
+            <div class="d-flex align-items-center">
+                <a href="#" class="text-body"><strong>{{ commentaire.user.fullname }}</strong></a>
+                <small class="ml-auto text-muted">{{ commentaire.createdAt|ago }}</small>
+            </div>
+            <p class="mt-1 text-70">
+                {{ commentaire.message|nl2br|raw }}
+            </p>
+
+            <div class="d-flex align-items-center">
+                <a href="#" class="text-50 d-flex align-items-center text-decoration-0">
+                    <i class="material-icons mr-1" style="font-size: inherit;">favorite_border</i> 3
+                </a>
+                <a href="#" class="text-50 d-flex align-items-center text-decoration-0 ml-3">
+                    <i class="material-icons mr-1" style="font-size: inherit;">thumb_up</i> 13
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

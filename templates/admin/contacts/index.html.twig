@@ -1,0 +1,126 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Admin - {{ parametres.structure ? parametres.structure.name : company_name }} - {{ title }}{% endblock %}
+
+{% block body %}
+    <div class="pt-32pt">
+        <div class="container-fluid page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+            {{ fil_arial_admin_categories(title, 'Contacts', '') }}
+        </div>
+    </div>
+
+    <div class="container-fluid page__container">
+        <div class="page-section">
+
+            {% include 'flash/__flash.html.twig' %}
+
+            <div class="page-separator">
+                <div class="page-separator__text">Liste des contacts</div>
+            </div>
+
+            <div class="card mb-0">
+
+                <div class="table-responsive" data-toggle="lists" data-lists-sort-by="js-lists-values-employee-name" data-lists-values='["js-lists-values-employee-name", "js-lists-values-employer-name", "js-lists-values-projects", "js-lists-values-activity", "js-lists-values-earnings"]'>
+
+                    <div class="card-header">
+                        <form class="form-inline">
+                            <label class="mr-sm-2 form-label" for="inlineFormFilterBy">Filtrer par:</label>
+                            <input type="text" class="form-control search mb-2 mr-sm-2 mb-sm-0" id="inlineFormFilterBy" placeholder="Rechercher ...">
+                        </form>
+                    </div>
+
+                    <table class="table mb-0 thead-border-top-0 table-nowrap">
+                        <thead>
+                        <tr>
+                            <th>
+                                <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-employee-name">Nom & Prénoms</a>
+                            </th>
+                            <th style="width: 150px;">
+                                <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-employer-name">Téléphone</a>
+                            </th>
+                            <th style="width: 150px;">
+                                <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-employer-name">Email</a>
+                            </th>
+                            <th style="width: 150px;">
+                                <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-employer-name">Sujet</a>
+                            </th>
+                            <th style="width: 150px;">
+                                <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-employer-name">Date</a>
+                            </th>
+                            <th style="width: 150px;">
+                                <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-employer-name">Valider</a>
+                            </th>
+                            <th style="width: 24px;" class="pl-0"></th>
+                        </tr>
+                        </thead>
+                        <tbody class="list" id="staff">
+                        {% for contact in contacts %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="{{ path('admin.contacts.show', {'id': contact.id}) }}" class="text-warning"><i class="material-icons mr-8pt">person</i></a>
+                                        <a href="{{ path('admin.contacts.show', {'id': contact.id}) }}" class="text-70">{{ contact.nomprenoms }}</a>
+                                    </div>
+                                </td>
+                                <td class="text-50 js-lists-values-activity small">{{ contact.email }}</td>
+                                <td class="text-50 js-lists-values-activity small">{{ contact.sujet }}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        {{ contact.createdAt|date('d/m/Y à H:i:s') }}
+                                    </div>
+                                </td>
+                                <td class="text-50 js-lists-values-activity small">
+                                    <form action="{{ path('admin.contacts.activer', {'id': contact.id}) }}" onclick="this.submit()">
+                                        <div class="ml-auto mb-2 mb-sm-0 custom-control-inline mr-0">
+                                            <div class="custom-control custom-checkbox-toggle ml-8pt">
+                                                <input checked="" type="checkbox" id="active" {{ (contact.notifications) ? 'checked' : '' }} data-id="{{ contact.id }}" class="custom-control-input">
+                                                <label class="custom-control-label" for="active">Active</label>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </td>
+                                <td class="text-right pl-0">
+                                    <a href="{{ path('admin.contacts.show', {'id': contact.id}) }}" class="text-50"><i class="material-icons">edit</i></a>
+                                    {% include 'admin/contacts/_delete_form.html.twig' %}
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="7">{{ data_none }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-footer p-8pt">
+                    <ul class="pagination justify-content-start pagination-xsm m-0">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true" class="material-icons">chevron_left</span>
+                                <span>Prev</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Page 1">
+                                <span>1</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Page 2">
+                                <span>2</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span>Next</span>
+                                <span aria-hidden="true" class="material-icons">chevron_right</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

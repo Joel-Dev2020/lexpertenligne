@@ -1,0 +1,130 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Admin - {{ parametres.structure ? parametres.structure.name : company_name }} - {{ title }}{% endblock %}
+
+{% block body %}
+    <div class="pt-32pt">
+        <div class="container-fluid page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+            {{ fil_arial_admin_categories(title, 'Blogs', '') }}
+        </div>
+    </div>
+    <div class="container-fluid page__container">
+        <div class="page-section">
+
+            <div class="row">
+                <div class="col-md-8">
+                    <p class="text-muted d-flex align-items-center mb-lg-32pt">
+                        <a href="{{ path('admin.blogs.index') }}" class="mr-3">Revenir à la liste</a>
+                        <a href="{{ path('admin.blogs.new') }}" class="mr-2 text-50">Nouvelle actualité</a>
+                        <a href="{{ path('admin.blogs.edit', {'id': blog.id}) }}" class="text-50" style="text-decoration: underline;">Modifier</a>
+                        <a href="{{ path('admin.blogscategories.edit', {'id': blog.categories.id}) }}" class="mr-2 text-50">{{ blog.categories.name }}</a>
+                    </p>
+
+                    <div class="card card-body">
+                        <div class="d-flex">
+                            <a href="#"
+                               class="avatar avatar-sm avatar-online mr-12pt">
+                                <!-- <img src="../../public/images/people/256/256_rsz_nicolas-horn-689011-unsplash.jpg" alt="people" class="avatar-img rounded-circle"> -->
+                                <span class="avatar-title rounded-circle">AT</span>
+                            </a>
+                            <div class="flex">
+                                <p class="d-flex align-items-center mb-2">
+                                    <a href="#" class="text-body mr-2"><strong>{{ blog.user.username }}</strong></a>
+                                    <small class="text-muted">{{ blog.createdAt|ago }}</small>
+                                </p>
+                                <h5 class="h5 measure-lead-max mb-2">{{ blog.name }}</h5>
+                                {% if blog.extrait %}
+                                <p>{{ blog.extrait|nl2br }}</p>
+                                <hr>
+                                {% endif %}
+                                <p>{{ blog.content|raw }}</p>
+                                <div class="d-flex align-items-center">
+                                    <a href="#"
+                                       class="text-50 d-flex align-items-center text-decoration-0">
+                                        <i class="material-icons mr-1" style="font-size: inherit;">remove_red_eye</i> {{ blog.view }}
+                                    </a>
+                                    <a href="#" class="text-50 d-flex align-items-center text-decoration-0 ml-3">
+                                        <i class="material-icons mr-1" style="font-size: inherit;">thumb_up</i> 130
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+
+                    <div class="page-separator">
+                        <div class="page-separator__text">Top Contributors</div>
+                    </div>
+                    <p class="text-70 mb-24pt">People who started the most discussions on Luma.</p>
+
+                    <div class="mb-4">
+
+                        <div class="d-flex align-items-center mb-2">
+                            <a href="#"
+                               class="avatar avatar-xs mr-8pt">
+                                <img src="{{ asset('assetics/images/people/50/guy-1.jpg') }}" alt="course" class="avatar-img rounded-circle">
+                            </a>
+                            <a href="#" class="flex mr-2 text-body"><strong>Luci Bryant</strong></a>
+                            <span class="text-70 mr-2">105</span>
+                            <i class="text-muted material-icons font-size-16pt">forum</i>
+                        </div>
+
+                        <div class="d-flex align-items-center mb-2">
+                            <a href="#" class="avatar avatar-xs mr-8pt">
+                                <img src="{{ asset('assetics/images/people/50/guy-2.jpg') }}" alt="course" class="avatar-img rounded-circle">
+                            </a>
+                            <a href="#" class="flex mr-2 text-body"><strong>Magnus Goldsmith</strong></a>
+                            <span class="text-70 mr-2">93</span>
+                            <i class="text-muted material-icons font-size-16pt">forum</i>
+                        </div>
+
+                        <div class="d-flex align-items-center mb-2">
+                            <a href="#"
+                               class="avatar avatar-xs mr-8pt">
+                                <img src="{{ asset('assetics/images/people/50/woman-1.jpg') }}" alt="course" class="avatar-img rounded-circle">
+                            </a>
+                            <a href="#" class="flex mr-2 text-body"><strong>Katelyn Rankin</strong></a>
+                            <span class="text-70 mr-2">55</span>
+                            <i class="text-muted material-icons font-size-16pt">forum</i>
+                        </div>
+
+                        <div class="d-flex align-items-center mb-2">
+                            <a href="#" class="avatar avatar-xs mr-8pt">
+                                <img src="{{ asset('assetics/images/256_rsz_nicolas-horn-689011-unsplash.jpg') }}" alt="course" class="avatar-img rounded-circle">
+                            </a>
+                            <a href="#" class="flex mr-2 text-body"><strong>Jenell D. Matney</strong></a>
+                            <span class="text-70 mr-2">32</span>
+                            <i class="text-muted material-icons font-size-16pt">forum</i>
+                        </div>
+
+                        <div class="d-flex align-items-center mb-2">
+                            <a href="#" class="avatar avatar-xs mr-8pt">
+                                <img src="{{ asset('assetics/images/256_rsz_sharina-mae-agellon-377466-unsplash.jpg') }}" alt="course" class="avatar-img rounded-circle">
+                            </a>
+                            <a href="#" class="flex mr-2 text-body"><strong>Sherri J. Cardenas</strong></a>
+                            <span class="text-70 mr-2">21</span>
+                            <i class="text-muted material-icons font-size-16pt">forum</i>
+                        </div>
+
+                        <div class="d-flex align-items-center mb-2">
+                            <a href="#" class="avatar avatar-xs mr-8pt">
+                                <img src="{{ asset('assetics/images/256_rsz_karl-s-973833-unsplash.jpg') }}" alt="course" class="avatar-img rounded-circle">
+                            </a>
+                            <a href="#" class="flex mr-2 text-body"><strong>Joseph S. Ferland</strong></a>
+                            <span class="text-70 mr-2">16</span>
+                            <i class="text-muted material-icons font-size-16pt">forum</i>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+
+
+

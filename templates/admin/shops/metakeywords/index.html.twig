@@ -1,0 +1,72 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Admin - {{ parametres.structure ? parametres.structure.name : company_name }} - {{ title }}{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid flex-grow-1 container-p-y">
+        <h4 class="font-weight-bold py-3 mb-0">Mots clés</h4>
+        <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
+            {{ fil_arial_admin_categories(title, 'Products', 'Sous catégories') }}
+        </div>
+
+        <!-- DataTable within card -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header" style="padding: 1rem 1rem;">
+                        <h6 class="align-items-center m-l-0">Nouveau mot clé</h6>
+                    </div>
+                    <div class="card-body">
+                        {% include 'admin/shops/metakeywords/_form_new.html.twig' %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header" style="padding: 1rem 1rem;">
+                        <div class="row align-items-center m-l-0">
+                            <div class="col-sm-6">
+                                <h6>{{ title }}</h6>
+                            </div>
+                            <div class="col-sm-6 text-right">
+                                <a class="btn btn-success text-white btn-sm btn-round" href="{{ path('admin.metakeywords.new') }}">
+                                    <i class="feather icon-plus"></i> Nouveau mot clé
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-datatable table-responsive">
+                        <table class="datatables-demo table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Mot clé</th>
+                                <th width="250">Slug</th>
+                                <th width="60">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for metakeyword in metakeywords %}
+                                <tr class="odd gradeX">
+                                    <td><a href="{{ path('admin.metakeywords.edit', {'id': metakeyword.id}) }}">{{ metakeyword.name }}</a></td>
+                                    <td align="center">{{ metakeyword.slug }}</td>
+                                    <td>
+                                        <a href="{{ path('admin.metakeywords.edit', {'id': metakeyword.id}) }}" class="btn btn-xs btn-success"><i class="icon feather icon-edit"></i></a>
+                                        {% include 'admin/shops/metakeywords/_delete_form.html.twig' %}
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="3">{{ data_none }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+

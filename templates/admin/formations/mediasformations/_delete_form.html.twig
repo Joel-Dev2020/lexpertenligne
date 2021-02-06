@@ -1,0 +1,7 @@
+<form method="post" action="{{ path('admin.mediasformations.delete', {'id': mediasformation.id, 'formation_id': mediasformation.formations.id}) }}" onsubmit="return confirm('Etes vous sûr de supprimer cette photo?');" style="display: inline !important;">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ mediasformation.id) }}">
+    <button class="btn btn-lg btn-link" style="padding: 0px!important;"><i class="material-icons">delete</i></button>
+</form>
+
+

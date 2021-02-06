@@ -1,0 +1,119 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Admin - {{ parametres.structure ? parametres.structure.name : company_name }} - {{ title }}{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid flex-grow-1 container-p-y">
+        <h4 class="font-weight-bold py-3 mb-0">Produits</h4>
+        <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
+            {{ fil_arial_admin_categories(title, 'Shop', 'Produits') }}
+        </div>
+
+        <!-- DataTable within card -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header" style="padding: 1rem 1rem;">
+                        <div class="row align-items-center m-l-0">
+                            <div class="col-sm-6">
+                                <h6>{{ title }} ({{ pluralize(products|length, 'Produit') }})</h6>
+                            </div>
+                            <div class="col-sm-6 text-right">
+                                <a class="btn btn-success btn-sm mb-3" href="{{ path('admin.products.index') }}">
+                                    <i class="feather icon-trash"></i> Retour à la liste des produits
+                                </a>
+                            </div>
+                        </div>
+                        {% include 'flash/__flash.html.twig' %}
+                        {% include 'admin/shops/products/partials/__qte_seuil_products.html.twig' %}
+                    </div>
+                    <form style="width: 100%!important;" method="post" action="{{ path('admin.products.delete_more') }}">
+                        <div class="card-datatable table-responsive">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <th width="150">
+                                        <select class="form-control" name="action" onchange="if(confirm('Etes vous sûr de supprimer le ou les produit(s) sélectionnés?')) this.form.submit()">
+                                            <option value="0">Actions groupées</option>
+                                            <option value="1">Supprimer</option>
+                                        </select>
+                                    </th>
+                                    <th width="30">Image</th>
+                                    <th>Nom produit</th>
+                                    <th width="100">Statut</th>
+                                    <th width="70">Prix</th>
+                                    <th width="40">Qtes</th>
+                                    <th width="100">Cat.</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {% for product in products %}
+                                        <tr class="odd gradeX {% if product.quantity < parametres.structure.seuilproduct %}text-danger{% endif %}" {% if product.quantity < parametres.structure.seuilproduct %}style="background-color: rgba(252,148,148,0.24)" {% endif %}>
+                                            <td style="text-align: center">
+                                                <input type="checkbox" name="checkproduct[]" id="checkproduct{{ product.id }}" value="{{ product.id }}">
+                                            </td>
+                                            <td>
+                                                {% if product.filename %}
+                                                    <img class="rounded mr-3" height="48" src="{{ vich_uploader_asset(product, 'imageFile') | imagine_filter('avatar') }}" alt="{{ product.name }}">
+                                                {% else %}
+                                                    <img class="rounded mr-3" height="48" src="{{ asset('admin/img/empty.jpg') }}" alt="{{ product.name }}">
+                                                {% endif %}
+                                            </td>
+                                            <td><a href="{{ path('admin.products.edit', {'id': product.id}) }}">{{ product.name|u.truncate(50, '...') }}</a></td>
+                                            <td>
+                                                {% if product.online %}
+                                                    <span class="badge badge-success">Publié</span>
+                                                {% else %}
+                                                    <span class="badge badge-danger">Non publié</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ product.price|devise }}</td>
+                                            <td>{{ product.quantity }}</td>
+                                            <td>
+                                                {% for cat in product.categories %}
+                                                    <a href="javascript:void(0)" class="badge badge-success">{{ cat.name ?? 'Aucune catégorie' }}</a>
+                                                {% else %}
+                                                    --------
+                                                {% endfor %}
+                                            </td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="7">{{ data_none }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nouveau produit</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-body">
+                            {% include 'admin/shops/products/_form_new.html.twig' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $('.switcher-input').unwrap();
+    </script>
+{% endblock %}
+

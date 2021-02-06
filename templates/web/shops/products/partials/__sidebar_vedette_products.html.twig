@@ -1,0 +1,35 @@
+{% if products|length > 0 %}
+    <h3 class="widget-title">Produits en vedettes</h3>
+    <ul class="product-list-widget product">
+        {% for index,product in products %}
+            <li>
+                <a href="{{ path('shop.products.show', {'id': product.id, 'slug': product.slug}) }}">
+                    {% if product.filename %}
+                        <img src="{{ vich_uploader_asset(product, 'imageFile') | imagine_filter('product_thumb') }}" alt="{{ product.name }}">
+                    {% else %}
+                        <img src="{{ asset('assetics/images/product-card-empty.jpg') }}" alt="{{ product.name }}">
+                    {% endif %}
+                </a>
+                <div class="product-content-box">
+                    <div class="star-ratings">
+                        <ul class="rating">
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star-o"></i></li>
+                            <li><i class="fa fa-star-o"></i></li>
+                            <li><i class="fa fa-star-o"></i></li>
+                        </ul>
+                    </div>
+                    <a class="product-title" href="{{ path('shop.products.show', {'id': product.id, 'slug': product.slug}) }}">
+                        <h2>{{ product.name|u.truncate(20, '...') }}</h2>
+                    </a>
+                    {% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <span class="price">
+                            {% include 'pages/shops/products/partials/__price.html.twig' %}
+                        </span>
+                    {% endif %}
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

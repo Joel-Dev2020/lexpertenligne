@@ -1,0 +1,19 @@
+{{ form_start(form) }}
+<div class="row form-group">
+    <div class="col-sm-6">
+        <label class="form-label">{{ form_label(form.products) }}</label>
+        {{ form_widget(form.products) }}
+        <a href="javascript:void(0)" class="small">{{ form_help(form.products) }}</a>
+    </div>
+    <div class="col-sm-6">
+        <label class="form-label">{{ form_label(form.newqty) }}</label>
+        {{ form_widget(form.newqty) }}
+        <a href="javascript:void(0)" class="small">{{ form_help(form.newqty) }}</a>
+    </div>
+</div>
+
+<div class="text-right mt-3">
+    <button type="submit" class="btn btn-primary">{{ button_label|default('Ajouter') }}</button>&nbsp;
+    <button type="reset" class="btn btn-default">Annuler</button>
+</div>
+{{ form_end(form) }}

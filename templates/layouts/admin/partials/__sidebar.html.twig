@@ -1,0 +1,488 @@
+<div class="mdk-drawer js-mdk-drawer"
+     id="default-drawer">
+    <div class="mdk-drawer__content">
+        <div class="sidebar sidebar-light-purple sidebar-light-dodger-blue sidebar-left" data-perfect-scrollbar>
+            <!-- Sidebar Content -->
+            <a href="{{ path('home') }}" class="sidebar-brand sidebar-brand-dark bg-primary-pickled-bluewood">
+                <!-- <img class="sidebar-brand-icon" src="../../public/images/illustration/student/128/white.svg" alt="Luma"> -->
+                <span class="avatar avatar-xl sidebar-brand-icon h-auto">
+                    <span class="avatar-title rounded bg-primary">
+                        {% if parametres.structure.filename %}
+                            <img src="{{ vich_uploader_asset(parametres.structure, 'imageFile') | imagine_filter('logo') }}" class="img-fluid" alt="{{ parametres.structure.name ?? company_name }}">
+                        {% else %}
+                            <img src="{{ asset('assetics/images/logo/black-70@2x.png') }}" class="img-fluid" alt="{{ parametres.structure.name ?? company_name }}">
+                        {% endif %}
+                    </span>
+                </span>
+                <span>{{ parametres.structure.name ?? company_name }}</span>
+            </a>
+
+            <div class="sidebar-heading">Navigation</div>
+            <ul class="sidebar-menu">
+
+                <li class="sidebar-menu-item {{ set_active_route(current_global, 'home') }}">
+                    <a class="sidebar-menu-button" href="{{ path('admin.home') }}">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">home</span>
+                        <span class="sidebar-menu-text">Accueil dashboard</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-heading">Gestion de contenu</div>
+            <ul class="sidebar-menu">
+                <li class="sidebar-menu-item {{ set_active_route_global(current_global, 'dossiers') }}">
+                    <a class="sidebar-menu-button js-sidebar-collapse" data-toggle="collapse" href="#dossiers_menu">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">all_inbox</span>
+                        Dossiers des experts
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent" id="dossiers_menu">
+                        <li class="sidebar-menu-item {{ set_active_route(current_page, 'dossiersdashboard') }}">
+                            <a class="sidebar-menu-button" href="{{ path('admin.dossiers.dashboard') }}">
+                                <span class="sidebar-menu-text">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item {{ set_active_route(current_page, 'dossierscategories') }}">
+                            <a class="sidebar-menu-button" href="{{ path('admin.dossierscategories.index') }}">
+                                <span class="sidebar-menu-text">Liste des catégories</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item {{ set_active_route(current_page, 'dossiers') }}">
+                            <a class="sidebar-menu-button" href="{{ path('admin.dossiers.index') }}">
+                                <span class="sidebar-menu-text">Liste des dossiers</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item {{ set_active_route_global(current_global, 'blogs') }}">
+                    <a class="sidebar-menu-button" data-toggle="collapse" href="#blogs_menu">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">bookmarks</span>
+                        Actualités des experts
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent" id="blogs_menu">
+                        <li class="sidebar-menu-item {{ set_active_route(current_page, 'blogsdashboard') }}">
+                            <a class="sidebar-menu-button" href="{{ path('admin.blogs.dashboard') }}">
+                                <span class="sidebar-menu-text">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item {{ set_active_route(current_page, 'blogscategories') }}">
+                            <a class="sidebar-menu-button" href="{{ path('admin.blogscategories.index') }}">
+                                <span class="sidebar-menu-text">Liste des catégories</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item {{ set_active_route(current_page, 'blogs') }}">
+                            <a class="sidebar-menu-button" href="{{ path('admin.blogs.index') }}">
+                                <span class="sidebar-menu-text">Liste des actualités</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item {{ set_active_route_global(current_global, 'formations') }}">
+                    <a class="sidebar-menu-button js-sidebar-collapse" data-toggle="collapse" href="#formations_menu">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">all_inbox</span>
+                        Formations
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent" id="formations_menu">
+                        <li class="sidebar-menu-item {{ set_active_route(current_page, 'formationsdashboard') }}">
+                            <a class="sidebar-menu-button" href="{{ path('admin.formations.dashboard') }}">
+                                <span class="sidebar-menu-text">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item {{ set_active_route(current_page, 'formationscategories') }}">
+                            <a class="sidebar-menu-button" href="{{ path('admin.formationscategories.index') }}">
+                                <span class="sidebar-menu-text">Liste des catégories</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item {{ set_active_route(current_page, 'formations') }}">
+                            <a class="sidebar-menu-button" href="{{ path('admin.formations.index') }}">
+                                <span class="sidebar-menu-text">Liste des formations</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item {{ set_active_route_global(current_global, 'articles') }}">
+                    <a class="sidebar-menu-button" data-toggle="collapse" href="#articles_menu">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">description</span>
+                        Gestion des articles
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent" id="articles_menu">
+                        <li class="sidebar-menu-item {{ set_active_route(current_page, 'articlescategories') }}">
+                            <a class="sidebar-menu-button" href="{{ path('admin.articlescategories.index') }}">
+                                <span class="sidebar-menu-text">Liste des catégories</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item {{ set_active_route(current_page, 'articles') }}">
+                            <a class="sidebar-menu-button" href="{{ path('admin.articles.index') }}">
+                                <span class="sidebar-menu-text">Liste des articles</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item {{ set_active_route_global(current_global, 'pages') }}">
+                    <a class="sidebar-menu-button" data-toggle="collapse" href="#pages_menu">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">description</span>
+                        Gestion des pages
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent" id="pages_menu">
+                        <li class="sidebar-menu-item {{ set_active_route(current_page, 'pagescategories') }}">
+                            <a class="sidebar-menu-button" href="{{ path('admin.pagescategories.index') }}">
+                                <span class="sidebar-menu-text">Liste des catégories</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item {{ set_active_route(current_page, 'pages') }}">
+                            <a class="sidebar-menu-button" href="{{ path('admin.pages.index') }}">
+                                <span class="sidebar-menu-text">Liste des pages</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item {{ set_active_route_global(current_global, 'documents') }}">
+                    <a class="sidebar-menu-button" data-toggle="collapse" href="#documents_menu">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">card_travel</span>
+                        Modèles documents
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent" id="documents_menu">
+                        <li class="sidebar-menu-item {{ set_active_route(current_page, 'documentscategories') }}">
+                            <a class="sidebar-menu-button" href="{{ path('admin.documentscategories.index') }}">
+                                <span class="sidebar-menu-text">Liste des catégories</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item {{ set_active_route(current_page, 'documents') }}">
+                            <a class="sidebar-menu-button" href="{{ path('admin.documents.index') }}">
+                                <span class="sidebar-menu-text">Liste des documents</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item {{ set_active_route_global(current_global, 'products') }}">
+                    <a class="sidebar-menu-button" data-toggle="collapse" href="#ecommerce_menu">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">shopping_cart</span>
+                        Catalogue des produits
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent" id="ecommerce_menu">
+                        <li class="sidebar-menu-item {{ set_active_route(current_page, 'productsdashboard') }}">
+                            <a class="sidebar-menu-button" href="{{ path('admin.products.dashboard') }}">
+                                <span class="sidebar-menu-text">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item {{ set_active_route(current_page, 'products') }}">
+                            <a class="sidebar-menu-button" href="{{ path('admin.products.index') }}">
+                                <span class="sidebar-menu-text">Gestion des produits</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item {{ set_active_route(current_page, 'productscategories') }}">
+                            <a class="sidebar-menu-button" href="{{ path('admin.categories.index') }}">
+                                <span class="sidebar-menu-text">Gestion des catégories</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item {{ set_active_route(current_page, 'commandes') }}">
+                            <a class="sidebar-menu-button" href="{{ path('admin.commandes.index') }}">
+                                <span class="sidebar-menu-text">Gestion des commandes</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Gestion des factures</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="sidebar-heading">OUTILS & SIMULATIONS</div>
+            <ul class="sidebar-menu">
+                <li class="sidebar-menu-item {{ set_active_route_global(current_global, 'simulations') }}">
+                    <a class="sidebar-menu-button" data-toggle="collapse" href="#baremes">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">lock</span>
+                        Barème des salaires
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent" id="baremes">
+                        <li class="sidebar-menu-item {{ set_active_route(current_page, 'baremescategories') }}">
+                            <a class="sidebar-menu-button" href="{{ path('admin.baremescategories.index') }}">
+                                <span class="sidebar-menu-text">Catégories</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item {{ set_active_route(current_page, 'secteurs') }}">
+                            <a class="sidebar-menu-button" href="{{ path('admin.secteurs.index') }}">
+                                <span class="sidebar-menu-text">Secteur d'activité</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item {{ set_active_route(current_page, 'salariers') }}">
+                            <a class="sidebar-menu-button" href="{{ path('admin.salariers.index') }}">
+                                <span class="sidebar-menu-text">Type salariers</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item {{ set_active_route(current_page, 'salaires') }}">
+                            <a class="sidebar-menu-button" href="{{ path('admin.salaires.index') }}">
+                                <span class="sidebar-menu-text">Salaires</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item {{ set_active_route_global(current_global, 'simulations') }}">
+                    <a class="sidebar-menu-button" data-toggle="collapse" href="#securites">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">lock</span>
+                        Sécurité sociale
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent" id="securites">
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Prestations Familiales</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Assurance Maternité</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Assurance Retraite</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">AT | MP</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item {{ set_active_route_global(current_global, 'simulations') }}">
+                    <a class="sidebar-menu-button"
+                       data-toggle="collapse"
+                       href="#components_menu">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">tune</span>
+                        Outils en ligne
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent"
+                        id="components_menu">
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Code de travail</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Convention collective interproffessionnelle</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Base de données relative au droit du travail</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Barème des salaires</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Barème des impôts sur salaire</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Notes fiscales</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item {{ set_active_route(current_page, 'dictionnaires') }}">
+                            <a class="sidebar-menu-button" href="{{ path('admin.dictionnaires.index') }}">
+                                <span class="sidebar-menu-text">Dictionnaire de la paie</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item {{ set_active_route_global(current_global, 'simulations') }}">
+                    <a class="sidebar-menu-button"
+                       data-toggle="collapse"
+                       href="#plugins_menu">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">folder</span>
+                        Outils de simulation
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent"
+                        id="plugins_menu">
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Evaluation du salaire brut</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Evaluation du salaire net à partir du brut</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Evaluation du salaire brut à partir du net</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Evaluation de l'impôt sur salaire (CN,IS,IGR)</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Evaluation de ses droits de congés payés</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Evaluation de ses droits de rupture en ligne</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Evaluation de sa pension de retraite normale</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Evaluation de sa pension avec rachat</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item {{ set_active_route_global(current_global, 'simulations') }}">
+                    <a class="sidebar-menu-button"
+                       data-toggle="collapse"
+                       href="#layouts_menu">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">view_compact</span>
+                        Layouts
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent" id="layouts_menu">
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button"
+                               href="https://luma.humatheme.com/Demos/Compact_App_Layout/index.html">
+                                <span class="sidebar-menu-text">Compact</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button"
+                               href="https://luma.humatheme.com/Demos/Mini_App_Layout/index.html">
+                                <span class="sidebar-menu-text">Mini</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button"
+                               href="https://luma.humatheme.com/Demos/Mini_Secondary_Layout/index.html">
+                                <span class="sidebar-menu-text">Mini + Secondary</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button"
+                               href="https://luma.humatheme.com/Demos/App_Layout/index.html">
+                                <span class="sidebar-menu-text">App</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item active">
+                            <a class="sidebar-menu-button" href="index.html">
+                                <span class="sidebar-menu-text">Boxed</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button"
+                               href="https://luma.humatheme.com/Demos/Sticky_App_Layout/index.html">
+                                <span class="sidebar-menu-text">Sticky</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button"
+                               href="https://luma.humatheme.com/Demos/Fixed_Layout/index.html">
+                                <span class="sidebar-menu-text">Fixed</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="sidebar-heading">GESTION DES CONTACTS</div>
+            <ul class="sidebar-menu">
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-button" data-toggle="collapse" href="#contacts">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">phone</span>
+                        Contacts
+                        <span class="sidebar-menu-badge badge badge-accent badge-notifications ml-auto">{{ count_abonnes_no_active() }}</span>
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent" id="contacts">
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="{{ path('admin.abonnes.index') }}">
+                                <span class="sidebar-menu-text">Abonnés</span>
+                                <span class="sidebar-menu-badge badge badge-accent badge-notifications ml-auto">{{ count_abonnes_no_active() }}</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="{{ path('admin.contacts.index') }}">
+                                <span class="sidebar-menu-text">Contacts</span>
+                                <span class="sidebar-menu-badge badge badge-accent badge-notifications ml-auto">{{ count_contacts_no_active() }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="sidebar-heading">ADMINISTRATEURS</div>
+            <ul class="sidebar-menu">
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-button" data-toggle="collapse" href="#users_menu">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">people</span>
+                        Gestion utilisateurs
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent" id="users_menu">
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="{{ path('admin.users.index') }}">
+                                <span class="sidebar-menu-text">Liste des utilisateurs</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-button" data-toggle="collapse" href="#parametres_menu">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">tune</span>
+                        Paramètres application
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent" id="parametres_menu">
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="{{ path('admin.structre.edit', {'id': company_id}) }}">
+                                <span class="sidebar-menu-text">Configuration</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="{{ path('admin.status.index') }}">
+                                <span class="sidebar-menu-text">Statut des commandes</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="{{ path('admin.tags.index') }}">
+                                <span class="sidebar-menu-text">Mots clés / Tags</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="{{ path('admin.publicites.edit', {'id': 1}) }}">
+                                <span class="sidebar-menu-text">Publicités</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- // END Sidebar Content -->
+
+        </div>
+    </div>
+</div>

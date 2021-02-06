@@ -1,0 +1,3 @@
+{% if products|length != 0 %}
+    {% include 'pages/shops/products/cards/__grid.html.twig' with {products: products} %}
+{% endif %}

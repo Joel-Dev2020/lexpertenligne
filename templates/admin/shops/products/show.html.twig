@@ -1,0 +1,423 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Admin - {{ parametres.structure ? parametres.structure.name : company_name }} - {{ title }}{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('admin/libs/blueimp-gallery/gallery.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/libs/blueimp-gallery/gallery-indicator.css') }}">
+{% endblock %}
+{% block body %}
+    <div class="container-fluid flex-grow-1 container-p-y">
+        <h4 class="font-weight-bold py-3 mb-0">{{ title }}</h4>
+        <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
+            {{ fil_arial_admin_categories(title, 'Shop', 'Produits') }}
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                {% include 'flash/__flash.html.twig' %}
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="feather icon-folder mr-1"></i>Fiche product: {{ product.name }}</h5>
+                    </div>
+                    <div class="card-body topic-name">
+                        <div class="row align-items-center">
+                            <div class="col-md-12">
+                                <h4 class="d-inline-block mb-0">{{ product.name }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-light-green-alt p-3">
+                        <div class="row align-items-center">
+                            <div class="col-md-12 btn-page">
+                                <a href="{{ path('admin.products.new') }}" class="btn btn-secondary text-uppercase"><i class="mr-2 feather icon-plus"></i>Nouveau produit</a>
+                                <a href="{{ path('admin.products.edit', {'id': product.id}) }}" class="btn btn-secondary text-uppercase"><i class="mr-2 feather icon-edit"></i>Modifier le produit</a>
+                                <a href="{{ path('admin.products.index') }}" class="btn btn-secondary text-uppercase"><i class="mr-2 feather icon-list"></i>Liste des produits</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body hd-detail hdd-admin border-bottom">
+                        <div class="row">
+                            <div class="col-auto text-center">
+                                {% if product.filename %}
+                                    <img class="media-object wid-60 img-radius mb-2" src="{{ vich_uploader_asset(product, 'imageFile') | imagine_filter('mini') }}" height="60" width="60" alt="{{ product.name }}">
+                                {% else %}
+                                    <img  class="media-object wid-60 img-radius mb-2" src="{{ asset('admin/img/empty.jpg') }}" height="60" width="60" alt="{{ product.name }}">
+                                {% endif %}
+                                <p><i class="fas fa-thumbs-up mr-1 text-primary"></i>4</p>
+                            </div>
+                            <div class="col">
+                                <div class="comment-top">
+                                    <h4><small class="text-muted f-w-400">SKU: </small> {{ product.sku ?? '-------------' }}</h4>
+                                    <p>Ajouté par {{ product.user.username ?? '------' }} {{ product.createdAt|ago }}</p>
+                                </div>
+                                <div class="comment-content">
+                                    <p class="text-justify">{{ product.description|raw }}</p>
+                                </div>
+                            </div>
+                            <div class="col-auto pl-0 col-right">
+                                <div class="card-body text-center">
+                                    <ul class="list-unstyled mb-0 edit-del">
+                                        <li class="d-inline-block f-20 mr-1"><a href="{{ path('admin.products.edit', {'id': product.id}) }}"><i class="feather icon-edit-2 text-muted"></i></a></li>
+                                        <li class="d-inline-block f-20">{% include 'admin/shops/products/_delete_form.html.twig' %}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-tabs-top nav-responsive-sm">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#item-overview">Détails</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#item-description">Description</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#item-images">Images</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#item-comments">Commentaires</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+
+                        <!-- Details -->
+                        <div class="tab-pane fade show active" id="item-overview">
+
+                            <div class="row no-gutters row-bordered">
+                                <div class="d-flex col-md-6 col-lg align-items-center">
+                                    <div class="card-body d-flex align-items-center">
+                                        <div>
+                                            <div class="ui-stars text-large text-nowrap">
+                                                <div class="ui-star filled">
+                                                    <i class="ion ion-md-star"></i>
+                                                    <i class="ion ion-md-star"></i>
+                                                </div>
+                                                <div class="ui-star filled">
+                                                    <i class="ion ion-md-star"></i>
+                                                    <i class="ion ion-md-star"></i>
+                                                </div>
+                                                <div class="ui-star filled">
+                                                    <i class="ion ion-md-star"></i>
+                                                    <i class="ion ion-md-star"></i>
+                                                </div>
+                                                <div class="ui-star filled">
+                                                    <i class="ion ion-md-star"></i>
+                                                    <i class="ion ion-md-star"></i>
+                                                </div>
+                                                <div class="ui-star half-filled">
+                                                    <i class="ion ion-md-star"></i>
+                                                    <i class="ion ion-md-star"></i>
+                                                </div>
+                                            </div>
+                                            <a href="javascript:void(0)" class="d-block text-muted small">{{ product.commentaireproducts.count }} avi(s)</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex col-md-6 col-lg align-items-center">
+                                    <div class="card-body d-flex align-items-center">
+                                        <div class="lnr lnr-cart display-4 text-secondary"></div>
+                                        <div class="ml-3">
+                                            <div class="text-muted small line-height-1">Prix</div>
+                                            <div class="text-large">{{ product.price|devise }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex col-md-6 col-lg align-items-center">
+                                    <div class="card-body d-flex align-items-center">
+                                        <div class="lnr lnr-earth display-4 text-secondary"></div>
+                                        <div class="ml-3">
+                                            <div class="text-muted small line-height-1">Vue(s)</div>
+                                            <div class="text-xlarge">{{ product.vues }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex col-md-6 col-lg align-items-center">
+                                    <div class="card-body d-flex align-items-center">
+                                        <div class="lnr lnr-heart display-4 text-secondary"></div>
+                                        <div class="ml-3">
+                                            <div class="text-muted small line-height-1">Aimé(s)</div>
+                                            <div class="text-xlarge">3,671</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="m-0">
+
+                            <div class="card-body">
+                                <h6 class="small font-weight-semibold mb-4">Infos basic</h6>
+                                <div class="table-responsive">
+                                    <table class="table product-item-table">
+                                        <tbody>
+                                        <tr>
+                                            <td width="150">Prix:</td>
+                                            <td>
+                                                <strong>{{ product.price|devise }}</strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="150">Categories:</td>
+                                            <td>
+                                                {% for cat in product.categories %}
+                                                    <a href="javascript:void(0)" class="badge badge-success">{{ cat.name ?? 'Aucune catégorie' }}</a>
+                                                {% else %}
+                                                    --------
+                                                {% endfor %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="150">Stock disponible:</td>
+                                            <td>{{ product.quantity }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="150">Tax:</td>
+                                            <td>18%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Couleurs:</td>
+                                            <td>
+                                                {% if product.colors %}
+                                                    {% for color in product.colors %}
+                                                    <span class="ui-product-color align-middle bg-primary" style="background-color: {{ color.colorvalue }}"></span>
+                                                    <span class="align-middle">{{ color.name }}</span> &nbsp;
+                                                    {% endfor %}
+                                                {% else %}Aucune couleur définie{% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Matières:</td>
+                                            <td>
+                                                {% if product.matieres %}
+                                                    {% for matiere in product.matieres %}
+                                                        <span class="align-middle">{{ matiere.name }}</span> &nbsp;
+                                                    {% endfor %}
+                                                {% else %}Aucune matière définie{% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="150">Etat:</td>
+                                            <td>
+                                                {% if product.online %}
+                                                    <span class="badge badge-success">Publié</span>
+                                                {% else %}
+                                                    <span class="badge badge-danger">Non publié</span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <hr class="m-0">
+
+                            <div class="card-body">
+                                <h6 class="small font-weight-semibold mb-4">Caractéristiques</h6>
+                                <div class="table-responsive">
+                                    <table class="table product-item-table">
+                                        <tbody>
+                                            <tr>
+                                                <td width="150">Délais de livraison:</td>
+                                                <td>{{ product.delaislivraison ?? '----------------' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td width="150">Garantie:</td>
+                                                <td>{{ product.garantie ?? '----------------' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td width="150">Pays:</td>
+                                                <td>{{ product.countries.name ?? '----------------' }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <hr class="m-0">
+
+                            <div class="card-body product-item-table">
+                                <h6 class="small font-weight-semibold mb-4">Meta</h6>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td width="150">Titre:</td>
+                                                <td>{{ product.name }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td width="150">Mots clés:</td>
+                                                <td>
+                                                    {% for keyword in product.metakeywords %}
+                                                        {{ keyword.name }},
+                                                    {% else %}
+                                                        <p class="text-muted">Aucun mot clé</p>
+                                                    {% endfor %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="150">Description:</td>
+                                                <td>{{ product.metadescription ? product.metadescription|nl2br : '-------------' }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- / Details -->
+
+                        <!-- Description -->
+                        <div class="tab-pane fade" id="item-description">
+                            <div class="card-body p-5">
+                                <div class="row">
+                                    <div class="col-md">
+                                        <p class="text-muted">{{ product.description ? product.description|raw : 'Aucune description' }}<p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- / Description -->
+
+                        <!-- Images -->
+                        <div class="tab-pane fade" id="item-images">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="feather icon-folder mr-1"></i>Gestion des images</h5>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Lightbox template -->
+                                    {% include 'admin/shops/products/partials/__tabs_photos.html.twig' with {product: product} %}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- / Images -->
+
+                        <!-- Comments -->
+                        <div class="tab-pane fade" id="item-comments">
+                            <div class="card review-card mb-4">
+                                <h5 class="card-header">Liste des commantaires</h5>
+                                <div class="card-body">
+                                    <div class="review-block">
+                                        {% for index,comment in product.commentaireproducts %}
+                                            <div class="row pt-0 {% if loop.index == 1 %}pb-2{% endif %}">
+                                                <div class="col-sm-auto pb-2">
+                                                    {% if comment.user.filename %}
+                                                        <img class="img-fluid rounded-circle ui-w-50 ml-0" src="{{ vich_uploader_asset(comment.user, 'imageFile') | imagine_filter('avatar') }}" alt="{{ comment.user.username }}">
+                                                    {% else %}
+                                                        <img  class="img-fluid rounded-circle ui-w-50 ml-0" src="{{ asset('admin/img/avatars/1.png') }}" alt="{{ comment.user.username }}">
+                                                    {% endif %}
+                                                </div>
+                                                <div class="col">
+                                                    <h6 class="m-b-15">
+                                                        {{ comment.user.prenoms }} {{ comment.user.nom }}
+                                                        <span class="float-right text-muted"> {{ comment.createdAt|ago }}</span>
+                                                    </h6>
+                                                    <a href="javascript:"><i class="fas fa-star text-primary"></i></a>
+                                                    <a href="javascript:"><i class="fas fa-star text-primary"></i></a>
+                                                    <a href="javascript:"><i class="fas fa-star text-primary"></i></a>
+                                                    <a href="javascript:"><i class="fas fa-star text-muted"></i></a>
+                                                    <a href="javascript:"><i class="fas fa-star text-muted"></i></a>
+                                                    <p class="mt-2 m-b-15 text-muted">{{ comment.message|raw }}</p>
+                                                    <a href="javascript:" class="mr-4"><i class="fa fa-thumbs-up mr-3 text-primary"></i>Repondre?</a>
+                                                    <a href="javascript:"><i class="fa fa-heart text-danger mr-3"></i></a>
+                                                    <a href="javascript:"><i class="fas fa-pencil-alt mr-3 text-primary"></i>Modifier?</a>
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <div class="card-body hd-detail hdd-user border-bottom bg-light-alt">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="comment-content">
+                                                            <p><i class="fa fa-info"></i> <small>Aucun commentaire pour {{ product.name }} pour le moment</small></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- / Comments -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card hdd-right-inner">
+                    <div class="card-header">
+                        <h5>Ajouter des images</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if product.filename %}
+                            <img class="mb-2" src="{{ vich_uploader_asset(product, 'imageFile') | imagine_filter('medium') }}" width="100%" alt="{{ product.name }}">
+                        {% else %}
+                            <img class="mb-2" src="{{ asset('admin/img/empty.jpg') }}" width="100%" alt="{{ product.name }}">
+                        {% endif %}
+                        <hr>
+                        {{ medias_form_products(product.id) }}
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="media align-items-center">
+                                <label class="mb-0 wid-100">Auteur</label>
+                                <div class="media-body">
+                                    <p class="mb-0">
+                                        {% if product.user and product.user.filename %}
+                                            <img class="wid-20 rounded mr-1 img-fluid" src="{{ vich_uploader_asset(product.user, 'imageFile') | imagine_filter('avatar') }}" alt="{{ product.user.username }}">
+                                        {% else %}
+                                            <img  class="wid-20 rounded mr-1 img-fluid" src="{{ asset('admin/img/avatars/1.png') }}" alt="{{ product.user.username ?? '' }}">
+                                        {% endif %}
+                                        {% if product.user %}
+                                        <a href="{{ path('admin.users.show', {'id': product.user.id}) }}">{{ product.user.username }}</a>
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        {% if product.categories %}
+                            <li class="list-group-item">
+                                <div class="media align-items-center">
+                                    <label class="mb-0 wid-100">Catégorie</label>
+                                    {% for cat in product.categories %}
+                                        <div class="media-body">
+                                            <p class="mb-0">
+                                                <a href="javascript:void(0)" class="badge badge-success">{{ cat.parent }}</a>
+                                            </p>
+                                        </div>
+                                    {% else %}
+                                        <div class="media-body">
+                                            <p class="mb-0">--------</p>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </li>
+                        {% endif %}
+                        <li class="list-group-item">
+                            <div class="media align-items-center">
+                                <label class="mb-0 wid-100">Ajouté le</label>
+                                <div class="media-body">
+                                    <p class="mb-0"><i class="feather icon-calendar mr-1"></i><label class="mb-0">{{ product.createdAt|date('d/m/Y à H:i:s') }}</label></p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="media align-items-center">
+                                <label class="mb-0 wid-100">Modifié le</label>
+                                <div class="media-body">
+                                    <p class="mb-0"><i class="feather icon-calendar mr-1"></i><label class="mb-0">{{ product.updatedAt|date('d/m/Y à H:i:s') }}</label></p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('admin/libs/blueimp-gallery/gallery.js') }}"></script>
+    <script src="{{ asset('admin/libs/blueimp-gallery/gallery-fullscreen.js') }}"></script>
+    <script src="{{ asset('admin/libs/blueimp-gallery/gallery-indicator.js') }}"></script>
+    <script src="{{ asset('admin/libs/masonry/masonry.js') }}"></script>
+    <script src="{{ asset('admin/js/pages/pages_gallery.js') }}"></script>
+{% endblock %}
+

@@ -1,0 +1,43 @@
+{{ form_start(form, {'action': path('admin.mediasdossiers.new')}) }}
+<label class="control-label" style="margin-bottom: 10px!important;">Ajouter des photos <span class="text-danger">(Important <= 1000 x 600)</span></label>
+{% if not form.vars.valid %}
+    <ul>
+        {# Loop through every form item #}
+        {% for child in form.children %}
+            {# Display the errors of the form item #}
+            {%for error in child.vars.errors%}
+                <li>{{error.message}}</li>
+            {%endfor%}
+        {%endfor%}
+    </ul>
+{%endif%}
+
+<div class="form-group">
+    <label class="form-label">Photo (900x611)</label>
+    <div class="media align-items-center">
+        <a href="#" class="media-left mr-16pt">
+            <img width="56" class="rounded-circle" src="{{ asset('assetics/images/avatar.png') }}" alt="Image">
+        </a>
+        <div class="media-body">
+            <div class="custom-file">
+                {{ form_widget(form.imageFile, {'id': 'inputGroupFile01'}) }}
+                <label class="custom-file-label" for="inputGroupFile01">Choisissez une photo</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="form-label">{{ form_label(form.name) }}</label>
+    {{ form_row(form.dossier_id, {'attr': {'value': id_dossier}}) }}
+    {{ form_widget(form.name) }}
+    <small class="form-text text-muted">{{ form_help(form.name) }}</small>
+</div>
+
+{{ form_rest(form) }}
+<button type="submit" class="btn btn-primary"><i class="m-r-5 feather icon-upload"></i>
+    <i class="fa fa-plus"></i> &nbsp;{{ button_label|default('Ajouter la photo') }}
+</button>
+{{ form_end(form) }}
+
+

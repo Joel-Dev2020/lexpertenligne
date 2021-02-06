@@ -1,0 +1,40 @@
+<div class="card posts-card">
+    <div class="posts-card__content d-flex align-items-center flex-wrap">
+        <div class="avatar avatar-lg mr-3">
+            <a href="{{ path('dossiers.show', {'id': dossier.id, 'slug': dossier.slug}) }}">
+                {% include 'web/dossiers/cards/__img_small.html.twig' %}
+            </a>
+        </div>
+        <div class="posts-card__title flex d-flex flex-column">
+            <a href="{{ path('dossiers.show', {'id': dossier.id, 'slug': dossier.slug}) }}" class="card-title mr-3">{{ dossier.name|u.truncate(35, '...') }}</a>
+            <div style="display: flex;flex-direction: row;">
+                <small class="text-50" style="margin-right: 10px!important;">{{ pluralize(dossier.view ?? 0, 'vue') }}</small>
+                <small class="dossier-react-like"></small>
+            </div>
+        </div>
+        <div class="d-flex align-items-center flex-column flex-sm-row posts-card__meta">
+            <div class="mr-3 text-50 text-uppercase posts-card__tag d-flex align-items-center">
+                <i class="material-icons text-muted-light mr-1">folder_open</i> {{ dossier.categories.name }}
+            </div>
+            <div class="mr-3 text-50 posts-card__date">
+                <small>{{ dossier.createdAt|date('d/m/Y à H:i:s') }}</small>
+            </div>
+            <div class="media mr-2 ml-sm-auto align-items-center">
+                <div class="media-left mr-2 avatar-group">
+                    {% include 'web/partials/__medias_users.html.twig' with {'comments': dossier.commentaire} %}
+                </div>
+                <div class="media-body">
+                    {% if dossier.commentaire|length > 2 %}
+                        <a href="javascript:">+{{ pluralize(dossier.commentaire|length, 'utilisateur') }} </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="dropdown ml-auto">
+            <a href="javascript:" data-toggle="dropdown" data-caret="false" class="text-muted"><i class="material-icons">more_vert</i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a href="{{ path('dossiers.show', {'id': dossier.id, 'slug': dossier.slug}) }}" class="dropdown-item">Lire le dossier</a>
+            </div>
+        </div>
+    </div>
+</div>

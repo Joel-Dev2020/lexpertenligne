@@ -1,0 +1,22 @@
+{{ form_start(form) }}
+<div class="form-group">
+    <label for="comment" class="form-label">Votre commentaire</label>
+    {% if data.commentaire.count == 0 %}
+        <div class="alert alert-info border-1 border-left-4 border-left-info" role="alert">
+            <div class="d-flex flex-wrap align-items-start">
+                <div class="mr-8pt">
+                    <i class="material-icons">access_time</i>
+                </div>
+                <div class="flex" style="min-width: 180px">
+                    <small class="text-black-100">
+                        Soyez le premier à laisser un commentaire
+                    </small>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {{ form_widget(form.message, {'id': 'comment'}) }}
+    <span class="small">{{ form_help(form.message) }}</span>
+</div>
+<button type="submit" class="btn btn-outline-secondary">Poster votre commentaire</button>
+{{ form_end(form) }}

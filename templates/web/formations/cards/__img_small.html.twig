@@ -1,0 +1,5 @@
+{% if formation.filename %}
+    <img src="{{ vich_uploader_asset(formation, 'imageFile') | imagine_filter('small') }}" alt="{{ formation.name }}" width="40" height="40" class="rounded">
+{% else %}
+    <img src="{{ asset('assetics/images/empty/small.png') | imagine_filter('small') }}" alt="{{ formation.name }}" width="40" height="40" class="rounded">
+{% endif %}

@@ -1,0 +1,64 @@
+{% form_theme form 'form_div_layout.html.twig' %}
+{{ form_start(form, {'action': path('security_checkout_register')}) }}
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label> {{ form_errors(form.nom) }}</label>
+            <div class="pt-required">Nom *</div>
+            {{ form_widget(form.nom) }}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label> {{ form_errors(form.prenoms) }}</label>
+            <div class="pt-required">Prénoms *</div>
+            {{ form_widget(form.prenoms) }}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>{{ form_errors(form.email) }}</label>
+            <div class="pt-required">Email *</div>
+            {{ form_widget(form.email) }}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>{{ form_errors(form.contacts) }}</label>
+            <div class="pt-required">Contacts *</div>
+            {{ form_widget(form.contacts) }}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label>{{ form_errors(form.username) }}</label>
+            <div class="pt-required">Nom d'utilisateur *</div>
+            {{ form_widget(form.username) }}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>{{ form_errors(form.password.first) }}</label>
+            <div class="pt-required">Mot de passe *</div>
+            {{ form_widget(form.password.first) }}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>{{ form_errors(form.password.second) }}</label>
+            <div class="pt-required">Confirmer le mot de passe *</div>
+            {{ form_widget(form.password.second) }}
+        </div>
+    </div>
+</div>
+
+<div class="order_button" style="margin-top: 30px!important;">
+    <button style="width: 200px!important; line-height: 45px; height: 45px;" type="submit">Créer mon compte</button>
+</div>
+{{ form_end(form) }}

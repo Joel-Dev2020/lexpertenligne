@@ -1,0 +1,306 @@
+{% for product in products %}
+    <div class="wrap-modal1 js-modal{{ product.id }}">
+        <div class="overlay-modal1 js-hide-modal1" data-id="{{ product.id }}"></div>
+        <div class="container">
+            <div class="modal1-content">
+                <button class="close js-hide-modal1" data-id="{{ product.id }}">
+                    <i class="fa fa-close"></i>
+                </button>
+                <div class="row ttm-single-product-details ttm-bgcolor-white">
+                    <div class="col-lg-6 col-md-6 col-sm-12 ml-auto mr-auto">
+                        {% if product.mediasproducts.count > 0 %}
+                            <div class="product-gallery easyzoom-product-gallery">
+                                <div class="product-look-views left">
+                                    <div class="mt-35 mb-35">
+                                        <ul class="thumbnails easyzoom-gallery-slider" data-slick='{"slidesToShow": 4, "slidesToScroll": 1, "arrows":true, "infinite":true, "vertical":true}'>
+                                            {% for media in product.mediasproducts %}
+                                                <li>
+                                                    <a href="{{ vich_uploader_asset(media, 'imageFile') | imagine_filter('product_thumb') }}" data-standard="{{ vich_uploader_asset(media, 'imageFile') | imagine_filter('product_thumb') }}">
+                                                        <img class="img-fluid" src="{{ vich_uploader_asset(media, 'imageFile') | imagine_filter('product_thumb') }}" alt="{{ media.name ?? product.name }}" />
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="product-look-preview-plus right">
+                                    <div class="pl-35 res-767-pl-15">
+                                        <div class="easyzoom easyzoom-model easyzoom--overlay easyzoom--with-thumbnails">
+                                            {% include 'pages/shops/products/cards/__img_medium.html.twig' %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="product-gallery easyzoom-product-gallery">
+                                <div class="product-look-views left">
+                                    <div class="mt-35 mb-35">
+                                        <ul class="thumbnails easyzoom-gallery-slider" data-slick='{"slidesToShow": 4, "slidesToScroll": 1, "arrows":true, "infinite":true, "vertical":true}'>
+                                            {% if product.filename %}
+                                                <li>
+                                                    <a href="{{ vich_uploader_asset(product, 'imageFile') | imagine_filter('product_thumb') }}" data-standard="{{ vich_uploader_asset(product, 'imageFile') | imagine_filter('product_thumb') }}">
+                                                        <img class="img-fluid" src="{{ vich_uploader_asset(product, 'imageFile') | imagine_filter('product_thumb') }}" alt="{{ product.name }}" />
+                                                    </a>
+                                                </li>
+                                            {% else %}
+                                                <li>
+                                                    <a href="{{ asset('assetics/images/product-card-empty.jpg') | imagine_filter('product_thumb') }}" data-standard="{{ asset('assetics/images/product-card-empty.jpg') | imagine_filter('product_thumb') }}">
+                                                        <img class="img-fluid" src="{{ asset('assetics/images/product-card-empty.jpg') | imagine_filter('product_thumb') }}" alt="{{ product.name }}" />
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="product-look-preview-plus right">
+                                    <div class="pl-35 res-767-pl-15">
+                                        <div class="easyzoom easyzoom-model easyzoom--overlay easyzoom--with-thumbnails">
+                                            {% include 'pages/shops/products/cards/__img_medium.html.twig' %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="summary entry-summary pl-30 res-991-pl-0 res-991-pt-40">
+                            <h2 class="product_title entry-title">{{ product.name }}</h2>
+                            <div class="share-icons social-links">
+                                <span>Partager :</span>
+                                <a href="javascript:"><i class="ti ti-facebook"></i></a>
+                                <a href="javascript:"><i class="ti ti-twitter-alt"></i></a>
+                                <a href="javascript:"><i class="ti ti-google"></i></a>
+                                <a href="javascript:"><i class="ti ti-linkedin"></i></a>
+                            </div>
+                            <div class="comments-notes clearfix">
+                                &nbsp;&nbsp;<a href="javascript:void(0)" class="review-link" rel="nofollow">(Pas de commentaires)</a>
+                                &nbsp;&nbsp;<a href="javascript:void(0)" class="review-link" rel="nofollow">Écrire un commentaire</a>
+                                <div class="product-rating clearfix">
+                                    <ul class="star-rating clearfix">
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product_in-stock d-block float-left">
+                                {% if product.quantity < parametres.structure.seuilproduct  %}
+                                    <i class="fa fa-times-circle"></i><span class="ml-2 text-danger">Stock faible ({{ product.quantity }})</span>
+                                {% else %}
+                                    <i class="fa fa-check-circle"></i><span class="ml-2 text-success">En stock ({{ product.quantity }} disponibles)</span>
+                                {% endif %}
+                            </div>
+                            <div class="clearfix"></div>
+                            {% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}
+                                <span class="price d-block">
+                                    {% include 'pages/shops/products/partials/__price.html.twig' %}
+                                </span>
+                            {% endif %}
+                            <div class="product-details__short-description">
+                                {{ product.extrait|nl2br }}
+                            </div>
+                            {#<div class="mt-30 mb-35">
+                                <form class="addToCartWithQty" method="post" action="{{ path('cart.addwithqtye', {'id': product.id}) }}">
+                                    <div class="quantity">
+                                        <label>Quantité: </label>
+                                        <input type="text" name="qty" min="1" max="{{ product.quantity }}" value="1" name="quantity-number" class="qty">
+                                        <span class="inc quantity-button">+</span>
+                                        <span class="dec quantity-button">-</span>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="actions">
+                                <div class="add-to-cart">
+                                    <a class="ttm-btn ttm-btn-size-md ttm-btn-shape-square ttm-btn-style-fill ttm-btn-color-skincolor" href="javascript:">Ajouter au panier</a>
+                                </div>
+                            </div>#}
+                            <div class="buttons">
+                                <a href="javascript:" rel="nofollow" data-product-id="24006456" data-product-type="simple" class="add_to_wishlist">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                    <span class="wishlist-text">Ajouter à ma liste de souhait</span>
+                                </a>
+                                <a href="javascript:" class="compare button" data-product_id="24006456" rel="nofollow">
+                                    <i class="fa fa-expand" aria-hidden="true"></i>
+                                    <span class="compare-text">Comparer</span>
+                                </a>
+                            </div>
+                            <div id="block-reassurance-1" class="block-reassurance">
+                                <ul>
+                                    <li>
+                                        <div class="block-reassurance-item">
+                                            <i class="fa fa-lock"></i>
+                                            <span>Politique de confidentialité</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="block-reassurance-item">
+                                            <i class="fa fa-truck"></i>
+                                            <span>Politique de remboursement</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="block-reassurance-item">
+                                            <i class="fa fa-arrow-left"></i>
+                                            <span>Politique des retours</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+
+<!-- modal area start-->
+{#<div class="modal fade" id="modal_box_{{ product.id }}" tabindex="-1" role="dialog"  aria-hidden="true" style="z-index: 99999999!important;">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal_body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-5 col-md-5 col-sm-12">
+                            <div class="modal_tab">
+                                <div class="tab-content product-details-large">
+                                    {% if product.mediasproducts|length == 0 %}
+                                        <div class="tab-pane fade show active" id="tab1" role="tabpanel" >
+                                            <div class="modal_tab_img">
+                                                <a href="javascript:">
+                                                    {% if product.filename %}
+                                                        <img src="{{ vich_uploader_asset(product, 'imageFile') | imagine_filter('thumbnail') }}" alt="{{ product.name }}">
+                                                    {% else %}
+                                                        <img src="{{ asset('assetics/img/product-empty.jpg') }}" alt="{{ product.name }}">
+                                                    {% endif %}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        {% for index, media in product.mediasproducts %}
+                                        <div class="tab-pane fade {% if loop.index == 1 %}show active{% endif %}" id="tab{{ loop.index }}" role="tabpanel" >
+                                            <div class="modal_tab_img">
+                                                <a href="javascript:">
+                                                    <img src="{{ vich_uploader_asset(media, 'imageFile') | imagine_filter('thumbnail') }}" alt="{{ media.name ?? product.name }}">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                                {% if product.mediasproducts|length != 0 %}
+                                    <div class="modal_tab_button">
+                                        <ul class="nav product_navactive owl-carousel" role="tablist">
+                                            {% for index, media in product.mediasproducts %}
+                                            <li >
+                                                <a class="nav-link {% if loop.index == 1 %}active{% endif %}" data-toggle="tab" href="#tab{{ loop.index }}" role="tab" aria-controls="tab{{ loop.index }}" aria-selected="false">
+                                                    <img src="{{ vich_uploader_asset(media, 'imageFile') | imagine_filter('small') }}" alt="{{ media.name ?? product.name }}">
+                                                </a>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-sm-12">
+                            <div class="modal_right">
+                                <div class="modal_title mb-10">
+                                    <h2>{{ product.name }}</h2>
+                                </div>
+                                <div class="product_ratings">
+                                    <ul>
+                                        <li><a href="javascript:"><i class="ion-ios-star-outline"></i></a></li>
+                                        <li><a href="javascript:"><i class="ion-ios-star-outline"></i></a></li>
+                                        <li><a href="javascript:"><i class="ion-ios-star-outline"></i></a></li>
+                                        <li><a href="javascript:"><i class="ion-ios-star-outline"></i></a></li>
+                                        <li><a href="javascript:"><i class="ion-ios-star-outline"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="modal_price mb-10">
+                                    {% if product.pricepromo %}
+                                        <span class="old_price">{{ product.price|devise }}</span>
+                                        <span class="new_price">{{ product.pricepromo|devise }}</span>
+                                    {% else %}
+                                        <span class="new_price">{{ product.price|devise }}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="see_all">
+                                    <a href="{{ path('shop.index') }}">Voir tous les produits</a>
+                                </div>
+                                <div class="modal_add_to_cart mb-15">
+                                    <form class="addToCartWithQty" method="post" action="{{ path('cart.addwithqtye', {'id': product.id}) }}">
+                                        <input name="qty" min="1" max="{{ product.quantity }}" step="1" value="1" type="number">
+                                        <button type="submit"><i class="fa fa-plus"></i> panier</button>
+                                    </form>
+                                </div>
+                                <div class="modal_description mb-15">
+                                    <p>{{ product.extrait|u.truncate(100, '...') }}</p>
+                                    <table class="table table-sm table-condensed table-bordered table-striped">
+                                        <tbody>
+                                        <tr>
+                                            <th style="width: 100px;">Couleur</th>
+                                            <td>{{ product.colors.name ?? 'Aucune matière disponible' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 100px;">Matière</th>
+                                            <td>
+                                                {% for matiere in product.matieres %}
+                                                    {{ matiere.name }}
+                                                {% else %}
+                                                    Aucune matière disponible
+                                                {% endfor %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 100px;">Garantie</th>
+                                            <td>{{ product.garantie ?? 'Aucune matière disponible' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 100px;">Marque</th>
+                                            <td style="text-align: right!important;">
+                                                <a href="javascript:">
+                                                    {% if product.marques and product.marques.filename %}
+                                                        <img style="width: 150px!important;" src="{{ vich_uploader_asset(product.marques, 'imageFile') | imagine_filter('marque') }}" alt="{{ product.marques.website }}">
+                                                    {% else %}
+                                                        <img style="width: 150px!important;" src="{{ asset('assetics/img/marques/empty.png') }}" alt="Marque">
+                                                    {% endif %}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 100px;">Poids</th>
+                                            <td>
+                                                {% if product.weight %}
+                                                    {{ product.weight }} kg
+                                                {% else %}
+                                                    Non mentionné
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="modal_social">
+                                    <h2>Partager ce produit</h2>
+                                    <ul>
+                                        <li><a href="javascript:"><i class="ion-social-facebook"></i></a></li>
+                                        <li><a href="javascript:"><i class="ion-social-twitter"></i></a></li>
+                                        <li><a href="javascript:"><i class="ion-social-instagram"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>#}
+<!-- modal area start-->

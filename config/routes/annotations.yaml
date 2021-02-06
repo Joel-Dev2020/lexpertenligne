@@ -5,3 +5,10 @@ controllers:
 kernel:
     resource: ../../src/Kernel.php
     type: annotation
+
+#site:
+#    resource: ../../src/Controller/
+#    type: annotation
+#    prefix:
+#        fr: '/fr'
+#        en: '/en'

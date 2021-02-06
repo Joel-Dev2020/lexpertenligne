@@ -1,0 +1,20 @@
+<div class="page-separator">
+    <div class="page-separator__text">Pages récentes</div>
+</div>
+<p class="text-70 mb-24pt">People who started the most discussions on Luma.</p>
+
+<div class="mb-4">
+    {% for page in pages %}
+        <div class="d-flex align-items-center mb-2">
+            <a href="{{ path('pages.show', {'id': page.id, 'slug': page.slug}) }}" class="avatar avatar-xs mr-8pt">
+                {% include 'web/pages/cards/__img_small.html.twig' %}
+            </a>
+            <a href="{{ path('pages.show', {'id': page.id, 'slug': page.slug}) }}" class="flex mr-2 text-body">
+                <strong>{{ page.name|u.truncate(30, '...') }}</strong>
+            </a>
+            <span class="text-70 mr-2">{{ page.view ?? 0 }}</span>
+            <i class="text-muted material-icons font-size-16pt">remove_red_eye</i>
+        </div>
+    {% endfor %}
+
+</div>

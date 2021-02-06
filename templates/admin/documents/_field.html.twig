@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-md-8">
+
+        <div class="page-separator">
+            <div class="page-separator__text">{{ title }}</div>
+        </div>
+
+        <label class="form-label">{{ form_label(form.name) }}</label>
+        <div class="form-group mb-24pt">
+            {{ form_widget(form.name) }}
+            <small class="form-text text-muted">{{ form_help(form.name) }}</small>
+        </div>
+
+        <label class="form-label">{{ form_label(form.documentFile) }}</label>
+        <div class="form-group mb-24pt">
+            {{ form_widget(form.documentFile) }}
+            <small class="form-text text-muted">{{ form_help(form.documentFile) }}</small>
+        </div>
+
+        <div class="form-group mb-32pt">
+            <label class="form-label">Image (600x300)</label>
+            <div class="media align-items-center">
+                <a href="#" class="media-left mr-16pt">
+                    <img width="56" class="rounded-circle" src="{{ asset('assetics/images/avatar.png') }}" alt="Image">
+                </a>
+                <div class="media-body">
+                    <div class="custom-file">
+                        {{ form_widget(form.imageFile, {'id': 'inputGroupFile01'}) }}
+                        <label class="custom-file-label" for="inputGroupFile01">Choisissez une couverture</label>
+                    </div>
+                </div>
+            </div>
+            <small class="form-text text-muted">{{ form_help(form.imageFile) }}</small>
+        </div>
+
+    </div>
+    <div class="col-md-4">
+
+        <div class="card">
+            <div class="card-header text-center">
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fa fa-save fa-2x"></i> &nbsp;
+                    {{ button_label|default('Enregistrer') }}
+                </button>
+            </div>
+        </div>
+
+        <div class="page-separator">
+            <div class="page-separator__text">Options</div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group">
+                    <label class="form-label">{{ form_label(form.categories) }}</label>
+                    {{ form_widget(form.categories) }}
+                    <small class="form-text text-muted">{{ form_help(form.categories) }}</small>
+                </div>
+                <div class="form-group">
+                    {{ form_widget(form.online) }}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

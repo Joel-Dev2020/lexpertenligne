@@ -1,0 +1,109 @@
+{% extends 'layouts/front/base.html.twig' %}
+
+{% block title %}{{ parametres.structure.name ?? company_name }} | {{ title }}{% endblock %}
+
+{% block body %}
+    <div class="page-section bg-white border-bottom-2">
+        <div class="container-fluid page__container">
+
+            <div class="d-flex flex-column flex-md-row align-items-center align-items-md-start flex mb-16pt text-center text-md-left">
+                <div class="avatar overlay overlay--primary mb-16pt mb-md-0 mr-md-16pt">
+                    {% include 'web/pages/cards/__img_small.html.twig' %}
+                    <div class="overlay__content"></div>
+                </div>
+                <div class="flex">
+                    <h1 class="h5 measure-lead-max mb-16pt">{{ page.name}}</h1>
+                    <div class="d-flex align-items-center">
+                        <a href="javascript:" class="avatar avatar-sm mr-12pt">
+                            {% include 'web/pages/cards/__img_avatar.html.twig' %}
+                        </a>
+                        <div class="mr-16pt">
+                            <div class="d-flex align-items-center">
+                                <small class="text-50 mr-2">{{ page.updatedAt|date('d/m/Y à H:i:s') }}</small>
+                            </div>
+                        </div>
+                        <div style="display: flex;flex-direction: row;justify-content: center;align-items: center;">
+                            <a href="#" class="text-50 d-flex align-items-center text-decoration-0" style="margin-right: 20px!important;">
+                                <i class="material-icons icon--left">remove_red_eye</i> {{ pluralize(page.view ?? 0, 'Vue') }}
+                            </a>
+                            <small class="page-react-like"></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid page__container">
+        <div class="page-section">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card card-body">
+                        <div class="d-flex">
+                            <a href="javascript:" class="avatar avatar-sm avatar-online mr-12pt">
+                                {% include 'web/pages/cards/__img_small.html.twig' %}
+                            </a>
+                            <div class="flex">
+                                <p class="d-flex align-items-center mb-2">
+                                    <a href="javascript:" class="text-body mr-2">Publié par <strong>{{ page.user.username ?? company_name }}</strong></a>
+                                    <small class="text-muted">{{ page.createdAt|ago }}</small>
+                                </p>
+                                {% if page.extrait %}
+                                    <p style="text-align: justify!important;">{{ page.extrait|raw }}</p>
+                                    <hr>
+                                {% endif %}
+                                <p style="text-align: justify!important;">{{ page.content|raw }}</p>
+                                <div class="d-flex align-items-center">
+                                    <a href="javascript:" class="text-50 d-flex align-items-center text-decoration-0" style="margin-right: 20px!important;">
+                                        <i class="material-icons mr-1" style="font-size: inherit;">remove_red_eye</i> {{ page.view }}
+                                    </a>
+                                    <small class="page-react-like"></small>
+                                </div>
+
+                                <div class="measure-lead-max mt-lg-5">
+
+                                    <div class="mb-8pt">
+                                        <div class="page-separator">
+                                            <div class="page-separator__text">Auteur</div>
+                                        </div>
+
+                                        <div class="media align-items-center mb-16pt">
+                                            <span class="media-left mr-16pt">
+                                                {% include 'web/pages/cards/__img_avatar.html.twig' %}
+                                            </span>
+                                            <div class="media-body">
+                                                <p class="text-50 lh-1 mb-0">
+                                                    {% for categorie in page.categories %}
+                                                        <a href="javascript:" class="chip chip-outline-secondary">{{ categorie.name }}</a> ,
+                                                    {% endfor %}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    {{ last_pages_sidebar() }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if autresPages|length > 0 %}
+        <div class="page-section bg-white border-top-2">
+            <div class="container-fluid page__container page__container">
+                <div class="page-separator">
+                    <div class="page-separator__text">D'autres articles à voir également</div>
+                </div>
+                <div class="row card-group-row">
+                    {% for autresPage in autresPages %}
+                        {% include 'web/pages/cards/card.html.twig' %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

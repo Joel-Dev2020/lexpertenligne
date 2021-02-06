@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="content-sec-head-style">
+            <div class="content-area-sec-title">
+                <h5>Derniers produits ajoutés</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <!-- slick_slider -->
+        <div class="slick_slider" data-slick='{"slidesToShow": 4, "slidesToScroll": 4, "arrows":true, "autoplay":true, "infinite":false}'>
+            {% if products|length != 0 %}
+                {% for product in products %}
+                    <!-- product -->
+                    <div class="product">
+                        <div class="product-box">
+                            <!-- product-box-inner -->
+                            <div class="product-box-inner">
+                                {% if product.featured %}
+                                    <div class="onsale">vedette</div>
+                                {% elseif product.nouveau %}
+                                    <div class="onsale">Nouveau</div>
+                                {% else %}
+                                    <div class="onsale">Vente!</div>
+                                {% endif %}
+                                {% include 'pages/shops/products/cards/__img.html.twig' %}
+                                <div class="product-btn-links-wrapper">
+                                    <div class="product-btn">
+                                        <a href="{{ path('cart.add', {'id': product.id}) }}" class="add-to-cart-btn tooltip-top addCart" data-tooltip="Ajouter au panier">
+                                            <i class="ti ti-shopping-cart"></i>
+                                        </a>
+                                    </div>
+                                    <div class="product-btn">
+                                        <a href="javascript:" class="quick-view-btn js-show-modal1 tooltip-top" id="{{ product.id }}" data-tooltip="Aperçu rapide">
+                                            <i class="ti ti-search"></i>
+                                        </a>
+                                    </div>
+                                    <div class="product-btn">
+                                        <a href="javascript:" class="wishlist-btn tooltip-top" data-tooltip="Ajouter à mes favoris">
+                                            <i class="ti ti-heart"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div><!-- product-box-inner end -->
+                            <div class="product-content-box">
+                                <a class="product-title" href="{{ path('shop.products.show', {'id': product.id, 'slug': product.slug}) }}">
+                                    <h2>{{ product.name|u.truncate(50, '...') }}</h2>
+                                </a>
+                                <div class="star-ratings">
+                                    <ul class="rating">
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-o"></i></li>
+                                        <li><i class="fa fa-star-o"></i></li>
+                                        <li><i class="fa fa-star-o"></i></li>
+                                    </ul>
+                                </div>
+                                <span class="price">
+                                    {% include 'pages/shops/products/partials/__price.html.twig' %}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- product end -->
+                {% endfor %}
+            {% endif %}
+        </div>
+        <!-- slick_slider end -->
+    </div>
+</div>

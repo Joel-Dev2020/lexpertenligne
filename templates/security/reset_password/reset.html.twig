@@ -1,0 +1,44 @@
+{% extends 'layouts/front/base.html.twig' %}
+
+{% block title %}{{ parametres.structure ? parametres.structure.name : company_name }} - Réinitialisez votre mot de passe{% endblock %}
+
+{% block body %}
+    <div class="page-section pb-0">
+        <div class="container-fluid page__container d-flex flex-column flex-sm-row align-items-sm-center">
+            <div class="flex">
+                <h1 class="h2 mb-0">Nouveau mot de passe</h1>
+                <p class="text-breadcrumb">Gestionaire de compte</p>
+            </div>
+            <p class="d-sm-none"></p>
+            <a href="{{ path('contacts') }}" class="btn btn-outline-secondary flex-column">
+                Bésoin d'aide?
+                <span class="btn__secondary-text">Contactez nous</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="page-section">
+        <div class="container-fluid page__container">
+            <div class="page-separator">
+                <div class="page-separator__text">Réinitialisez votre mot de passe</div>
+            </div>
+            <div class="col-sm-6 p-0">
+                {{ form_start(resetForm) }}
+                {% for flashError in app.flashes('reset_password_error') %}
+                    <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+                {% endfor %}
+
+                <div class="form-group">
+                    <label class="form-label">* Nouveau mot de passe</label>
+                    {{ form_widget(resetForm.plainPassword.first) }}
+                </div>
+                <div class="form-group">
+                    <label class="form-label">* Confirmer nouveau mot de passe</label>
+                    {{ form_widget(resetForm.plainPassword.second) }}
+                </div>
+                <button type="submit" class="btn btn-primary">Modifier le mot de passe</button>
+                {{ form_end(resetForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

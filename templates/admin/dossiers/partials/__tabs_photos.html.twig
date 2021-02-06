@@ -1,0 +1,35 @@
+{% if dossier.mediasdossiers|length != 0 %}
+    <div id="gallery-lightbox" class="blueimp-gallery blueimp-gallery-controls">
+        <div class="slides"></div>
+        <h3 class="title"></h3>
+        <a class="prev">‹</a>
+        <a class="next">›</a>
+        <a class="close">×</a>
+        <a class="play-pause"></a>
+        <ol class="indicator"></ol>
+    </div>
+    <div id="gallery-thumbnails" class="row form-row">
+        <div class="gallery-sizer"></div>
+        {% for mediasdossier in dossier.mediasdossiers %}
+            <div class="gallery-thumbnail col-sm-6 col-md-6 col-xl-3 mb-2" data-tag="{{ mediasdossier.name }}">
+                <a href="{{ vich_uploader_asset(mediasdossier, 'imageFile') | imagine_filter('large') }}" class="img-thumbnail img-thumbnail-zoom-in">
+                    <span class="img-thumbnail-overlay bg-dark opacity-25"></span>
+                    <img src="{{ vich_uploader_asset(mediasdossier, 'imageFile') | imagine_filter('admin_thumbnail') }}" class="img-fluid" alt="{{ mediasdossier.name }}">
+                </a>
+                <span class="display-4 text-white" style="position: absolute; top: 40%;left: 40%;z-index: 10000;">
+                    {% include 'admin/dossiers/mediasdossiers/_delete_form.html.twig' %}
+                </span>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="card-body hd-detail hdd-user border-bottom bg-light-alt">
+        <div class="row">
+            <div class="col">
+                <div class="comment-content">
+                    <p><i class="fa fa-info"></i> <small>Aucune photo disponible pour le moment</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

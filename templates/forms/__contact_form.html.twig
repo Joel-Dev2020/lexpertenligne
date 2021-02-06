@@ -1,0 +1,31 @@
+{{ form_start(form, {'action': path('contacts'), 'attr': {'id': 'contact-form', 'novalidate': 'novalidate'}}) }}
+    <div class="page-separator">
+        <div class="page-separator__text">Envoyez nous un message</div>
+    </div>
+    <span id="js-contact-message"></span>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form_label(form.nomprenoms) }}
+                {{ form_widget(form.robot) }}
+                {{ form_widget(form.nomprenoms) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.telephone) }}
+                {{ form_widget(form.telephone) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email) }}
+                <small class="form-text text-muted">Noter que tous les champs du formulaire sont obligatoires</small>
+            </div>
+            <button type="submit" id="js-contact-button-send" class="btn btn-primary"><i class="material-icons">send</i>&nbsp;Envoyer le message</button>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form_label(form.message) }}
+                {{ form_widget(form.message) }}
+            </div>
+        </div>
+    </div>
+{{ form_end(form) }}

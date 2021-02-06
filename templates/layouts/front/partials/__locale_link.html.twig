@@ -1,0 +1,9 @@
+{% for locale in locales %}
+    {% if locale != app.request.locale %}
+        <li>
+            <a href="{{ path('change_locale', {'locale': locale}) }}" title="{{ locale }}">
+                <img src="{{ asset('assetics/images/'~locale~'.png') }}" alt="{{ locale }}">
+            </a>
+        </li>
+    {% endif %}
+{% endfor %}

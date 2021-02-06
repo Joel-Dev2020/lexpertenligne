@@ -1,0 +1,233 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Admin - {{ parametres.structure ? parametres.structure.name : company_name }} - {{ title }}{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid flex-grow-1 container-p-y">
+        <h4 class="font-weight-bold py-3 mb-0">Détails commande N° {{ commande.reference }}</h4>
+        <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
+            {{ fil_arial_admin_categories(title, 'Shop', 'Commandes') }}
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="nav nav-pills bg-nav-pills nav-justified mb-0">
+                            <li class="nav-item">
+                                <a href="#shipping-information" data-toggle="tab" aria-expanded="true" class="nav-link active">
+                                    <i class="fas fa-truck f-18"></i>
+                                    <span class="d-none d-lg-inline-block m-l-10">{{ title }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ path('admin.commandes.index') }}" class="nav-link btn btn-info text-white">
+                                    <i class="fas fa-shopping-cart f-18"></i>
+                                    <span class="d-none d-lg-inline-block m-l-10">Liste des commandes</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <p class="text-muted mb-0">
+                            <strong>Note</strong>:
+                            {{ commande.note ? commande.note|nl2br : 'Aucune note laissée par le client' }}
+                        </p>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane show active" id="shipping-information">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-2">{{ title }}</h5>
+                                <p class="text-muted mb-0">
+                                    <strong>Client: {{ commande.user.nom }} {{ commande.user.prenoms }}</strong><br>
+                                    <strong>Contacts</strong>: {{ commande.user.contacts }} <br>
+                                    <strong>Email</strong>: {{ commande.user.email }}
+                                </p>
+                                <hr>
+                                <p class="text-muted mb-0">
+                                    <strong>Etat de la commande</strong>: <span class="badge badge-dark" style="background-color: {{ commande.status.color }}!important;">{{ commande.status.name }}</span>
+                                    <br>
+                                    <strong>Mode de paiement</strong>: <span class="badge badge-success">{{ commande.modepaiment }}</span>
+                                    <br>
+                                    <strong>Date de la commande</strong>: {{ commande.date|date('d/m/Y') }}
+                                </p>
+                                {% if commande.valider %}
+                                <a class="pull-right btn btn-sm btn-outline-info" href="{{ path('shop.commandes.generatepdf', {'id': commande.id}) }}">
+                                    <i class="fa fa-print"></i> Générer la facture
+                                </a>
+                                {% endif %}
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-xl-12">
+                                        <div class="card mb-4 bg-success text-white">
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="ion ion-md-cart display-4"></div>
+                                                    <div class="ml-4">
+                                                        <div class="text-white small">TOTAL TTC</div>
+                                                        <div class="text-large">{{ commande.totalttc|devise }}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% if commande.adresses['livraison'] and commande.adresses['facturation'] %}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card border mb-0">
+                                            <div class="card-body">
+                                                <div class="custom-control custom-radio">
+                                                    <i class="fa fa-map-marker"></i>
+                                                    <label class="custom-control-label font-weight-bold" for="radiohome">Adrese de livraison</label>
+                                                </div>
+                                                <br />
+                                                <h6 class="mb-0">{{ commande.adresses['livraison'].nomprenoms }}</h6>
+                                                <p class="mb-0 m-t-10">{{ commande.adresses['livraison'].adresse }}</p>
+                                                <p class="mb-0">{{ commande.adresses['livraison'].contacts }}</p>
+                                                <p class="mb-0"><a class="text-secondary" href="mailto:demo@sample.com" target="_top">{{ commande.adresses['livraison'].email }}</a></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card border mb-0 ">
+                                            <div class="card-body">
+                                                <div class="custom-control custom-radio">
+                                                    <i class="fa fa-map-marker"></i>
+                                                    <label class="custom-control-label font-weight-bold" for="radiooffice">Adresse de facturation</label>
+                                                </div>
+                                                <br />
+                                                <h6 class="mb-0">{{ commande.adresses['facturation'].nomprenoms }}</h6>
+                                                <p class="mb-0 m-t-10">{{ commande.adresses['facturation'].adresse }}</p>
+                                                <p class="mb-0">{{ commande.adresses['facturation'].contacts }}</p>
+                                                <p class="mb-0"><a class="text-secondary" href="mailto:demo@sample.com" target="_top">{{ commande.adresses['facturation'].email }}</a></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% else %}
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="card border mb-0">
+                                                <div class="card-body">
+                                                    <div class="custom-control custom-radio">
+                                                        <i class="fa fa-map-marker"></i>
+                                                        <label class="custom-control-label font-weight-bold" for="radiohome">Point relais</label>
+                                                    </div>
+                                                    <br />
+                                                    <h6 class="mb-0">Mode: {{ commande.modelivraison }}</h6>
+                                                    <h6 class="mb-0">Lieu de retrait: {{ commande.pointrelais }}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Liste des commandes</h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-border table-hover table-striped table-striped table-sm mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Photo &nbsp; &nbsp; Produit</th>
+                                    <th class="text-center">Qté.</th>
+                                    <th class="text-right">PU.</th>
+                                    <th class="text-right">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in commande.products %}
+                                <tr>
+                                    <td width="250">
+                                        {% if item['product'].filename %}
+                                            <img src="{{ vich_uploader_asset(item['product'], 'imageFile') | imagine_filter('panier_cart') }}" alt="{{ item['product'].name }}" title="{{ item['product'].name }}" class="rounded mr-2" height="48">
+                                        {% else %}
+                                            <img src="{{asset('admin/img/empty.jpg') }}" alt="{{ item['product'].name }}" title="{{ item['product'].name }}" class="rounded mr-2" height="48">
+                                        {% endif %}
+                                        <p class="m-0 d-inline-block align-middle" style="width: 250px;white-space: normal;">
+                                            <a href="{{ path('admin.products.show', {'id': item['product'].id}) }}" class="text-body font-weight-semibold">{{ item['product'].name|lower }}
+                                                <br> (SKU.: {{ item['product'].sku ?? '-------' }})</a>
+                                            <br>
+                                            <small>{{ item.qte }} x {{ item['product'].price|devise }}</small><br>
+                                            <small>Catégorie:
+                                                {% for cat in item['product'].categories %}
+                                                    <em>{{ cat.name|lower }}</em>
+                                                {% endfor %}
+                                            </small>
+                                            {% if item['product'].colors != null %} |
+                                                <small>Couleur: {{ item['product'].colors.name }}</small>
+                                            {% endif %}
+                                            <small>: </small>
+                                            {% if item['product'].matieres|length != 0 %} |
+                                                <small>Matériau:
+                                                    {% for matiere in item['product'].matieres %}
+                                                        <em>{{ matiere.name }}</em>
+                                                    {% endfor %}
+                                                </small>
+                                            {% endif %}
+                                        </p>
+                                    </td>
+                                    <td class="text-center">{{ item.qte }}</td>
+                                    <td class="text-right">{{ item['product'].price|devise }}</td>
+                                    <td class="text-right">
+                                        {{ (item['product'].price * item.qte)|devise }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-body py-2">
+                        <div class="table-responsive">
+                            <table class="table table-borderless mb-0 w-auto table-sm float-right text-right">
+                                <tbody>
+                                    <tr>
+                                        <td><h6 class="m-0">Total HT:</h6></td>
+                                        <td>{{ commande.totalht|devise }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><h6 class="m-0">Montant TVA ({{ parametres.structure.tva }}%):</h6></td>
+                                        <td>{{ commande.totaltva|devise }}</td>
+                                    </tr>
+                                    <tr class="border-top">
+                                        <td><h5 class="m-0">Total TTC:</h5></td>
+                                        <td class="font-weight-semibold">
+                                            {{ commande.totalttc|devise }}
+                                        </td>
+                                    </tr>
+                                    <tr><td colspan="3"></td></tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <span class="text-muted">
+                                                Arrêter la présente facture à la somme de
+                                                <strong><u>{{ commande.chiffreenlettre|lower }}</u></strong> Fcfa
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

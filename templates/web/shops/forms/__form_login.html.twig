@@ -1,0 +1,28 @@
+<form action="{{ path('security_login') }}" method="post">
+    {% if app.user %}
+        <div class="mb-3">
+            Vous êtes connecté en tant que {{ app.user.username }}, <a href="{{ path('security_logout') }}">Déconnexion</a>
+        </div>
+    {% endif %}
+
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+    <div class="form_group">
+        <label>Votre adresse email <span>*</span></label>
+        <input type="email" name="email" value="{{ app.session.get(constant('App\\Controller\\Security\\SecurityController::LAST_EMAIL')) }}" autofocus required id="email" placeholder="Votre adresse email*">
+    </div>
+    <div class="form_group">
+        <label>Password  <span>*</span></label>
+        <input type="password" name="password" id="password" placeholder="Votre mot de passe*" required>
+    </div>
+    <div class="form_group">
+        <label for="remember_box">
+            <input type="checkbox" id="remember_me" name="remember_me"/>
+            <span> Se souvenir de moi </span>
+        </label>
+    </div>
+    <div class="order_button">
+        <button type="submit">Se connecter</button>
+    </div>
+    <a href="#">Mot de passe oublié?</a>
+</form>

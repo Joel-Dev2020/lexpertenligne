@@ -1,0 +1,72 @@
+{% extends 'layouts/front/base.html.twig' %}
+
+{% block title %}{{ parametres.structure.name ?? company_name }} | {{ title }}{% endblock %}
+{% block body %}
+    {{ fil_arial(title) }}
+    <div class="container-fluid page__container page__container page-section">
+        <div class="page-separator">
+            <div class="page-separator__text">Statistiques</div>
+        </div>
+
+        <div class="row card-group-row mb-lg-8pt">
+            <div class="col-lg-7 card-group-row__col">
+
+                <div class="card card-group-row__card d-flex flex-column">
+                    <div class="row no-gutters flex">
+                        <div class="col-6">
+                            <div class="card-body">
+                                <h6 class="text-50">Dossiers</h6>
+
+                                <div class="h2 mb-0">{{ count_dossiers()['countdossiers'] }}</div>
+                                <div class="d-flex flex-column">
+                                    <strong>Total Dossiers</strong>
+                                    <small class="text-50">{{ count_dossiers()['countdossiers'] }}</small>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="h2 mb-0">+{{ count_dossiers()['countpublishedtoday'] }}</div>
+                                <div class="d-flex flex-column">
+                                    <strong>Aujourd'hui</strong>
+                                    <small class="text-50">Publiés</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 border-left">
+                            <div class="card-body">
+                                <h6 class="text-50">Utilisateurs</h6>
+
+                                <div class="h2 mb-0">{{ count_dossiers()['countvues'] }}</div>
+                                <div class="d-flex flex-column">
+                                    <strong>Total Vues</strong>
+                                    <small class="text-50">{{ count_dossiers()['countvues'] }}</small>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="h2 mb-0">{{ count_dossiers()['countcomments'] }}</div>
+                                <strong>Commentaires</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            {{ get_lastestdossiers() }}
+        </div>
+        {% if dossiers|length > 0 %}
+            <div class="page-separator">
+                <div class="page-separator__text">Liste des dossiers</div>
+            </div>
+
+            <div class="posts-cards mb-24pt">
+                {% for dossier in dossiers %}
+                    {% include 'web/dossiers/cards/card.html.twig' %}
+                {% endfor %}
+            </div>
+
+            <div class="card p-8pt mb-0 d-inline-block">
+                {{ knp_pagination_render(dossiers) }}
+            </div>
+        {% endif %}
+
+    </div>
+{% endblock %}

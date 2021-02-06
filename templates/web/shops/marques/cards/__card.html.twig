@@ -1,0 +1,27 @@
+{% for row in marques|batch(4) %}
+    <div class="products row">
+        {% for marque in row %}
+            <div class="product col-md-3 col-sm-6 col-xs-12">
+                <div class="product-box">
+                    <!-- product-box-inner -->
+                    <div class="product-box-inner">
+                        <div class="product-image-box">
+                            {% if marque.filename %}
+                                <img src="{{ vich_uploader_asset(marque, 'imageFile') | imagine_filter('marque') }}" alt="{{ marque.website }}">
+                            {% else %}
+                                <img src="{{ asset('assetics/images/product-thumb-empty.png') }}" alt="{{ marque.website }}">
+                            {% endif %}
+                        </div>
+                        <div class="product-btn-links-wrapper">
+                            <div class="product-btn">
+                                <a href="{{ marque.website }}" target="_blank" class="wishlist-btn tooltip-top" data-tooltip="{{ marque.name }}">
+                                    <i class="ti ti-link"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div><!-- product-box-inner end -->
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endfor %}

@@ -1,0 +1,236 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Administration | {{ app.user.username }}{% endblock %}
+
+{% block body %}
+    <div class="pt-32pt">
+        <div class="container-fluid page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+            {{ fil_arial_admin_categories(title, '', '') }}
+            <div class="row" role="tablist">
+                <div class="col-auto">
+                    <a href="{{ path('admin.blogs.new') }}" class="btn btn-outline-secondary">Nouvelle actualité</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-section border-bottom-2">
+        <div class="container-fluid page__container">
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card border-1 border-left-3 border-left-accent text-center mb-lg-0">
+                        <div class="card-body">
+                            <h4 class="h2 mb-0">{{ admin_count_categories_blogs() }}</h4>
+                            <div>Catégorie(s)</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card text-center mb-lg-0">
+                        <div class="card-body">
+                            <h4 class="h2 mb-0">{{ admin_count_blogs() }}</h4>
+                            <div>Actualité(s)</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card text-center mb-lg-0">
+                        <div class="card-body">
+                            <h4 class="h2 mb-0">{{ admin_count_comments_blogs() }}</h4>
+                            <div>Commentaire(s)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container-fluid page__container page-section">
+        <div class="row mb-8pt">
+            {% if lastBlogs|length > 0 %}
+            <div class="col-lg-6">
+                <div class="page-separator">
+                    <div class="page-separator__text">Actualités récentes</div>
+                </div>
+                <div class="card">
+                    <div data-toggle="lists" data-lists-values='[
+                          "js-lists-values-course",
+                          "js-lists-values-document",
+                          "js-lists-values-amount",
+                          "js-lists-values-date"
+                        ]' data-lists-sort-by="js-lists-values-date" data-lists-sort-desc="true" class="table-responsive">
+                        <table class="table table-flush table-nowrap">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">
+                                        <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-course">Image</a>
+                                        <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-document">Nom</a>
+                                        <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-amount">Catégorie</a>
+                                        <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-date">Date</a>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="list">
+                            {% for blog in lastBlogs %}
+                                <tr>
+                                    <td>
+                                        <div class="d-flex flex-nowrap align-items-center">
+                                            <a href="{{ path('blogs.show', {'id': blog.slug, 'slug': blog.slug}) }}" target="_blank" class="avatar avatar-4by3 overlay overlay--primary mr-12pt">
+                                                {% if blog.filename %}
+                                                    <img src="{{ vich_uploader_asset(blog, 'imageFile') | imagine_filter('thumbnail') }}" alt="{{ blog.name }}" class="avatar-img rounded">
+                                                {% else %}
+                                                    <img src="{{ asset('assetics/images/empty/small.png') | imagine_filter('thumbnail') }}" alt="{{ blog.name }}" class="avatar-img rounded">
+                                                {% endif %}
+                                                <span class="overlay__content"></span>
+                                            </a>
+                                            <div class="flex">
+                                                <a class="card-title js-lists-values-course" href="javascript:">{{ blog.name|u.truncate(30, '...') }}</a>
+                                                <small class="text-muted mr-1">
+                                                    {{ blog.categories.name }}
+                                                    <a href="{{ path('blogs.show', {'id': blog.slug, 'slug': blog.slug}) }}" target="_blank" style="color: inherit;" class="js-lists-values-document">
+                                                        #{{ blog.id }}
+                                                    </a> -
+                                                    <i class="fa fa-eye-slash"></i> <span class="js-lists-values-amount">{{ pluralize(blog.view ?? 0, 'Vue') }}</span>
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-right">
+                                        <small class="text-muted text-uppercase js-lists-values-date">{{ blog.createdAt|date('d/m/Y') }}</small>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+                <div class="col-lg-6">
+                    <div class="page-separator">
+                        <div class="page-separator__text">Actualités récentes</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="alert alert-soft-warning mb-0 p-8pt">
+                                <div class="d-flex align-items-start">
+                                    <div class="mr-8pt">
+                                        <i class="material-icons">error_outline</i>
+                                    </div>
+                                    <div class="flex">
+                                        <small class="text-100">Aucune actualité récente pour le moment</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if lastComments|length > 0 %}
+            <div class="col-lg-6">
+                <div class="page-separator">
+                    <div class="page-separator__text">Derniers commentaires</div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        {% for comment in lastComments %}
+                            {% if loop.index == 1 %}
+                                <div class="media">
+                                    <div class="media-left mr-12pt">
+                                        <a href="{{ path('admin.users.show', {'id': comment.user.id}) }}" class="avatar avatar-sm">
+                                            {% if comment.user.filename %}
+                                                <img src="{{ vich_uploader_asset(comment.user, 'imageFile') | imagine_filter('thumbnail') }}" alt="{{ comment.user.username }}" class="avatar-img rounded-circle">
+                                            {% else %}
+                                                <img src="{{ asset('assetics/images/empty/small.png') | imagine_filter('thumbnail') }}" alt="{{ comment.user.username }}" class="avatar-img rounded-circle">
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                    <div class="media-body d-flex flex-column">
+                                        <div class="d-flex align-items-center">
+                                            <a href="{{ path('admin.users.show', {'id': comment.user.id}) }}" class="card-title">{{ comment.user.username }}</a> &nbsp;
+                                            <small class="ml-auto text-muted">{{ comment.createdAt|ago }}</small><br>
+                                        </div>
+                                        <span class="text-muted">dans <a href="javascript:" class="text-50" style="text-decoration: underline;">{{ comment.blogs.categories.name }}</a></span>
+                                        <p class="mt-1 mb-0 text-70">{{ comment.message|nl2br }}</p>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="media ml-sm-32pt mt-3 border rounded p-3 card mb-0 d-inline-flex measure-paragraph-max">
+                                    <div class="media-left mr-12pt">
+                                        <a href="{{ path('admin.users.show', {'id': comment.user.id}) }}" class="avatar avatar-sm">
+                                            {% if comment.user.filename %}
+                                                <img src="{{ vich_uploader_asset(comment.user, 'imageFile') | imagine_filter('thumbnail') }}" alt="{{ comment.user.username }}" class="avatar-img rounded-circle">
+                                            {% else %}
+                                                <img src="{{ asset('assetics/images/empty/small.png') | imagine_filter('thumbnail') }}" alt="{{ comment.user.username }}" class="avatar-img rounded-circle">
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="d-flex align-items-center">
+                                            <a href="{{ path('admin.users.show', {'id': comment.user.id}) }}" class="card-title">{{ comment.user.username }}</a> &nbsp;
+                                            <small class="ml-auto text-muted">{{ comment.createdAt|ago }}</small>
+                                        </div>
+                                        <p class="mt-1 mb-0 text-70">{{ comment.message|nl2br }}</p>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="card-footer">
+                        <form action="#" id="message-reply">
+                            <div class="input-group input-group-merge">
+                                <input type="text" class="form-control form-control-appended" required placeholder="Réponse rapide">
+                                <div class="input-group-append">
+                                    <div class="input-group-text pl-0">
+                                        <button class="btn btn-flush" type="button"><i class="material-icons">send</i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+                <div class="col-lg-6">
+                    <div class="page-separator">
+                        <div class="page-separator__text">Derniers commentaires</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="alert alert-soft-warning mb-0 p-8pt">
+                                <div class="d-flex align-items-start">
+                                    <div class="mr-8pt">
+                                        <i class="material-icons">error_outline</i>
+                                    </div>
+                                    <div class="flex">
+                                        <small class="text-100">Aucun commentaire récents pour le moment</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <!-- Chart.js Samples -->
+    <script src="{{ asset('assetics/js/page.erp-dashboard.js') }}"></script>
+    <script src="{{ asset('assetics/js/page.employees.js') }}"></script>
+    <script src="{{ asset('assetics/js/page.staff.js') }}"></script>
+
+    <!-- Chart.js -->
+    <script src="{{ asset('assetics/vendor/Chart.min.js') }}"></script>
+    <script src="{{ asset('assetics/js/chartjs.js') }}"></script>
+    <script src="{{ asset('assetics/js/chartjs-rounded-bar.js') }}"></script>
+
+    <!-- Chart.js Samples -->
+    <script src="{{ asset('assetics/js/page.ecommerce.js') }}"></script>
+{% endblock %}
+

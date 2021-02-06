@@ -1,0 +1,7 @@
+{{ form_start(form, {'action': path('admin.blogscategories.new')}) }}
+{% include 'admin/pages/categories/_fields.html.twig' %}
+<div class="text-left mt-3">
+    <button type="submit" class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>&nbsp;
+    <button type="reset" class="btn btn-default">Annuler</button>
+</div>
+{{ form_end(form) }}

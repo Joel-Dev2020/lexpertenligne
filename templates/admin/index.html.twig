@@ -1,0 +1,209 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Administration | {{ app.user.username }}{% endblock %}
+
+{% block body %}
+    <div class="pt-32pt">
+        <div class="container-fluid page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+            {{ fil_arial_admin_categories(title, '', '') }}
+            <div class="row" role="tablist">
+                <div class="col-auto">
+                    <a href="javascript:" class="btn btn-outline-secondary">Nouveau dossier</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid page__container">
+        <div class="page-section">
+            <div class="row mb-lg-8pt">
+                <div class="col-md-6">
+                    <div class="page-separator">
+                        <div class="page-separator__text">Dossiers</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center mb-16pt">
+                                <div class="flex">
+                                    <strong class="card-title">Dossiers récents</strong>
+                                    <span class="text-20">({{ last_dossiers|length }})</span>
+                                </div>
+                                <i class="material-icons text-50">more_horiz</i>
+                            </div>
+
+                            <div class="alert alert-soft-warning mb-0 p-8pt">
+                                <div class="d-flex align-items-start">
+                                    <div class="mr-8pt">
+                                        <i class="material-icons">error_outline</i>
+                                    </div>
+                                    <div class="flex">
+                                        <small class="text-100">Liste des derniers dossiers publiés</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="list-group list-group-flush">
+                            {% for dossier in last_dossiers %}
+                                <div class="list-group-item d-flex align-items-start p-16pt">
+                                    <div class="d-flex flex-column mr-16pt">
+                                        <small class="text-uppercase text-50">{{ dossier.createdAt|date('d/m') }}</small>
+                                        <strong class="border-bottom-2 border-bottom-accent">{{ dossier.createdAt|date('Y') }}</strong>
+                                    </div>
+                                    <div class="flex">
+                                        <div class="mb-8pt"><strong>{{ dossier.name|u.truncate(40, '...') }}</strong></div>
+                                        {% if dossier.extrait %}
+                                        <p class="mb-0 text-50">{{ dossier.extrait|u.truncate(130, '...') }}</p>
+                                        {% endif %}
+                                        <a href="{{ path('dossiers.show', {'id': dossier.id, 'slug': dossier.slug}) }}" target="_blank" class="text-70 text-underline">Voir le dossier</a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="card-footer text-right">
+                            <a class="pull-right" href="{{ path('admin.dossiers.index') }}">
+                                <i class="fa fa-plus"></i> Voir plus de dossiers
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="page-separator">
+                        <div class="page-separator__text">Statistiques</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <div class="card mb-md-0">
+                                <div class="card-header pb-0 border-0 d-flex">
+                                    <div class="flex">
+                                        <div class="h2 mb-0">{{ admin_count_dossiers() }}</div>
+                                        <p class="card-title">Dossiers</p>
+                                    </div>
+                                    <i class="material-icons text-50">more_horiz</i>
+                                </div>
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        <a href="{{ path('admin.dossiers.index') }}" class="btn btn-sm btn-outline-secondary">Voir la liste</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <div class="card mb-md-0">
+                                <div class="card-header pb-0 border-0 d-flex">
+                                    <div class="flex">
+                                        <div class="h2 mb-0">{{ admin_count_blogs() }}</div>
+                                        <p class="card-title">Actualités</p>
+                                    </div>
+                                    <i class="material-icons text-50">more_horiz</i>
+                                </div>
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        <a href="{{ path('admin.blogs.index') }}" class="btn btn-sm btn-outline-secondary">Voir la liste</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <div class="card mb-md-0">
+                                <div class="card-header pb-0 border-0 d-flex">
+                                    <div class="flex">
+                                        <div class="h2 mb-0">{{ admin_count_formations() }}</div>
+                                        <p class="card-title">Formations</p>
+                                    </div>
+                                    <i class="material-icons text-50">more_horiz</i>
+                                </div>
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        <a href="{{ path('admin.formations.index') }}" class="btn btn-sm btn-outline-secondary">Voir la liste</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <div class="card mb-md-0">
+                                <div class="card-header pb-0 border-0 d-flex">
+                                    <div class="flex">
+                                        <div class="h2 mb-0">12</div>
+                                        <p class="card-title">Produits</p>
+                                    </div>
+                                    <i class="material-icons text-50">more_horiz</i>
+                                </div>
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        <a href="{{ path('admin.products.index') }}" class="btn btn-sm btn-outline-secondary">Voir la liste</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <div class="card mb-md-0">
+                                <div class="card-header pb-0 border-0 d-flex">
+                                    <div class="flex">
+                                        <div class="h2 mb-0">12</div>
+                                        <p class="card-title">Commandes</p>
+                                    </div>
+                                    <i class="material-icons text-50">more_horiz</i>
+                                </div>
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        <a href="#" class="btn btn-sm btn-outline-secondary">Voir la liste</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <div class="card mb-md-0">
+                                <div class="card-header pb-0 border-0 d-flex">
+                                    <div class="flex">
+                                        <div class="h2 mb-0">12</div>
+                                        <p class="card-title">Pages</p>
+                                    </div>
+                                    <i class="material-icons text-50">more_horiz</i>
+                                </div>
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        <a href="{{ path('admin.pages.index') }}" class="btn btn-sm btn-outline-secondary">Voir la liste</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <div class="card mb-md-0">
+                                <div class="card-header pb-0 border-0 d-flex">
+                                    <div class="flex">
+                                        <div class="h2 mb-0">12</div>
+                                        <p class="card-title">Documents</p>
+                                    </div>
+                                    <i class="material-icons text-50">more_horiz</i>
+                                </div>
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        <a href="#" class="btn btn-sm btn-outline-secondary">Voir la liste</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <div class="card mb-md-0">
+                                <div class="card-header pb-0 border-0 d-flex">
+                                    <div class="flex">
+                                        <div class="h2 mb-0">12</div>
+                                        <p class="card-title">Utilisateurs</p>
+                                    </div>
+                                    <i class="material-icons text-50">more_horiz</i>
+                                </div>
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        <a href="{{ path('admin.users.index') }}" class="btn btn-sm btn-outline-secondary">Voir la liste</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}{% endblock %}

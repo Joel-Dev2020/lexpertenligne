@@ -1,0 +1,19 @@
+{% for message in app.flashes('mercuryseries_flashy_notification') %}
+    <script id="flashy-template" type="text/template">
+        <div class="flashy flashy--{{ message.type }}">
+            <i class="fa fa-info" style="position: relative; top:0;"></i>
+            <a class="flashy__body" href="#" target="_blank"></a>
+        </div>
+        {#<div class="flashy alert alert-dark-{{ message.type }}">
+            <button class="close" type="button" id="hullabalooClose" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <i class="fa fa-info" style="position: relative; top:0;"></i>
+            <strong><a class="flashy__body" href="#" target="_blank"></a></strong>
+        </div>#}
+    </script>
+
+    <script>
+        flashy("{{ message.message }}", "{{ message.link }}");
+    </script>
+{% endfor %}

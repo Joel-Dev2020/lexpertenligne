@@ -1,0 +1,140 @@
+{% extends 'layouts/front/base.html.twig' %}
+
+{% block title %}{{ parametres.structure.name ?? company_name }} | {{ title }}{% endblock %}
+
+{% block body %}
+    <div class="page-section bg-white border-bottom-2">
+        <div class="container-fluid page__container">
+
+            <div class="d-flex flex-column flex-md-row align-items-center align-items-md-start flex mb-16pt text-center text-md-left">
+                <div class="avatar overlay overlay--primary mb-16pt mb-md-0 mr-md-16pt">
+                    {% include 'web/dossiers/cards/__img_small.html.twig' %}
+                    <div class="overlay__content"></div>
+                </div>
+                <div class="flex">
+                    <h1 class="h5 measure-lead-max mb-16pt">{{ dossier.name}}</h1>
+                    <div class="d-flex align-items-center">
+                        <a href="javascript:" class="avatar avatar-sm mr-12pt">
+                            {% include 'web/dossiers/cards/__img_avatar.html.twig' %}
+                        </a>
+                        <div class="mr-16pt">
+                            <a href="javascript:" class="card-title">{{ dossier.user.username }}</a>
+                            <div class="d-flex align-items-center">
+                                <small class="text-50 mr-2">{{ dossier.updatedAt|date('d/m/Y à H:i:s') }}</small>
+                            </div>
+                        </div>
+                        <div>
+                            <a href="javascript:" class="text-50 d-flex align-items-center text-decoration-0">
+                                <i class="material-icons icon--left">remove_red_eye</i> {{ pluralize(dossier.view ?? 0, 'Vue') }}
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container-fluid page__container">
+        <div class="page-section">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card card-body">
+                        <div class="d-flex">
+                            <a href="javascript:" class="avatar avatar-sm avatar-online mr-12pt">
+                                {% include 'web/dossiers/cards/__img_small.html.twig' %}
+                            </a>
+                            <div class="flex">
+                                <p class="d-flex align-items-center mb-2">
+                                    <a href="javascript:" class="text-body mr-2">Publié par <strong>{{ dossier.user.username ?? company_name }}</strong></a>
+                                    <small class="text-muted">{{ dossier.createdAt|ago }}</small>
+                                </p>
+                                {% if dossier.extrait %}
+                                    <p style="text-align: justify!important;">{{ dossier.extrait|nl2br }}</p>
+                                    <hr>
+                                {% endif %}
+                                <p style="text-align: justify!important;">{{ dossier.content|raw }}</p>
+                                <div class="d-flex align-items-center">
+                                    <a href="javascript:" class="text-50 d-flex align-items-center text-decoration-0" style="margin-right: 20px!important;">
+                                        <i class="material-icons mr-1" style="font-size: inherit;">remove_red_eye</i> {{ dossier.view }}
+                                    </a>
+                                    <small class="dossier-react-like"></small>
+                                </div>
+
+                                <div class="page-separator mt-lg-5">
+                                    <div class="page-separator__text">{{ pluralize(dossier.commentaire.count, 'Commentaire') }}</div>
+                                </div>
+                                <div class="d-flex mb-24pt">
+                                    {% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}
+                                        <a href="#" class="avatar avatar-sm mr-12pt">
+                                            {% include 'web/dossiers/cards/__img_avatar.html.twig' %}
+                                        </a>
+                                    {% endif %}
+                                    <div class="flex">
+                                        {% include 'web/partials/forms/form_comment.html.twig' with {form: form, data: dossier} %}
+                                    </div>
+                                </div>
+                                {% if dossier.commentaire.count > 0 %}
+                                    <div class="pt-3 mb-24pt">
+                                        <h4>{{ pluralize(dossier.commentaire.count, 'Commentaire') }}</h4>
+                                        {% for commentaire in dossier.commentaire %}
+                                            {% include 'web/partials/cards/__comment.html.twig' with {commentaire: commentaire} %}
+                                        {% endfor %}
+                                        <a href="#" class="btn btn-block btn-light">Voir plus de commentaires ...</a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    {{ last_dossiers_sidebar() }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if autresDossiers|length > 0 %}
+        <div class="page-section bg-white border-top-2">
+            <div class="container-fluid page__container page__container">
+                <div class="page-separator">
+                    <div class="page-separator__text">D'autres dossiers à voir également</div>
+                </div>
+                <div class="row">
+                    {% for autresdossier in autresDossiers %}
+                        <div class="col-sm-6 col-md-4">
+                            <div class="card posts-card-popular">
+                                {% include 'web/dossiers/cards/__img.html.twig' with {'dossier': autresdossier} only %}
+                                <div class="posts-card-popular__content">
+                                    <div class="card-body d-flex align-items-center">
+                                        <div class="avatar-group flex">
+                                            <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
+                                                <a href="#">
+                                                    {% if autresdossier.user.filename %}
+                                                        <img src="{{ vich_uploader_asset(autresdossier, 'imageFile') | imagine_filter('small') }}" alt="{{ autresdossier.user.username }}" class="avatar-img rounded-circle">
+                                                    {% else %}
+                                                        <img src="{{ asset('assetics/images/empty/small.png') | imagine_filter('small') }}" alt="{{ autresdossier.user.username }}" class="avatar-img rounded-circle">
+                                                    {% endif %}
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <a style="text-decoration: none;" class="d-flex align-items-center" href="#">
+                                            <i class="material-icons mr-1" style="font-size: inherit;">remove_red_eye</i> <small>{{ autresdossier.view ?? 0 }}</small>
+                                        </a>
+                                    </div>
+                                    <div class="posts-card-popular__title card-body">
+                                        <small class="text-muted text-uppercase">{{ autresdossier.categories.name }}</small>
+                                        <h4 class="card-title m-0">
+                                            <a href="{{ path('dossiers.show', {'id': autresdossier.id, 'slug': autresdossier.slug}) }}">{{ autresdossier.name|u.truncate(50, '...') }}</a>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

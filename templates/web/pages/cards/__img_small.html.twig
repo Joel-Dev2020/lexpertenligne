@@ -1,0 +1,5 @@
+{% if page.filename %}
+    <img src="{{ vich_uploader_asset(page, 'imageFile') | imagine_filter('small') }}" alt="{{ page.name }}" width="40" height="40" class="avatar-img rounded">
+{% else %}
+    <img src="{{ asset('assetics/images/empty/small.png') | imagine_filter('small') }}" alt="{{ page.name }}" width="40" height="40" class="avatar-img rounded">
+{% endif %}

@@ -1,0 +1,117 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Admin - {{ parametres.structure ? parametres.structure.name : company_name }} - {{ title }}{% endblock %}
+
+{% block body %}
+    <div class="pt-32pt">
+        <div class="container-fluid page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+            {{ fil_arial_admin_categories(title, 'Notifications', '') }}
+        </div>
+    </div>
+
+    <div class="container-fluid page__container">
+        <div class="page-section">
+
+            {% include 'flash/__flash.html.twig' %}
+
+            <div class="page-separator">
+                <div class="page-separator__text">Notifications</div>
+            </div>
+
+            <div class="card mb-0">
+
+                <div class="table-responsive" data-toggle="lists" data-lists-sort-by="js-lists-values-employee-name" data-lists-values='["js-lists-values-employee-name", "js-lists-values-employer-name", "js-lists-values-projects", "js-lists-values-activity", "js-lists-values-earnings"]'>
+
+                    <div class="card-header">
+                        <form class="form-inline">
+                            <label class="mr-sm-2 form-label" for="inlineFormFilterBy">Filtrer par:</label>
+                            <input type="text" class="form-control search mb-2 mr-sm-2 mb-sm-0" id="inlineFormFilterBy" placeholder="Rechercher ...">
+                        </form>
+                    </div>
+
+                    <table class="table mb-0 thead-border-top-0 table-nowrap">
+                        <thead>
+                        <tr>
+                            <th>
+                                <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-employee-name">ID</a>
+                            </th>
+                            <th style="width: 150px;">
+                                <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-employer-name">Notifications</a>
+                            </th>
+                            <th style="width: 150px;">
+                                <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-employer-name">Dates</a>
+                            </th>
+                            <th style="width: 24px;" class="pl-0"></th>
+                        </tr>
+                        </thead>
+                        <tbody class="list" id="staff">
+                        {% for notification in notifications %}
+                            <tr>
+                                <td class="text-50 js-lists-values-activity small">
+                                    {{ notification.id }}
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="{{ path('admin.tags.edit', {'id': tag.id}) }}" class="text-warning"><i class="material-icons mr-8pt">star</i></a>
+                                        <a href="{{ path('admin.notifications.show', {'id': notification.id}) }}" class="text-70">
+                                            <span class="badge badge-success" style="background-color: {{ notification.color }};">
+                                            {{ notification.action }} <i class="fa fa-{{ notification.icon }}"></i>
+                                            </span>
+                                            <u>{{ notification.titre }}</u>
+                                            {% if notification.contacts %}
+                                                <strong>{{ notification.contacts.nomprenoms }}</strong>
+                                            {% endif %}
+                                            {% if notification.abonnes %}
+                                                <strong>{{ notification.abonnes.email }}</strong>
+                                            {% endif %}
+                                            edité(e) par {{ notification.user.username ?? (parametres.structure ? parametres.structure.name : company_name) }}
+                                        </a>
+                                    </div>
+                                </td>
+                                <td class="text-50 js-lists-values-activity small">
+                                    {{ notification.createdAt|ago }}
+                                </td>
+                                <td class="text-right pl-0">
+                                    <a href="{{ path('admin.notifications.show', {'id': notification.id}) }}" class="text-50"><i class="material-icons">folder</i></a>
+                                    {% include 'admin/notifications/_delete_form.html.twig' %}
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="4">{{ data_none }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-footer p-8pt">
+                    <ul class="pagination justify-content-start pagination-xsm m-0">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true" class="material-icons">chevron_left</span>
+                                <span>Prev</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Page 1">
+                                <span>1</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Page 2">
+                                <span>2</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span>Next</span>
+                                <span aria-hidden="true" class="material-icons">chevron_right</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

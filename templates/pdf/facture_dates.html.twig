@@ -1,0 +1,154 @@
+<html lang="fr">
+    <head>
+        <title>Facture</title>
+        <link rel="stylesheet" href="../../public/pdf/pdf.css">
+    </head>
+    <div id="body">
+        {% for commande in commandes %}
+            <div id="content page_break" style="page-break-after: always;">
+                <div id="section_header"></div>
+                <div class="page" style="font-size: 7pt">
+                    <table style="width: 100%;" class="header">
+                        <tbody>
+                        <tr>
+                            <td style="height: 75px!important;">
+                                <img style="height: 75px!important;" src="../../public/pdf/logo.png" alt="logo">
+                            </td>
+                            <td><h1 style="text-align: right"></h1></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <table style="width: 100%;margin-top: 30px!important;" class="header">
+                        <tbody>
+                        <tr>
+                            <td><h1 style="text-align: left">FACTURE</h1></td>
+                            <td><h1 style="text-align: right">N°: {{ commande.reference }}</h1></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <table style="width: 100%; font-size: 8pt;">
+                        <tbody>
+                        <tr>
+                            <td style="padding: 5px!important;"><strong>Adresse de livraison: </strong></td>
+                            <td style="padding: 5px!important;"><strong>Adresse de facturation: </strong></td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding: 5px!important;">Nom & prénoms: <strong>{{ commande.adresses['livraison'].nomprenoms }}</strong></td>
+                            <td style="padding: 5px!important;">Nom & prénoms: <strong>{{ commande.adresses['facturation'].nomprenoms }}</strong></td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding: 5px!important;">Contacts: <strong>{{ commande.adresses['livraison'].contacts }}</strong></td>
+                            <td style="padding: 5px!important;">Contacts: <strong>{{ commande.adresses['facturation'].contacts }}</strong></td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding: 5px!important;">Adresse: <strong>{{ commande.adresses['livraison'].adresse|nl2br }}</strong></td>
+                            <td style="padding: 5px!important;">Adresse: <strong>{{ commande.adresses['facturation'].adresse|nl2br }}</strong></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <table style="width: 100%; border-top: 1px solid black; border-bottom: 1px solid black; font-size: 8pt;">
+
+                        <tbody>
+                        <tr>
+                            <td>Client: {{ commande.user.prenoms }} <strong>{{ commande.user.nom }}</strong></td>
+                            <td>Contacts: <strong>{{ commande.user.contacts }}</strong></td>
+                            <td>Email: <strong>{{ commande.user.email }}</strong></td>
+                            <td>Date commande: <strong>{{ commande.createdAt|date('d/m/Y à H:i:s') }}</strong></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="change_order_items">
+                        {% if commande.note %}
+                            <tbody>
+                            <tr>
+                                <td colspan="7" style="white-space: normal">
+                                    <h2 style="display: inline;">Note:</h2>
+                                    {{ commande.note|nl2br }}
+                                </td>
+                            </tr>
+                            </tbody>
+                        {% endif %}
+                        <tbody>
+                        <tr>
+                            <th width="20">N°</th>
+                            <th width="30">Image</th>
+                            <th>Designation</th>
+                            <th width="20">Quantité</th>
+                            <th width="70" colspan="2">Prix U.</th>
+                            <th width="70">Total</th>
+                        </tr>
+                        {% for index, item in commande.products %}
+                            <tr class="{% if (index + 1) % 2 == 0 %}even_row{% else %}odd_row{% endif %}">
+                                <td style="text-align: center">{{ loop.index }}</td>
+                                <td class="change_order_unit_col" style="border-left-style: none;">
+                                    {% if item.product.filename %}
+                                        <img width="30" style="top:30px;" src="{{ vich_uploader_asset(item.product, 'imageFile') | imagine_filter('panier_cart') }}" alt="{{ item.product.name }}" title="{{ item.product.name }}">
+                                    {% else %}
+                                        <img width="30" style="top:30px;" src="../../public/admin/img/empty.jpg" alt="{{ item.product.name }}" title="{{ item.product.name }}">
+                                    {% endif %}
+                                </td>
+                                <td valign="middle">
+                                    {{ item.product.name|lower }} (Réf.: {{ item.product.referenceproduct ?? '--------' }})
+                                    <br>
+                                    <small>Catégorie: <em>{{ item.product.souscategories.name|lower }}</em></small>
+                                </td>
+                                <td style="text-align: center">{{ item.quantity }}</td>
+                                <td colspan="2" style="text-align: right;">{{ item.product.price|devise }}</td>
+                                <td class="change_order_total_col">{{ (item.product.price * item.quantity)|devise }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+
+                        <tbody>
+                        <tr style="font-size: 8px!important;">
+                            <td colspan="4" style="text-align: right;"></td>
+                            <td colspan="2" style="text-align: right;"><strong>TOTAL HT:</strong></td>
+                            <td class="change_order_total_col"><strong>{{ commande.totalht|devise }}</strong></td>
+                        </tr>
+                        <tr style="font-size: 8px!important;">
+                            <td colspan="4" style="text-align: right;"></td>
+                            <td colspan="2" style="text-align: right;"><strong>TVA ({{ parametres.structure.tva }}%):</strong></td>
+                            <td class="change_order_total_col"><strong>{{ commande.totaltva|devise }}</strong></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="text-align: right;">(Total toute Taxe comprise.)</td>
+                            <td colspan="2" style="text-align: right;"><strong>TOTAL TTC:</strong></td>
+                            <td class="change_order_total_col"><strong>{{ commande.totalttc|devise }}</strong></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <table style="width: 100%; font-size: 8pt;">
+                        <tbody>
+                        <tr>
+                            <td style="white-space: normal; text-align: left!important;">
+                                <span class="text-muted">Arrêter la présente facture à la somme de <strong><u>{{ commande.chiffreenlettre|lower }}</u></strong> Fcfa</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <table style="width: 100%;margin-top: 100px!important;" class="">
+                        <tbody>
+                        <tr>
+                            <td style="width: 10%;"></td>
+                            <td><h3 style="text-align: left">Signature du client</h3></td>
+                            <td><h3 style="text-align: right">Signature du livreur</h3></td>
+                            <td style="width: 10%;"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</html>
+

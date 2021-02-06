@@ -1,0 +1,23 @@
+{% for dossier in dossiers %}
+    <div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
+        <div class="mdk-box mdk-box--bg-primary bg-dark js-mdk-box mb-0" data-effects="parallax-background blend-background">
+            <div class="mdk-box__bg">
+                {% if dossier.filename %}
+                    <div class="mdk-box__bg-front" style="background-image: url({{ vich_uploader_asset(dossier, 'imageFile') | imagine_filter('medium') }});"></div>
+                {% else %}
+                    <div class="mdk-box__bg-front" style="background-image: url({{ asset('assetics/images/empty/medium.png') | imagine_filter('medium') }});"></div>
+                {% endif %}
+            </div>
+            <div class="mdk-box__content justify-content-center">
+                <div class="hero container-fluid page__container text-center" style="padding-top: 3.71rem!important;padding-bottom: 3.71rem!important;max-height: 410px!important;min-height: 410px!important;">
+                    <h1 class="text-white text-shadow" style="font-size: 25pt!important;">{{ dossier.name }}</h1>
+                    <p class="lead measure-hero-lead mx-auto text-white text-shadow mb-48pt" style="text-align: center!important;font-size: 12pt!important;">
+                        {{ dossier.extrait|u.truncate(200,'...')|nl2br }}
+                    </p>
+                    <a href="{{ path('dossiers.show', {'id': dossier.id, 'slug': dossier.slug}) }}" class="btn btn-lg btn-white btn--raised mb-16pt">En savoir plus</a>
+                    <p class="mb-0"><a href="#" class="text-white text-shadow"><strong>Publier par {{ parametres.structure.name|lower }}</strong></a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}

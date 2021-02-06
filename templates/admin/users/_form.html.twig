@@ -1,0 +1,91 @@
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="form-label">Photo (200x200)</label>
+            <div class="media align-items-center">
+                <a href="#" class="media-left mr-16pt">
+                    {% if user.filename %}
+                        <img width="56" class="rounded-circle" src="{{ vich_uploader_asset(user, 'imageFile') | imagine_filter('avatar') }}" alt="{{ user.username }}">
+                    {% else %}
+                        <img width="56" class="rounded-circle" src="{{ asset('admin/img/avatars/1.png') }}" alt="{{ user.username }}">
+                    {% endif %}
+                </a>
+                <div class="media-body">
+                    <div class="custom-file">
+                        {{ form_widget(form.imageFile, {'id': 'inputGroupFile01'}) }}
+                        <label class="custom-file-label" for="inputGroupFile01">Choisissez une photo</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">{{ form_label(form.username) }}</label>
+            {{ form_widget(form.username) }}
+            <small class="form-text text-muted">{{ form_help(form.username) }}</small>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">{{ form_label(form.nom) }}</label>
+            {{ form_widget(form.nom) }}
+            <small class="form-text text-muted">{{ form_help(form.nom) }}</small>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">{{ form_label(form.prenoms) }}</label>
+            {{ form_widget(form.prenoms) }}
+            <small class="form-text text-muted">{{ form_help(form.prenoms) }}</small>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">{{ form_label(form.email) }}</label>
+            {{ form_widget(form.email) }}
+            <small class="form-text text-muted">{{ form_help(form.email) }}</small>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="form-label">{{ form_label(form.contacts) }}</label>
+            {{ form_widget(form.contacts) }}
+            <small class="form-text text-muted">{{ form_help(form.contacts) }}</small>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">{{ form_label(form.password.first) }}</label>
+            {{ form_widget(form.password.first) }}
+            <small class="form-text text-muted">{{ form_help(form.password.first) }}</small>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">{{ form_label(form.password.second) }}</label>
+            {{ form_widget(form.password.second) }}
+            <small class="form-text text-muted">{{ form_help(form.password.second) }}</small>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">{{ form_label(form.address) }}</label>
+            {{ form_widget(form.address) }}
+            <small class="form-text text-muted">{{ form_help(form.address) }}</small>
+        </div>
+
+        <div class="form-group">
+            <div class="custom-control custom-checkbox">
+                <label class="custom-control-label">Rôles</label>
+                {{ form_widget(form.roles) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="custom-control custom-checkbox">
+                {{ form_widget(form.enabled, {'id': 'customCheck1'}) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card-footer">
+    <button type="submit" class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+</div>
+{{ form_end(form) }}

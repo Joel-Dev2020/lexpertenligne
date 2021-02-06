@@ -1,0 +1,288 @@
+<div class="mdk-drawer js-mdk-drawer" id="default-drawer">
+    <div class="mdk-drawer__content">
+        <div class="sidebar sidebar-light-purple sidebar-light-dodger-blue sidebar-left" data-perfect-scrollbar>
+            <!-- Sidebar Content -->
+            <a href="{{ path('home') }}" class="sidebar-brand sidebar-brand-dark bg-primary-pickled-bluewood">
+                <!-- <img class="sidebar-brand-icon" src="../../public/images/illustration/student/128/white.svg" alt="Luma"> -->
+                <span class="avatar avatar-xl sidebar-brand-icon h-auto">
+                    <span class="avatar-title rounded bg-primary">
+                        {% if parametres.structure.filename %}
+                            <img src="{{ vich_uploader_asset(parametres.structure, 'imageFile') | imagine_filter('logo') }}" class="img-fluid" alt="{{ parametres.structure.name ?? company_name }}">
+                        {% else %}
+                            <img src="{{ asset('assetics/images/logo/black-70@2x.png') }}" class="img-fluid" alt="{{ parametres.structure.name ?? company_name }}">
+                        {% endif %}
+                    </span>
+                </span>
+                <span>{{ parametres.structure.name ?? company_name }}</span>
+            </a>
+
+            <div class="sidebar-heading">Navigation</div>
+            <ul class="sidebar-menu">
+
+                <li class="sidebar-menu-item {{ set_active_route(current_global, 'home') }}">
+                    <a class="sidebar-menu-button" href="{{ path('home') }}">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">home</span>
+                        <span class="sidebar-menu-text">Accueil</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-heading">Applications</div>
+            <ul class="sidebar-menu">
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-button js-sidebar-collapse" data-toggle="collapse" href="#enterprise_menu">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">donut_large</span>
+                        Droit du travail
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent" id="enterprise_menu">
+                        {{ pages_nav(1) }}
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-button" data-toggle="collapse" href="#productivity_menu">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">people</span>
+                        Ressources humaines
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent" id="productivity_menu">
+                        {{ pages_nav(2) }}
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-button" data-toggle="collapse" href="#fiscalites">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">access_time</span>
+                        Fiscalité des salaires
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent" id="fiscalites">
+                        {{ pages_nav(3) }}
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-button" data-toggle="collapse" href="#securites">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">lock</span>
+                        Sécurité sociale
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent" id="securites">
+                        {{ pages_nav(5) }}
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-button" data-toggle="collapse" href="#ecommerce_menu">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">folder</span>
+                        Modèles documents
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent" id="ecommerce_menu">
+                        {{ docs_nav() }}
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-button" data-toggle="collapse" href="#messaging_menu">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">message</span>
+                        Offres & Emplois
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent" id="messaging_menu">
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Demande d'emplois</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Offre d'emplois</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Bourse de l'emplois</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-button" data-toggle="collapse" href="#community_menu">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">shopping_cart</span>
+                        Boutique
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent" id="community_menu">
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="{{ path('shop.index') }}">
+                                <span class="sidebar-menu-text">Notre librairie</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Autres produits</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="sidebar-heading">OUTILS & SIMULATIONS</div>
+            <ul class="sidebar-menu">
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-button"
+                       data-toggle="collapse"
+                       href="#components_menu">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">tune</span>
+                        Outils en ligne
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent"
+                        id="components_menu">
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Code de travail</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Convention collective interproffessionnelle</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Base de données relative au droit du travail</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Barème des salaires</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Barème des impôts sur salaire</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Notes fiscales</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="{{ path('dictionnaires.index') }}">
+                                <span class="sidebar-menu-text">Dictionnaire de la paie</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-button"
+                       data-toggle="collapse"
+                       href="#plugins_menu">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">folder</span>
+                        Outils de simulation
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent"
+                        id="plugins_menu">
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Evaluation du salaire brut</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Evaluation du salaire net à partir du brut</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Evaluation du salaire brut à partir du net</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Evaluation de l'impôt sur salaire (CN,IS,IGR)</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Evaluation de ses droits de congés payés</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Evaluation de ses droits de rupture en ligne</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Evaluation de sa pension de retraite normale</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="javascript:">
+                                <span class="sidebar-menu-text">Evaluation de sa pension avec rachat</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-button"
+                       data-toggle="collapse"
+                       href="#layouts_menu">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">view_compact</span>
+                        Layouts
+                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                    </a>
+                    <ul class="sidebar-submenu collapse sm-indent"
+                        id="layouts_menu">
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button"
+                               href="https://luma.humatheme.com/Demos/Compact_App_Layout/index.html">
+                                <span class="sidebar-menu-text">Compact</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button"
+                               href="https://luma.humatheme.com/Demos/Mini_App_Layout/index.html">
+                                <span class="sidebar-menu-text">Mini</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button"
+                               href="https://luma.humatheme.com/Demos/Mini_Secondary_Layout/index.html">
+                                <span class="sidebar-menu-text">Mini + Secondary</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button"
+                               href="https://luma.humatheme.com/Demos/App_Layout/index.html">
+                                <span class="sidebar-menu-text">App</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item active">
+                            <a class="sidebar-menu-button"
+                               href="index.html">
+                                <span class="sidebar-menu-text">Boxed</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button"
+                               href="https://luma.humatheme.com/Demos/Sticky_App_Layout/index.html">
+                                <span class="sidebar-menu-text">Sticky</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button"
+                               href="https://luma.humatheme.com/Demos/Fixed_Layout/index.html">
+                                <span class="sidebar-menu-text">Fixed</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- // END Sidebar Content -->
+
+        </div>
+    </div>
+</div>

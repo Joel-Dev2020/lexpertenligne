@@ -1,0 +1,38 @@
+{{ form_start(form, {'action': path('admin.mediasproducts.new'), 'attr': {'class': 'form-horizontal'}}) }}
+<label class="control-label" style="margin-bottom: 10px!important;">Ajouter des photos <span class="text-danger">(Important <= 1920 x 1280)</span></label>
+{% if not form.vars.valid %}
+    <ul>
+        {# Loop through every form item #}
+        {% for child in form.children %}
+            {# Display the errors of the form item #}
+            {%for error in child.vars.errors%}
+                <li>{{error.message}}</li>
+            {%endfor%}
+        {%endfor%}
+    </ul>
+{%endif%}
+
+<div class="form-group">
+    <label class="form-label">{{ form_label(form.name) }}</label>
+    {{ form_row(form.product_id, {'attr': {'value': id_product}}) }}
+    {{ form_widget(form.name) }}
+    <a href="javascript:void(0)" class="small">{{ form_help(form.name) }}</a>
+</div>
+
+<div class="form-group">
+    <label class="form-label">Photo (1920x1280)</label>
+    {{ form_widget(form.imageFile) }}
+    <a href="javascript:void(0)" class="small">{{ form_errors(form.imageFile) }}</a>
+</div>
+
+{{ form_rest(form) }}
+<ul class="list-group list-group-flush">
+    <li class="list-group-item py-3">
+        <button type="submit" class="btn btn-primary"><i class="m-r-5 feather icon-upload"></i>
+            {{ button_label|default('Ajouter la photo') }}
+        </button>
+    </li>
+</ul>
+{{ form_end(form) }}
+
+

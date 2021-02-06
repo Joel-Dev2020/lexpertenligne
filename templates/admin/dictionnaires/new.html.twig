@@ -1,0 +1,32 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Admin - {{ parametres.structure ? parametres.structure.name : company_name }} - {{ title }}{% endblock %}
+
+{% block body %}
+    <div class="pt-32pt">
+        <div class="container-fluid page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+            {{ fil_arial_admin_categories(title, 'Dictionnaire de la paie', '') }}
+            <div class="row" role="tablist">
+                <div class="col-auto">
+                    <a href="{{ path('admin.dictionnaires.index') }}" class="btn btn-outline-secondary">Liste des lexique du dictionnaire</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-section container-fluid page__container">
+        <div class="page-separator">
+            <div class="page-separator__text">Nouveau lexique</div>
+        </div>
+        {% include 'flash/__flash.html.twig' %}
+        <div class="col-md-7 p-0">
+            <div class="card p-relativemb-0">
+                <div class="card-body">
+                    {{ include('admin/dictionnaires/_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

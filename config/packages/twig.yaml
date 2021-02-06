@@ -1,2 +1,24 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
+    form_themes:
+        - bootstrap_4_layout.html.twig
+        - 'Resources/views/form/fields.html.twig'
+        - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
+    globals:
+        # Examples:
+        tva: 18
+        locales: '%app.locales%'
+        company_name: L'EXPERTENLIGNE
+        company_id: '%company_id%'
+        pub_id: '%pub_id%'
+        parametres: "@setParametres"
+        pubs: "@setPublicites"
+        company_number: (+ 225) 00 000 000
+        company_cel: (+ 225) 00 000 000
+        company_email: infos@lexpertenligne.com
+        company_adress: Zone 4 - Abidjan, Côte d'Ivoire
+        copyright: 'Tous droits reservés.'
+        domaine_link: 'http://www.promaster.ci'
+        data_none: Aucune donnée trouvée!
+        WSLINK: http://www.web-symphonie.com
+        WS: Web Symphonie

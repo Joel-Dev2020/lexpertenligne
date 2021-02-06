@@ -1,0 +1,85 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Admin - {{ parametres.structure ? parametres.structure.name : company_name }} - {{ title }}{% endblock %}
+
+{% block body %}
+    <div class="pt-32pt">
+        <div class="container-fluid page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+            {{ fil_arial_admin_categories(title, 'Produits', '') }}
+            <div class="row" role="tablist">
+                <div class="col-auto">
+                    <a href="{{ path('admin.products.new') }}" class="btn btn-outline-primary">
+                        <i class="material-icons">add</i>
+                        {{ libelle_ajouter }}
+                    </a> &nbsp;
+                    <a href="{{ path('admin.categories.new') }}" class="btn btn-outline-success">
+                        <i class="material-icons">add</i>
+                        Nouvelle catégorie
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid page__container">
+        <div class="page-section">
+
+            {% include 'flash/__flash.html.twig' %}
+
+            <div class="page-separator">
+                <div class="page-separator__text">Liste des products</div>
+            </div>
+
+            <div class="card mb-0">
+
+                <div class="table-responsive" data-toggle="lists" data-lists-sort-by="js-lists-values-employee-name" data-lists-values='["js-lists-values-employee-name", "js-lists-values-employer-name", "js-lists-values-projects", "js-lists-values-activity", "js-lists-values-earnings"]'>
+
+                    <div class="card-header">
+                        <form class="form-inline">
+                            <label class="mr-sm-2 form-label" for="inlineFormFilterBy">Filtrer par:</label>
+                            <input type="text" class="form-control search mb-2 mr-sm-2 mb-sm-0" id="inlineFormFilterBy" placeholder="Rechercher ...">
+                        </form>
+                    </div>
+
+                    <table class="table mb-0 thead-border-top-0 table-nowrap">
+                        <thead>
+                        <tr>
+                            <th>
+                                <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-employee-name">Image</a>
+                            </th>
+                            <th style="width: 150px;">
+                                <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-employer-name">Statut</a>
+                            </th>
+                            <th style="width: 150px;">
+                                <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-employer-name">Prix</a>
+                            </th>
+                            <th style="width: 150px;">
+                                <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-employer-name">Qtes</a>
+                            </th>
+                            <th style="width: 150px;">
+                                <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-employer-name">Cat.</a>
+                            </th>
+                            <th style="width: 24px;" class="pl-0"> </th>
+                        </tr>
+                        </thead>
+                        <tbody class="list" id="staff">
+                        {% for product in products %}
+                            {% include 'admin/shops/products/partials/_tr_table.html.twig' %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6">{{ data_none }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-footer p-8pt">
+                    {{ knp_pagination_render(products) }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+

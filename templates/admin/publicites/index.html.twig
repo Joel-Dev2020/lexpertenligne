@@ -1,0 +1,106 @@
+{% extends 'layouts/admin/admin.html.twig' %}
+
+{% block title %}Admin - {{ parametres.structure ? parametres.structure.name : company_name }} - {{ title }}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid flex-grow-1 container-p-y">
+        <h4 class="font-weight-bold py-3 mb-0">Publicités</h4>
+        <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('admin.home') }}"><i class="feather icon-home"></i></a></li>
+                <li class="breadcrumb-item" >Publicités</li>
+                <li class="breadcrumb-item active" >Edition</li>
+            </ol>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="nav-tabs-top">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#user-edit-account">Publicités du site web</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="user-edit-account">
+                            <div class="card-body pb-2">
+                                {% include 'flash/__flash.html.twig' %}
+                                <br>
+                                {{ include ('admin/publicites/_form.html.twig', {form: form, button: 'Sauvégarder'}) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $('.switcher-input').unwrap();
+
+        $(document).ready(function () {
+            let publicites_urlpubblock1 = document.getElementById('publicites_urlpubblock1');
+            let publicites_generateurl1 = document.getElementById('publicites_generateurl1');
+            publicites_generateurl1.addEventListener('change', function (e) {
+                e.preventDefault();
+                let url = e.target.options[e.target.selectedIndex].value;
+                if (url === ''){
+                    publicites_urlpubblock1.value = '#';
+                }else{
+                    publicites_urlpubblock1.value = url;
+                }
+            })
+
+            let publicites_urlpubblock2 = document.getElementById('publicites_urlpubblock2');
+            let publicites_generateurl2 = document.getElementById('publicites_generateurl2');
+            publicites_generateurl2.addEventListener('change', function (e) {
+                e.preventDefault();
+                let url = e.target.options[e.target.selectedIndex].value;
+                if (url === ''){
+                    publicites_urlpubblock2.value = '#';
+                }else{
+                    publicites_urlpubblock2.value = url;
+                }
+            })
+
+            let publicites_urlpubblock3 = document.getElementById('publicites_urlpubblock3');
+            let publicites_generateurl3 = document.getElementById('publicites_generateurl3');
+            publicites_generateurl3.addEventListener('change', function (e) {
+                e.preventDefault();
+                let url = e.target.options[e.target.selectedIndex].value;
+                if (url === ''){
+                    publicites_urlpubblock3.value = '#';
+                }else{
+                    publicites_urlpubblock3.value = url;
+                }
+            })
+
+            let publicites_urlpubblock4 = document.getElementById('publicites_urlpubblock4');
+            let publicites_generateurl4 = document.getElementById('publicites_generateurl4');
+            publicites_generateurl4.addEventListener('change', function (e) {
+                e.preventDefault();
+                let url = e.target.options[e.target.selectedIndex].value;
+                if (url === ''){
+                    publicites_urlpubblock4.value = '#';
+                }else{
+                    publicites_urlpubblock4.value = url;
+                }
+
+            })
+
+            let publicites_urlpubblock5 = document.getElementById('publicites_urlpubblock5');
+            let publicites_generateurl5 = document.getElementById('publicites_generateurl5');
+            publicites_generateurl5.addEventListener('change', function (e) {
+                e.preventDefault();
+                let url = e.target.options[e.target.selectedIndex].value;
+                if (url === ''){
+                    publicites_urlpubblock5.value = '#';
+                }else{
+                    publicites_urlpubblock5.value = url;
+                }
+
+            })
+        })
+    </script>
+{% endblock %}

@@ -1,0 +1,14 @@
+{{ form_start(form) }}
+<div class="row form-group">
+    <div class="col-sm-12">
+        <label class="form-label">{{ form_label(form.datefacture) }}</label>
+        {{ form_widget(form.datefacture) }}
+        <a href="javascript:void(0)" class="small">{{ form_help(form.datefacture) }}</a>
+    </div>
+</div>
+
+<div class="text-right mt-3">
+    <button type="submit" class="btn btn-primary">{{ button_label|default('Générer la facture') }}</button>&nbsp;
+    <button type="reset" class="btn btn-default">Annuler</button>
+</div>
+{{ form_end(form) }}
